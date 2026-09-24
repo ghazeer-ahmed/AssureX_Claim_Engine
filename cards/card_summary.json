@@ -1,0 +1,6 @@
+{
+  "total_images": 2550,
+  "training_images": 2100,
+  "validation_images": 225,
+  "test_images": 225
+}

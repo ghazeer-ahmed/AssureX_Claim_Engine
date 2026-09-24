@@ -1,0 +1,37 @@
+{
+  "seed": 42,
+  "splits": {
+    "train": {
+      "total": 1050,
+      "class_counts": {
+        "Manual Review": 350,
+        "Valid Claim": 350,
+        "Invalid Claim": 350
+      }
+    },
+    "validation": {
+      "total": 225,
+      "class_counts": {
+        "Invalid Claim": 75,
+        "Valid Claim": 75,
+        "Manual Review": 75
+      }
+    },
+    "test": {
+      "total": 225,
+      "class_counts": {
+        "Manual Review": 75,
+        "Valid Claim": 75,
+        "Invalid Claim": 75
+      }
+    }
+  },
+  "full": {
+    "total": 1500,
+    "class_counts": {
+      "Manual Review": 500,
+      "Valid Claim": 500,
+      "Invalid Claim": 500
+    }
+  }
+}
