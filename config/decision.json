@@ -1,0 +1,7 @@
+{
+    "minimum_confidence": 0.8,
+    "strong_difference": 0.05,
+    "acceptable_difference": 0.15,
+    "maximum_difference": 0.25,
+    "deadline_alert_days": 7
+}
