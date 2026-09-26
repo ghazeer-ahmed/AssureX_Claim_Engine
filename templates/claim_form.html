@@ -1,0 +1,42 @@
+{% extends 'base.html' %}{% from '_forms.html' import csrf, input, textarea %}
+{% block title %}New claim | AssureX{% endblock %}
+{% block content %}<section class="workspace container"><a href="{{ url_for('workflow.claims') }}">← Claims</a>
+    <div class="page-head mt-3">
+        <div><span class="small-title">Step 1 · Claim details</span>
+            <h1 class="mt-3">Start a warranty claim</h1>
+            <p class="text-secondary">Save a draft first. You can attach evidence and check it before submission.</p>
+        </div>
+    </div>
+    {% if products %}<form method="POST" class="surface form-wide">{{ csrf() }}
+        <div class="row">
+            <div class="col-md-6 mb-3"><label for="product_id" class="form-label">Product</label><select id="product_id"
+                    name="product_id" class="form-select" required>
+                    <option value="">Choose a registered product</option>{% for p in products %}<option
+                        value="{{ p.id }}">{{ p.product_name }} · {{ p.serial_number }}</option>{% endfor %}
+                </select></div>
+            <div class="col-md-6 mb-3"><label for="warranty_id" class="form-label">Warranty</label><select
+                    id="warranty_id" name="warranty_id" class="form-select" required>
+                    <option value="">Choose the matching warranty</option>{% for w in warranties %}<option
+                        value="{{ w.id }}" data-product="{{ w.product_id }}">{{ w.warranty_type|title }} · {{ w.provider
+                        }} · {{ w.start_date }} → {{ w.expiry_date }}</option>{% endfor %}
+                </select></div>
+        </div>
+        <p class="form-text">If no warranty appears for your product, open <a href="{{ url_for('products') }}">Products</a> and add its warranty before creating the claim. Products registered from now on get a standard warranty from the purchase details automatically.</p>
+        {{ input('fault_occurrence_date','When did the fault occur?',type='date',required=true) }}
+        <div class="row">
+            <div class="col-md-6 mb-3"><label for="fault_category" class="form-label">Fault category</label><select name="fault_category" id="fault_category" class="form-select" required>{% for fault in fault_categories %}<option>{{ fault }}</option>{% endfor %}</select></div>
+            <div class="col-md-6 mb-3"><label for="damage_type" class="form-label">Damage type</label><select name="damage_type" id="damage_type" class="form-select" required>{% for damage in damage_types %}<option>{{ damage }}</option>{% endfor %}</select></div>
+        </div>
+        {{ input('claim_amount','Claim amount',type='number',required=true) }}
+        {{ textarea('fault_description','Describe the fault',required=true) }}{{ textarea('service_history','Previous service history') }}{{ textarea('previous_replacement_details','Previous replacements') }}
+        <div class="form-actions"><a class="btn btn-outline-secondary"
+                href="{{ url_for('workflow.claims') }}">Cancel</a><button class="btn btn-primary">Save draft & add
+                evidence</button></div>
+    </form>
+    {% else %}<div class="empty-card">
+        <h3>No eligible products yet</h3>
+        <p>Customers can register products and add warranties. Employees can work only with customers assigned by an
+            administrator.</p>{% if session.role=='customer' %}<a class="btn btn-primary"
+            href="{{ url_for('add_product') }}">Register product</a>{% endif %}
+    </div>{% endif %}
+</section>{% endblock %}

@@ -1,0 +1,68 @@
+{% extends 'base.html' %}{% from '_forms.html' import badge %}{% block title %}Dashboard | AssureX{% endblock %}
+{% block content %}<section class="workspace container">
+    <div class="page-head">
+        <div><span class="small-title">{{ session.role|replace('_',' ')|title }}</span>
+            <h1 class="mt-3">Welcome, {{ session.name }}</h1>
+            <p class="text-secondary">A clear view of your warranty and claim activity.</p>
+        </div><a class="btn btn-primary" href="{{ url_for('workflow.claims') }}">Open claim workspace</a>
+    </div>
+    <div class="metric-grid mb-4">{% for label,value in [('Registered products',product_count),('Expiring warranties',expiring),('Saved receipts',receipts),('Active warranties',active),('Total claims',total),('Awaiting review',counts['Manual Review'] + counts['Under Evaluation']),('Action required',counts['Additional Information Required']),('Approved',counts['Approved']),('Rejected',counts['Rejected']),('Expired warranties',expired)] %}
+        <div class="metric-card"><span>{{ label }}</span><strong>{{ value }}</strong></div>{% endfor %}</div>
+    <div class="surface mb-4">
+        <h2 class="h4">Recorded outcomes</h2>
+        {% for label,count in outcomes.items() %}<p>{{ label }}: {{ count }}</p>{% else %}<p>No evaluations recorded.</p>{% endfor %}
+        {% for label,count in consistency.items() %}<p>{{ label }}: {{ count }}</p>{% endfor %}
+        <p>Average top confidence: {{ ((average_conf * 100)|round(2)) ~ '%' if average_conf is not none else 'Not available' }}</p>
+        <details><summary>Claim and repair trends</summary>
+            {% for month,count in trends.items() %}<p>{{ month }}: {{ count }} claims</p>{% endfor %}
+            {% for label,count in repairs.items() %}<p>{{ label }} repairs: {{ count }}</p>{% endfor %}
+            {% for reason,count in rejections.items() %}<p>Rejection: {{ reason }} ({{ count }})</p>{% endfor %}
+        </details>
+    </div>
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="surface">
+                <div class="d-flex justify-content-between">
+                    <h2 class="h4">Recent claims</h2><a href="{{ url_for('workflow.claims') }}">View all</a>
+                </div>{% for claim in claims %}<div class="evidence-row">
+                    <div><a class="fw-bold" href="{{ url_for('workflow.claim_detail',claim_id=claim.id) }}">{{
+                            claim.claim_id }}</a><small class="d-block text-secondary">{{ claim.product_name }} · {{
+                            claim.created_at[:10] }}</small></div>{{ badge(claim.status) }}
+                </div>{% else %}<div class="py-5 text-center">
+                    <h3>Your workspace is ready</h3>
+                    <p class="text-secondary">Claims will appear here when a draft is created.</p>{% if
+                    session.role=='customer' %}<a href="{{ url_for('products') }}"
+                        class="btn btn-outline-primary">Manage products & warranties</a>{% endif %}
+                </div>{% endfor %}
+            </div>
+            {% if flags %}<div class="surface mt-4">
+                <h2 class="h4">Issues found at submission</h2>{% for item in flags %}<div class="status-row"><span>{{
+                        item.rule_name|replace('_',' ')|title }}</span><strong>{{ item.count }}</strong></div>{% endfor
+                %}
+            </div>{% endif %}
+        </div>
+        <div class="col-lg-4">
+            <div class="surface mb-4">
+                <h2 class="h4">Claims by category</h2>{% for category,count in categories.items() %}<div
+                    class="status-row"><span>{{ category }}</span><strong>{{ count }}</strong></div>{% else %}<p
+                    class="text-secondary">No claim data yet.</p>{% endfor %}
+            </div>
+            <div class="surface mb-4">
+                <h2 class="h4">Reported faults</h2>{% for fault,count in faults.items() %}<div class="status-row">
+                    <span>{{ fault }}</span><strong>{{ count }}</strong></div>{% else %}<p class="text-secondary">No
+                    faults reported.</p>{% endfor %}
+            </div>
+            {% if session.role=='admin' %}<div class="surface mb-4">
+                <h2 class="h4">Export records</h2>
+                <div class="d-grid gap-2">{% for kind in ['claims','products','warranties','analytics'] %}<a
+                        class="btn btn-outline-secondary" href="{{ url_for('workflow.export_records',kind=kind) }}">{{
+                        kind|title }} CSV</a>{% endfor %}</div>
+            </div>
+            <div class="surface">
+                <h2 class="h4">Security events today</h2>{% for event in alerts %}<p>{{ event.event|title }}: <strong>{{
+                        event.count }}</strong></p>{% else %}<p class="text-secondary mb-0">No recorded events today.
+                </p>{% endfor %}
+            </div>{% endif %}
+        </div>
+    </div>
+</section>{% endblock %}

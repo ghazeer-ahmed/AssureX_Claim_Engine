@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{{ claim.claim_id }} report</title>
+    <style>
+        body {
+            font: 15px Arial, sans-serif;
+            max-width: 960px;
+            margin: 40px auto;
+            padding: 20px;
+            color: #17202a
+        }
+
+        h1 {
+            color: #2457d6
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0
+        }
+
+        td,
+        th {
+            text-align: left;
+            border: 1px solid #ddd;
+            padding: 10px;
+            overflow-wrap: anywhere
+        }
+
+        small {
+            color: #555
+        }
+
+        @media print {
+            body {
+                margin: 0
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <p>ASSUREX · CLAIM RECORD</p>
+    <h1>{{ claim.claim_id }}</h1>
+    <p>{{ claim.product_name }} · {{ claim.customer_name }}</p>
+    <table>{% for key in
+        ['public_product_id','serial_number','purchase_date','fault_occurrence_date','fault_description','fault_category','damage_type','claim_amount','service_history','previous_replacement_details','warranty_conditions','submission_date','status','final_result']
+        %}<tr>
+            <th>{{ key|replace('_',' ')|title }}</th>
+            <td>{{ claim[key] or 'Not recorded' }}</td>
+        </tr>{% endfor %}</table>
+    {% include '_evaluation.html' %}
+    <h2>Submitted warranty checks</h2>
+    <p>Checks support a human review; they are not an automated approval or rejection.</p>
+    <table>
+        <tr>
+            <th>Check</th>
+            <th>Result</th>
+            <th>Explanation</th>
+        </tr>{% for f in findings %}<tr>
+            <td>{{ f.rule_name }}</td>
+            <td>{{ f.result }}</td>
+            <td>{{ f.details }}</td>
+        </tr>{% else %}<tr>
+            <td colspan="3">No submission snapshot yet.</td>
+        </tr>{% endfor %}
+    </table>
+    <h2>Warranty record</h2><p>{{ summary.warranty.provider if summary.warranty else "No linked warranty" }}. Remaining days: {{ summary.remaining_days }}.</p>
+    <h2>Evidence manifest</h2>{% for doc in docs %}<p><strong>{{ doc.document_type }}</strong>: {{ doc.original_name
+        }}<br><small>SHA-256: {{ doc.file_hash }}</small></p>{% else %}<p>No documents.</p>{% endfor %}
+    <h2>Reviewer decisions and reasons</h2>{% for r in reviews %}<p><strong>{{ r.name }} · {{ r.action }}</strong>
+        (previously {{ r.previous_status }})<br>{{ r.comment }}<br><small>{{ r.created_at }}</small></p>{% else %}<p>No
+        reviews yet.</p>{% endfor %}
+    <h2>Submission history</h2>{% for snap in snapshots %}<details><summary>{{ snap.created_at }}</summary><pre style="white-space:pre-wrap">{{ snap.data|tojson(indent=2) }}</pre></details>{% endfor %}
+    <h2>Timeline</h2>{% for event in history %}<p>{{ event.created_at }} · {{ event.action }}</p>{% endfor %}<small>Open
+        this downloaded HTML file in a browser and use Print to save a PDF.</small>
+</body>
+
+</html>

@@ -1,0 +1,285 @@
+{% extends "base.html" %}
+
+{% block title %}
+Warranties | AssureX Claim Engine
+{% endblock %}
+
+{% block content %}
+
+<section class="warranty-section">
+
+    <div class="container">
+
+        <div class="page-head">
+
+            <div>
+
+                <span class="small-title">
+                    Warranty Tracking
+                </span>
+
+                <h1 class="mt-3">
+                    My Warranties
+                </h1>
+
+                <p class="text-secondary">
+                    View warranty dates, status and remaining time.
+                </p>
+
+            </div>
+
+            <a
+                href="{{ url_for('products') }}"
+                class="btn btn-primary"
+            >
+                View Products
+            </a>
+
+        </div>
+
+
+        {% if notifications %}
+
+            <div class="warranty-alert-box mb-4">
+
+                <h5>
+                    Warranty Alerts
+                </h5>
+
+                {% for item in notifications %}
+
+                    <div class="alert-item">
+
+                        <span>
+                            {{ item["message"] }}
+                        </span>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+
+        <div class="mb-4">
+
+            <span class="text-secondary">
+                Expiry alert period:
+            </span>
+
+            <strong>
+                {{ alert_days }} days
+            </strong>
+
+        </div>
+
+
+        <form method="GET" class="surface filter-grid mb-4"><div><label for="warranty-q">Search warranties</label><input id="warranty-q" class="form-control" name="q" placeholder="Product, provider or warranty type" value="{{ request.args.get('q','') }}"></div><div><label for="warranty-status">Warranty status</label><select class="form-select" id="warranty-status" name="status"><option value="">All statuses</option>{% for status in ['Active','Approaching Expiry','Expired','Upcoming'] %}<option {{ 'selected' if request.args.get('status') == status }}>{{ status }}</option>{% endfor %}</select></div><div class="filter-actions"><button class="btn btn-primary">Filter</button><a href="{{ url_for('warranties') }}" class="btn btn-outline-secondary">Reset</a></div></form>
+        {% if warranties %}
+
+            <div class="row g-4">
+
+                {% for warranty in warranties %}
+
+                    <div class="col-lg-6">
+
+                        <div class="warranty-card">
+
+                            <div class="warranty-top">
+
+                                <div>
+
+                                    <span class="product-id">
+                                        {{ warranty["public_product_id"] }}
+                                    </span>
+
+                                    <h4 class="mt-2 mb-1">
+                                        {{ warranty["product_name"] }}
+                                    </h4>
+
+                                    <p class="text-secondary mb-0">
+                                        {{ warranty["brand"] }}
+                                    </p>
+
+                                </div>
+
+
+                                {% if warranty["status"] == "Active" %}
+
+                                    <span class="status-badge status-active">
+                                        Active
+                                    </span>
+
+                                {% elif warranty["status"] == "Approaching Expiry" %}
+
+                                    <span class="status-badge status-warning">
+                                        Approaching Expiry
+                                    </span>
+
+                                {% elif warranty["status"] == "Upcoming" %}
+                                    <span class="status-badge">Upcoming</span>
+                                {% else %}
+
+                                    <span class="status-badge status-expired">
+                                        Expired
+                                    </span>
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="warranty-type">
+
+                                {% if warranty["warranty_type"] == "extended" %}
+
+                                    Extended Warranty
+
+                                {% else %}
+
+                                    Standard Warranty
+
+                                {% endif %}
+
+                            </div>
+
+
+                            <div class="product-info">
+
+                                <span>
+                                    Provider
+                                </span>
+
+                                <strong>
+                                    {{ warranty["provider"] }}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="product-info">
+
+                                <span>
+                                    Start Date
+                                </span>
+
+                                <strong>
+                                    {{ warranty["start_date"] }}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="product-info">
+
+                                <span>
+                                    Expiry Date
+                                </span>
+
+                                <strong>
+                                    {{ warranty["expiry_date"] }}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="product-info">
+
+                                <span>
+                                    Remaining
+                                </span>
+
+                                <strong>
+
+                                    {% if warranty["status"] == "Expired" %}
+
+                                        Expired
+
+                                    {% else %}
+
+                                        {{ warranty["days_left"] }} days
+
+                                    {% endif %}
+
+                                </strong>
+
+                            </div>
+
+
+                            <div class="warranty-text">
+
+                                <span>
+                                    Coverage Conditions
+                                </span>
+
+                                <p>
+                                    {{ warranty["coverage_conditions"] or "Not provided" }}
+                                </p>
+
+                            </div>
+
+
+                            <div class="warranty-text">
+
+                                <span>
+                                    Exclusions
+                                </span>
+
+                                <p>
+                                    {{ warranty["exclusions"] or "Not provided" }}
+                                </p>
+
+                            </div>
+
+
+                            <div class="warranty-text">
+
+                                <span>
+                                    Service Centre
+                                </span>
+
+                                <p>
+                                    {{ warranty["service_center_details"] or "Not provided" }}
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-card">
+
+                <h3>
+                    No warranty records
+                </h3>
+
+                <p class="text-secondary">
+                    Open your products and add a warranty
+                    to a registered product.
+                </p>
+
+                <a
+                    href="{{ url_for('products') }}"
+                    class="btn btn-primary"
+                >
+                    View Products
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

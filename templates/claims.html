@@ -1,0 +1,78 @@
+{% extends 'base.html' %}{% from '_forms.html' import badge %}
+{% block title %}Claims | AssureX{% endblock %}
+{% block content %}<section class="workspace container">
+    <div class="page-head">
+        <div><span class="small-title">Claim workspace</span>
+            <h1 class="mt-3">Your claims, in one place</h1>
+            <p class="text-secondary">Prepare evidence, follow progress and keep every decision on record.</p>
+        </div>
+        {% if session.role != 'reviewer' %}<a class="btn btn-primary" href="{{ url_for('workflow.new_claim') }}">+ New
+            claim</a>{% endif %}
+    </div>
+    <form method="GET" class="surface filter-grid mb-4">
+        <div><label for="q">Search</label><input id="q" name="q" class="form-control"
+                placeholder="Claim, product or serial number" value="{{ request.args.get('q','') }}"></div>
+        <div><label for="status">Status</label><select id="status" name="status" class="form-select">
+                <option value="">All statuses</option>{% for status in statuses %}<option {{ 'selected' if
+                    request.args.get('status')==status }}>{{ status }}</option>{% endfor %}
+            </select></div>
+        <div><label for="category">Category</label><input id="category" name="category" class="form-control"
+                value="{{ request.args.get('category','') }}" placeholder="e.g. Laptop"></div>
+        <div><label for="from_date">From</label><input id="from_date" type="date" name="from_date" class="form-control"
+                value="{{ request.args.get('from_date','') }}"></div>
+        <div><label for="to_date">To</label><input id="to_date" type="date" name="to_date" class="form-control"
+                value="{{ request.args.get('to_date','') }}"></div>
+        <div><label for="risk">Checks</label><select id="risk" name="risk" class="form-select">
+                <option value="">All claims</option><option value="flagged" {{ 'selected' if request.args.get('risk')=='flagged'
+                    }}>Flagged at submission</option>
+            </select></div>
+        {% if session.role in ['admin','reviewer'] %}<div><label for="reviewer">Reviewed by</label><select
+                name="reviewer" id="reviewer" class="form-select">
+                <option value="">Any reviewer</option>{% for reviewer in reviewers %}<option value="{{ reviewer.id }}"
+                    {{ 'selected' if request.args.get('reviewer')==reviewer.id|string }}>{{ reviewer.name }}</option>{%
+                endfor %}
+            </select></div>{% endif %}
+        <div><label for="warranty_status">Warranty</label><select id="warranty_status" name="warranty_status" class="form-select"><option value="">All warranties</option>{% for item in ['Active','Expired','Upcoming','Approaching Expiry','Extended'] %}<option {{ 'selected' if request.args.get('warranty_status')==item }}>{{ item }}</option>{% endfor %}</select></div>
+        <div><label for="min_conf">Minimum confidence (0 to 1)</label><input id="min_conf" name="min_conf" type="number" min="0" max="1" step="0.01" value="{{ request.args.get('min_conf','') }}" class="form-control"></div>
+        <div><label for="max_conf">Maximum confidence (0 to 1)</label><input id="max_conf" name="max_conf" type="number" min="0" max="1" step="0.01" value="{{ request.args.get('max_conf','') }}" class="form-control"></div>
+        <div class="filter-actions"><button class="btn btn-primary">Apply filters</button><a
+                href="{{ url_for('workflow.claims') }}" class="btn btn-outline-secondary">Reset</a></div>
+    </form>
+    <div class="d-flex justify-content-between mb-3"><span class="text-secondary">{{ total }} matching
+            claims</span>{% if session.role == 'admin' %}<a
+            href="{{ url_for('workflow.export_records', kind='claims', **request.args.to_dict()) }}">Export filtered
+            claims</a>{% endif %}</div>
+    <div class="surface table-responsive">
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th>Claim / product</th>
+                    <th>Customer</th>
+                    <th>Fault</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for claim in claims %}<tr>
+                    <td><a class="fw-bold" href="{{ url_for('workflow.claim_detail', claim_id=claim.id) }}">{{
+                            claim.claim_id }}</a><small class="d-block text-secondary">{{ claim.product_name }} · {{
+                            claim.serial_number }}</small></td>
+                    <td>{{ claim.customer_name }}</td>
+                    <td>{{ claim.damage_type }}</td>
+                    <td>{{ badge(claim.status) }}</td>
+                    <td>{{ claim.created_at[:10] }}</td>
+                </tr>
+                {% else %}<tr>
+                    <td colspan="5" class="text-center py-5">
+                        <h3>No claims found</h3>
+                        <p class="text-secondary">Create your first claim or adjust the filters.</p>
+                    </td>
+                </tr>{% endfor %}</tbody>
+        </table>
+    </div>
+<nav class="mt-3" aria-label="Claim pages">
+    {% if page > 1 %}<a class="btn btn-outline-primary" href="{{ url_for('workflow.claims', **dict(request.args.to_dict(), page=page-1)) }}">Previous</a>{% endif %}
+    <span>Page {{ page }} of {{ pages }}</span>
+    {% if page < pages %}<a class="btn btn-outline-primary" href="{{ url_for('workflow.claims', **dict(request.args.to_dict(), page=page+1)) }}">Next</a>{% endif %}
+</nav></section>{% endblock %}

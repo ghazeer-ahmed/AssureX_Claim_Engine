@@ -1,0 +1,55 @@
+{% extends 'base.html' %}{% from '_forms.html' import csrf %}{% block title %}User access | AssureX{% endblock %}
+{% block content %}<section class="workspace container">
+    <h1>User access</h1>
+    <p class="text-secondary">Public registration creates customer accounts. Assign staff roles and customer access
+        here.</p>
+    <div class="surface table-responsive mb-4">
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody>{% for user in users %}<tr>
+                    <td>{{ user.name }}<small class="d-block">{{ user.user_id }}</small></td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        <form method="POST" class="d-flex gap-2">{{ csrf() }}<input type="hidden" name="action"
+                                value="role"><input type="hidden" name="user_id" value="{{ user.id }}"><select
+                                aria-label="Role for {{ user.name }}" class="form-select" name="role" {% if
+                                user.id==session.user_id %}disabled{% endif %}>{% for role in
+                                ['customer','service_centre_employee','reviewer','admin'] %}<option value="{{ role }}"
+                                    {{ 'selected' if role==user.role }}>{{ role|replace('_',' ')|title }}</option>{%
+                                endfor %}</select><button class="btn btn-outline-primary" {% if user.id==session.user_id
+                                %}disabled{% endif %}>Save</button></form>
+                    </td>
+                </tr>{% endfor %}</tbody>
+        </table>
+    </div>
+    <div class="surface">
+        <h2 class="h4">Service centre assignments</h2>
+        <p class="text-secondary">Employees can only create and manage claims for their assigned customers.</p>
+        <form method="POST" class="filter-grid">{{ csrf() }}<input type="hidden" name="action" value="assign">
+            <div><label for="employee_id">Employee</label><select id="employee_id" name="employee_id"
+                    class="form-select" required>
+                    <option value="">Choose employee</option>{% for user in users if
+                    user.role=='service_centre_employee' %}<option value="{{ user.id }}">{{ user.name }}</option>{%
+                    endfor %}
+                </select></div>
+            <div><label for="customer_id">Customer</label><select id="customer_id" name="customer_id"
+                    class="form-select" required>
+                    <option value="">Choose customer</option>{% for user in users if user.role=='customer' %}<option
+                        value="{{ user.id }}">{{ user.name }}</option>{% endfor %}
+                </select></div>
+            <div class="filter-actions"><button class="btn btn-primary">Assign customer</button></div>
+        </form>{% for assignment in assignments %}<div class="evidence-row"><span>{{ assignment.employee }} → {{
+                assignment.customer }}</span>
+            <form method="POST">{{ csrf() }}<input type="hidden" name="action" value="unassign"><input type="hidden"
+                    name="employee_id" value="{{ assignment.employee_id }}"><input type="hidden" name="customer_id"
+                    value="{{ assignment.customer_id }}"><button class="btn btn-sm btn-outline-danger">Remove
+                    assignment</button></form>
+        </div>{% endfor %}
+    </div>
+</section>{% endblock %}

@@ -1,0 +1,14 @@
+<h2 class="h4">Recorded evaluation</h2>
+{% if evaluation %}
+<p><strong>{{ evaluation.result }}</strong></p>
+<p>Consistency: {{ evaluation.status }}</p>
+{% if evaluation.difference is not none %}<p>Confidence difference: {{ (evaluation.difference * 100)|round(2) }} percentage points</p>{% endif %}
+<ul>{% for reason in evaluation.reasons %}<li>{{ reason }}</li>{% endfor %}</ul>
+<details><summary>Checks passed</summary><ul>{% for item in evaluation.passed %}<li>{{ item }}</li>{% endfor %}</ul></details>
+{% else %}<p>No submitted evaluation yet.</p>{% endif %}
+{% for kind, row in predictions.items() %}
+<h3 class="h6">{{ kind }}: {{ row.predicted_class }}</h3>
+<p>Valid: {{ (row.valid_conf * 100)|round(2) }}%, Invalid: {{ (row.invalid_conf * 100)|round(2) }}%, Manual review: {{ (row.manual_conf * 100)|round(2) }}%</p>
+<p class="small text-break">Version: {{ row.version }}. Recorded: {{ row.created_at }}</p>
+{% endfor %}
+{% if predictions|length < 2 %}<p class="small">Python scoring runs on the server; image scoring runs in your browser when you submit an editable claim. If either model is unavailable, the claim stays in the human review queue.</p>{% endif %}

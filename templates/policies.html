@@ -1,0 +1,26 @@
+{% extends 'base.html' %}{% from '_forms.html' import csrf %}{% block title %}Warranty policies | AssureX{% endblock %}
+{% block content %}<section class="workspace container">
+    <h1>Warranty policies</h1>
+    <p class="text-secondary">Review these sample policies against your actual warranty terms before use. Claims in
+        unconfigured categories are flagged for review.</p>
+    {% for category,policy in policies.items() %}<details class="surface mb-3">
+        <summary>{{ category }} · {{ policy.coverage_months }} months · report within {{ policy.reporting_days }} days
+        </summary>
+        <form method="POST" class="mt-4">{{ csrf() }}<input type="hidden" name="category" value="{{ category }}">
+            <div class="row">{% for key,label in [('coverage_months','Default coverage (months)'),('reporting_days','Reporting deadline (days)'),('grace_days','Grace period (days)')] %}<div
+                    class="col-md-4 mb-3"><label class="form-label" for="{{ category }}-{{ key }}">{{ label
+                        }}</label><input id="{{ category }}-{{ key }}" class="form-control" type="number"
+                        min="{{ 1 if key=='coverage_months' else 0 }}" max="3650" name="{{ key }}"
+                        value="{{ policy[key] }}" required></div>{% endfor %}</div>
+            <p class="form-text">Existing warranty records retain their recorded dates. These policies govern claim
+                checks.</p>
+            <div class="row">{% for key,label,options in [('covered_faults','Covered faults',faults),('exclusions','Exclusions',faults),('mandatory_documents','Required documents',document_types)] %}<fieldset class="col-md-4 mb-3">
+                    <legend class="h6">{{ label }}</legend>{% for item in options %}<label class="d-block mb-2"><input
+                            type="checkbox" name="{{ key }}" value="{{ item }}" {{ 'checked' if item in policy[key] }}>
+                        {{ item }}</label>{% endfor %}
+                </fieldset>{% endfor %}</div><label class="d-block mb-3"><input type="checkbox"
+                    name="authorized_repairs_only" value="yes" {{ 'checked' if policy.authorized_repairs_only }}>
+                Require authorized repairs</label><button class="btn btn-primary">Save {{ category }} policy</button>
+        </form>
+    </details>{% endfor %}
+</section>{% endblock %}

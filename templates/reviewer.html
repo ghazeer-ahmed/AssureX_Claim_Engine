@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}
+Reviewer | AssureX Claim Engine
+{% endblock %}
+
+{% block content %}
+
+<section class="dashboard-page">
+
+    <div class="container">
+
+        <div class="dashboard-head">
+
+            <span class="small-title">
+                Claim Reviewer
+            </span>
+
+            <h1 class="mt-3">
+                Welcome, {{ session.get("name") }}
+            </h1>
+
+            <p class="text-secondary">
+                Your reviewer account is ready.
+            </p>
+
+        </div>
+
+
+        <div class="role-card">
+
+            <h4>
+                Account Details
+            </h4>
+
+            <div class="status-row">
+
+                <span>User ID</span>
+
+                <strong>
+                    {{ session.get("public_user_id") }}
+                </strong>
+
+            </div>
+
+            <div class="status-row">
+
+                <span>Role</span>
+
+                <strong>
+                    Claim Reviewer
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

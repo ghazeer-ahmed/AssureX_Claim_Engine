@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+
+{% block title %}
+Add Warranty | AssureX Claim Engine
+{% endblock %}
+
+{% block content %}
+
+<section class="warranty-section">
+
+    <div class="container">
+
+        <div class="warranty-form-card">
+
+            <div class="mb-4">
+
+                <span class="small-title">
+                    Warranty Record
+                </span>
+
+                <h1 class="mt-3">
+                    Add Warranty
+                </h1>
+
+                <p class="text-secondary">
+                    Add warranty information for this product.
+                </p>
+
+            </div>
+
+
+            <div class="selected-product mb-4">
+
+                <span>
+                    Product
+                </span>
+
+                <strong>
+                    {{ product["product_name"] }}
+                </strong>
+
+                <small>
+                    {{ product["product_id"] }}
+                    |
+                    {{ product["brand"] }}
+                </small>
+
+            </div>
+
+
+            <form method="POST">
+                <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Warranty Type
+                        </label>
+
+                        <select
+                            name="warranty_type"
+                            class="form-select"
+                            required
+                        >
+
+                            <option value="">
+                                Select warranty type
+                            </option>
+
+                            <option
+                                value="standard"
+                                {% if request.form.get("warranty_type") == "standard" %}
+                                selected
+                                {% endif %}
+                            >
+                                Standard Warranty
+                            </option>
+
+                            <option
+                                value="extended"
+                                {% if request.form.get("warranty_type") == "extended" %}
+                                selected
+                                {% endif %}
+                            >
+                                Extended Warranty
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Warranty Provider
+                        </label>
+
+                        <input
+                            type="text"
+                            name="provider"
+                            class="form-control"
+                            value="{{ request.form.get('provider', '') }}"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Start Date
+                        </label>
+
+                        <input
+                            type="date"
+                            name="start_date"
+                            class="form-control"
+                            value="{{ request.form.get('start_date', product['purchase_date'] or '') }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Warranty Duration
+                        </label>
+
+                        <div class="input-group">
+
+                            <input
+                                type="number"
+                                name="duration"
+                                class="form-control"
+                                min="1"
+                                value="{{ request.form.get('duration', product['warranty_duration'] or '') }}"
+                                required
+                            >
+
+                            <span class="input-group-text">
+                                months
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Coverage Conditions
+                    </label>
+
+                    <textarea
+                        name="coverage_conditions"
+                        class="form-control"
+                        rows="3"
+                    >{{ request.form.get("coverage_conditions", "") }}</textarea>
+
+                </div>
+
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Exclusions
+                    </label>
+
+                    <textarea
+                        name="exclusions"
+                        class="form-control"
+                        rows="3"
+                    >{{ request.form.get("exclusions", "") }}</textarea>
+
+                </div>
+
+
+                <div class="mb-4">
+
+                    <label class="form-label">
+                        Service Centre Details
+                    </label>
+
+                    <textarea
+                        name="service_center_details"
+                        class="form-control"
+                        rows="3"
+                    >{{ request.form.get("service_center_details", "") }}</textarea>
+
+                </div>
+
+
+                <div class="form-actions">
+
+                    <a
+                        href="{{ url_for('products') }}"
+                        class="btn btn-outline-secondary"
+                    >
+                        Cancel
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        Save Warranty
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

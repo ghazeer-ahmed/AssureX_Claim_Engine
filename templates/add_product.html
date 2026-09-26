@@ -1,0 +1,243 @@
+{% extends "base.html" %}
+
+{% block title %}
+Register Product | AssureX Claim Engine
+{% endblock %}
+
+{% block content %}
+
+<section class="product-section">
+
+    <div class="container">
+
+        <div class="product-form-card">
+
+            <div class="mb-4">
+
+                <span class="small-title">
+                    Product Registration
+                </span>
+
+                <h1 class="mt-3">
+                    Register Product
+                </h1>
+
+                <p class="text-secondary">
+                    Enter the product and purchase information.
+                </p>
+
+            </div>
+
+
+            <form method="POST">
+                <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Product Name
+                        </label>
+
+                        <input
+                            type="text"
+                            name="product_name"
+                            class="form-control"
+                            value="{{ request.form.get('product_name', '') }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Category
+                        </label>
+
+                        <input
+                            type="text"
+                            name="category"
+                            class="form-control"
+                            value="{{ request.form.get('category', '') }}"
+                            placeholder="Laptop, Smartphone"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Brand
+                        </label>
+
+                        <input
+                            type="text"
+                            name="brand"
+                            class="form-control"
+                            value="{{ request.form.get('brand', '') }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Model Number
+                        </label>
+
+                        <input
+                            type="text"
+                            name="model_number"
+                            class="form-control"
+                            value="{{ request.form.get('model_number', '') }}"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Serial Number
+                    </label>
+
+                    <input
+                        type="text"
+                        name="serial_number"
+                        class="form-control"
+                        value="{{ request.form.get('serial_number', '') }}"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Purchase Date
+                        </label>
+
+                        <input
+                            type="date"
+                            name="purchase_date"
+                            class="form-control"
+                            value="{{ request.form.get('purchase_date', '') }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Purchase Price
+                        </label>
+
+                        <input
+                            type="number"
+                            name="purchase_price"
+                            class="form-control"
+                            min="0"
+                            step="0.01"
+                            value="{{ request.form.get('purchase_price', '') }}"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Retailer
+                        </label>
+
+                        <input
+                            type="text"
+                            name="retailer"
+                            class="form-control"
+                            value="{{ request.form.get('retailer', '') }}"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="col-md-6 mb-4">
+
+                        <label class="form-label">
+                            Standard Warranty Duration
+                        </label>
+
+                        <div class="input-group">
+
+                            <input
+                                type="number"
+                                name="warranty_duration"
+                                class="form-control"
+                                min="1"
+                                value="{{ request.form.get('warranty_duration', '') }}"
+                                required
+                            >
+
+                            <span class="input-group-text">
+                                months
+                            </span>
+
+                        </div>
+
+                        <div class="form-text">A standard warranty will be created automatically using the purchase date, duration and retailer entered above.</div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-actions">
+
+                    <a
+                        href="{{ url_for('products') }}"
+                        class="btn btn-outline-secondary"
+                    >
+                        Cancel
+                    </a>
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        Register Product
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

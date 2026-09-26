@@ -1,0 +1,31 @@
+{% extends 'base.html' %}{% from '_forms.html' import csrf, input %}{% block title %}Verify evidence | AssureX{%
+endblock %}
+{% block content %}<section class="workspace container"><a
+        href="{{ return_url }}">← {{ claim.claim_id }}</a>
+    <h1 class="mt-3">Review extracted information</h1>
+    <p class="text-secondary">{{ doc.original_name }} · Compare these fields with the original document. Blank fields
+        are allowed if the document does not contain them.</p>
+    <div class="row g-4">
+        <div class="col-lg-5">
+            <div class="surface">
+                <h2 class="h4">Original evidence</h2><a class="btn btn-outline-primary mb-3"
+                    href="{{ url_for('workflow.download_document',document_id=doc.id) }}">Download original</a>
+                <p>{{ extraction.extraction_status }}</p>{% if editable %}<form method="POST">{{ csrf() }}<button
+                        name="action" value="extract" class="btn btn-primary">Extract text</button></form>{% endif %}
+                <details class="mt-4">
+                    <summary>Extracted text</summary>
+                    <pre class="audit-details">{{ extraction.raw_text or 'No extracted text yet.' }}</pre>
+                </details>
+                <p class="form-text mt-3">Extraction proposes values only. It never replaces the registered product
+                    details automatically.</p>
+            </div>
+        </div>
+        <div class="col-lg-7">
+            <form method="POST" class="surface">{{ csrf() }}<fieldset {% if not editable %}disabled{% endif %}>{% for
+                    name,label in [('purchase_date','Purchase date (YYYY-MM-DD)'),('invoice_number','Invoice number'),('product_name','Product name'),('model_number','Model number'),('serial_number','Serial number'),('retailer','Retailer'),('purchase_amount','Purchase amount'),('warranty_duration','Warranty duration in months')] %}{{
+                    input(name,label,fields.get(name,'')) }}{% endfor %}<button class="btn btn-primary" name="action"
+                        value="verify">Confirm verified information</button></fieldset>{% if extraction.verified_at %}<p
+                    class="form-text mt-3">Last verified {{ extraction.verified_at }}</p>{% endif %}</form>
+        </div>
+    </div>
+</section>{% endblock %}

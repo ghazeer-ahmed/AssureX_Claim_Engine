@@ -1,0 +1,17 @@
+{% macro csrf() %}<input type="hidden" name="_csrf" value="{{ csrf_token() }}">{% endmacro %}
+{% macro input(name, label, value='', type='text', required=false, help='') %}
+<div class="mb-3"><label class="form-label" for="{{ name }}">{{ label }}</label>
+    <input class="form-control" id="{{ name }}" name="{{ name }}" type="{{ type }}"
+        value="{{ request.form.get(name, value) or '' }}" {% if required %}required{% endif %} {% if type=='number'
+        %}min="0" step="0.01" {% endif %} maxlength="200">
+    {% if help %}<div class="form-text">{{ help }}</div>{% endif %}
+</div>
+{% endmacro %}
+{% macro textarea(name, label, value='', required=false) %}
+<div class="mb-3"><label class="form-label" for="{{ name }}">{{ label }}</label><textarea id="{{ name }}"
+        class="form-control" rows="3" name="{{ name }}" maxlength="4000" {% if required %}required{% endif
+        %}>{{ request.form.get(name, value) or '' }}</textarea></div>
+{% endmacro %}
+{% macro badge(status) %}<span
+    class="claim-badge {{ 'badge-good' if status in ['Approved','Pass','Closed'] else ('badge-danger' if status in ['Rejected','Fail'] else 'badge-neutral') }}">{{
+    status }}</span>{% endmacro %}

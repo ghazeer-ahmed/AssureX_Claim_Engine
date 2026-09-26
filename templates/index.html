@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home | AssureX Claim Engine
+{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+
+    <div class="container">
+
+        <div class="row align-items-center min-vh-75">
+
+            <div class="col-lg-7">
+
+                <span class="small-title">
+                    Warranty Claim Management
+                </span>
+
+                <h1 class="display-4 fw-bold mt-3">
+                    Warranty claims made easier to manage
+                </h1>
+
+                <p class="lead mt-3 text-secondary">
+                    Register products, manage warranties, submit claims
+                    and track claim progress from one place.
+                </p>
+
+
+                {% if session.get("user_id") %}
+
+                    <div class="mt-4">
+
+                        {% if session.get("role") == "customer" %}
+
+                            <a
+                                href="{{ url_for('customer_dashboard') }}"
+                                class="btn btn-primary btn-lg"
+                            >
+                                Open Dashboard
+                            </a>
+
+                        {% elif session.get("role") == "service_centre_employee" %}
+
+                            <a
+                                href="{{ url_for('employee_dashboard') }}"
+                                class="btn btn-primary btn-lg"
+                            >
+                                Open Dashboard
+                            </a>
+
+                        {% elif session.get("role") == "reviewer" %}
+
+                            <a
+                                href="{{ url_for('reviewer_dashboard') }}"
+                                class="btn btn-primary btn-lg"
+                            >
+                                Open Dashboard
+                            </a>
+
+                        {% elif session.get("role") == "admin" %}
+
+                            <a
+                                href="{{ url_for('admin_dashboard') }}"
+                                class="btn btn-primary btn-lg"
+                            >
+                                Open Dashboard
+                            </a>
+
+                        {% endif %}
+
+                    </div>
+
+                {% else %}
+
+                    <div class="mt-4">
+
+                        <a
+                            href="{{ url_for('register') }}"
+                            class="btn btn-primary btn-lg me-2"
+                        >
+                            Register
+                        </a>
+
+                        <a
+                            href="{{ url_for('login') }}"
+                            class="btn btn-outline-dark btn-lg"
+                        >
+                            Login
+                        </a>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="col-lg-5 mt-5 mt-lg-0">
+
+                <div class="info-card">
+
+                    <p class="card-label">
+                        System Setup
+                    </p>
+
+                    <h3>
+                        Application Ready
+                    </h3>
+
+                    <p class="text-secondary">
+                        Account registration and role access are available.
+                    </p>
+
+                    <div class="status-row">
+
+                        <span>Flask application</span>
+
+                        <strong>
+                            Ready
+                        </strong>
+
+                    </div>
+
+
+                    <div class="status-row">
+
+                        <span>SQLite database</span>
+
+                        {% if table_count > 0 %}
+
+                            <strong>
+                                Ready
+                            </strong>
+
+                        {% else %}
+
+                            <strong>
+                                Not Created
+                            </strong>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="status-row">
+
+                        <span>User access</span>
+
+                        <strong>
+                            Ready
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="features">
+
+    <div class="container">
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+
+                <div class="feature-card">
+
+                    <h4>
+                        Customer
+                    </h4>
+
+                    <p>
+                        Customers have their own account area and cannot
+                        open pages belonging to another role.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="feature-card">
+
+                    <h4>
+                        Service Centre
+                    </h4>
+
+                    <p>
+                        Service centre employees use a separate account
+                        role for their permitted claim work.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-md-4">
+
+                <div class="feature-card">
+
+                    <h4>
+                        Review
+                    </h4>
+
+                    <p>
+                        Reviewers and administrators have separate
+                        protected areas for later modules.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

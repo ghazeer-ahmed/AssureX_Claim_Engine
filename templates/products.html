@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Products | AssureX Claim Engine
+{% endblock %}
+
+{% block content %}
+
+<section class="product-section">
+
+    <div class="container">
+
+        <div class="page-head">
+
+            <div>
+
+                <span class="small-title">
+                    Products
+                </span>
+
+                <h1 class="mt-3">
+                    My Products
+                </h1>
+
+                <p class="text-secondary">
+                    View your registered products.
+                </p>
+
+            </div>
+
+            <div>
+
+                <a
+                    href="{{ url_for('add_product') }}"
+                    class="btn btn-primary"
+                >
+                    Add Product
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <form method="GET" class="surface d-flex gap-2 mb-4"><input class="form-control" aria-label="Search products" name="q" placeholder="Product ID, name, serial, category or brand" value="{{ request.args.get('q','') }}"><button class="btn btn-primary">Search</button><a href="{{ url_for('products') }}" class="btn btn-outline-secondary">Reset</a></form>
+        {% if products %}
+
+            <div class="row g-4">
+
+                {% for product in products %}
+
+                    <div class="col-lg-6">
+
+                        <div class="product-card">
+
+                            <div class="product-top">
+
+                                <div>
+
+                                    <span class="product-id">
+                                        {{ product["product_id"] }}
+                                    </span>
+
+                                    <h4 class="mt-2 mb-1">
+                                        {{ product["product_name"] }}
+                                    </h4>
+
+                                    <p class="text-secondary mb-0">
+                                        {{ product["brand"] }}
+                                    </p>
+
+                                </div>
+
+                                <span class="category-badge">
+                                    {{ product["category"] }}
+                                </span>
+
+                            </div>
+
+
+                            <div class="product-info">
+
+                                <span>
+                                    Model Number
+                                </span>
+
+                                <strong>
+                                    {{ product["model_number"] or "Not provided" }}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="product-info">
+
+                                <span>
+                                    Serial Number
+                                </span>
+
+                                <strong>
+                                    {{ product["serial_number"] }}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="product-info">
+
+                                <span>
+                                    Purchase Date
+                                </span>
+
+                                <strong>
+                                    {{ product["purchase_date"] }}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="product-info">
+
+                                <span>
+                                    Purchase Price
+                                </span>
+
+                                <strong>
+                                    {{ product["purchase_price"] }}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="product-info">
+
+                                <span>
+                                    Retailer
+                                </span>
+
+                                <strong>
+                                    {{ product["retailer"] }}
+                                </strong>
+
+                            </div>
+
+
+                            <div class="product-info">
+
+                                <span>
+                                    Warranty Duration
+                                </span>
+
+                                <strong>
+                                    {{ product["warranty_duration"] }} months
+                                </strong>
+
+                            </div>
+
+
+                            <div class="mt-4">
+
+                                <a
+                                    href="{{ url_for('add_warranty', product_db_id=product['id']) }}"
+                                    class="btn btn-outline-primary"
+                                >
+                                    Add Warranty
+                                </a>
+                                <a class="btn btn-outline-secondary" href="{{ url_for('workflow.product_documents', product_id=product.id) }}">Documents</a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-card">
+
+                <h3>
+                    No products registered
+                </h3>
+
+                <p class="text-secondary">
+                    Register your first product to start keeping
+                    its purchase and warranty information.
+                </p>
+
+                <a
+                    href="{{ url_for('add_product') }}"
+                    class="btn btn-primary"
+                >
+                    Register First Product
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% from '_forms.html' import csrf %}
+{% block content %}
+<section class="container workspace">
+    <h1>{{ product.product_name }} documents</h1>
+    <p>Save receipts and warranty records before creating a claim.</p>
+    {% for doc in documents %}
+    <div class="surface mb-3">
+        <strong>{{ doc.document_type }}: {{ doc.original_name }}</strong>
+        <a href="{{ url_for('workflow.download_document', document_id=doc.id) }}">Download</a>
+        <a href="{{ url_for('workflow.verify_document', document_id=doc.id) }}">Verify</a>
+        {% if session.role != 'reviewer' %}
+        <form method="post" action="{{ url_for('workflow.delete_document', document_id=doc.id) }}">
+            {{ csrf() }}<button class="btn btn-outline-danger">Remove</button>
+        </form>
+        {% endif %}
+    </div>
+    {% else %}<p>No saved documents.</p>{% endfor %}
+    {% if session.role != 'reviewer' %}
+    <form method="post" enctype="multipart/form-data" class="surface">
+        {{ csrf() }}
+        <label for="document_type">Document type</label>
+        <select id="document_type" name="document_type" class="form-select mb-3">
+            {% for kind in document_types %}<option>{{ kind }}</option>{% endfor %}
+        </select>
+        <label for="document">File</label>
+        <input id="document" name="document" type="file" required class="form-control mb-3" accept=".pdf,.png,.jpg,.jpeg,.mp4">
+        <button class="btn btn-primary">Save document</button>
+    </form>
+    {% endif %}
+</section>
+{% endblock %}

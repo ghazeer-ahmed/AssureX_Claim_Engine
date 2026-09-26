@@ -1,0 +1,18 @@
+{% extends 'base.html' %}{% from '_forms.html' import csrf %}{% block title %}Notifications | AssureX{% endblock %}
+{% block content %}<section class="workspace container">
+    <div class="page-head">
+        <div>
+            <h1>Notifications</h1>
+            <p class="text-secondary">Warranty reminders and claim updates.</p>
+        </div>
+        <form method="POST">{{ csrf() }}<button class="btn btn-outline-primary">Mark all as read</button></form>
+    </div>
+    <div class="surface">{% for n in notifications %}<div
+            class="timeline-entry {{ 'notification-new' if not n.is_read }}"><strong>{{ n.notification_type|title
+                }}</strong>
+            <p class="mb-1">{{ n.message }}</p><small class="text-secondary">{{ n.created_at }} · {{ 'Read' if n.is_read
+                else 'Unread' }}</small>{% if n.claim_id %}<a class="ms-3"
+                href="{{ url_for('workflow.claim_detail',claim_id=n.claim_id) }}">Open claim</a>{% endif %}
+        </div>{% else %}<p class="text-secondary">You're up to date. Notifications will appear here.</p>{% endfor %}
+    </div>
+</section>{% endblock %}
