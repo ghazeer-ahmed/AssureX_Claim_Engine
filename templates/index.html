@@ -1,234 +1,123 @@
 {% extends "base.html" %}
 
-{% block title %}
-Home | AssureX Claim Engine
-{% endblock %}
+{% block title %}AssureX | Warranty claims, clearly managed{% endblock %}
 
 {% block content %}
-
 <section class="hero">
+    <div class="container hero-layout">
+        <div class="hero-copy">
+            <span class="hero-eyebrow"><span class="eyebrow-dot"></span>Warranty support, all in one place</span>
+            <h1>Warranty claims,<br><span>without the guesswork.</span></h1>
+            <p class="hero-lede">Register a product, keep its warranty close, and follow each claim from the first detail to the final review.</p>
 
-    <div class="container">
-
-        <div class="row align-items-center min-vh-75">
-
-            <div class="col-lg-7">
-
-                <span class="small-title">
-                    Warranty Claim Management
-                </span>
-
-                <h1 class="display-4 fw-bold mt-3">
-                    Warranty claims made easier to manage
-                </h1>
-
-                <p class="lead mt-3 text-secondary">
-                    Register products, manage warranties, submit claims
-                    and track claim progress from one place.
-                </p>
-
-
-                {% if session.get("user_id") %}
-
-                    <div class="mt-4">
-
-                        {% if session.get("role") == "customer" %}
-
-                            <a
-                                href="{{ url_for('customer_dashboard') }}"
-                                class="btn btn-primary btn-lg"
-                            >
-                                Open Dashboard
-                            </a>
-
-                        {% elif session.get("role") == "service_centre_employee" %}
-
-                            <a
-                                href="{{ url_for('employee_dashboard') }}"
-                                class="btn btn-primary btn-lg"
-                            >
-                                Open Dashboard
-                            </a>
-
-                        {% elif session.get("role") == "reviewer" %}
-
-                            <a
-                                href="{{ url_for('reviewer_dashboard') }}"
-                                class="btn btn-primary btn-lg"
-                            >
-                                Open Dashboard
-                            </a>
-
-                        {% elif session.get("role") == "admin" %}
-
-                            <a
-                                href="{{ url_for('admin_dashboard') }}"
-                                class="btn btn-primary btn-lg"
-                            >
-                                Open Dashboard
-                            </a>
-
-                        {% endif %}
-
-                    </div>
-
-                {% else %}
-
-                    <div class="mt-4">
-
-                        <a
-                            href="{{ url_for('register') }}"
-                            class="btn btn-primary btn-lg me-2"
-                        >
-                            Register
-                        </a>
-
-                        <a
-                            href="{{ url_for('login') }}"
-                            class="btn btn-outline-dark btn-lg"
-                        >
-                            Login
-                        </a>
-
-                    </div>
-
+            {% if session.get("user_id") %}
+                {% if session.get("role") == "customer" %}
+                    <a href="{{ url_for('customer_dashboard') }}" class="btn btn-primary btn-lg hero-cta">Open my dashboard <span aria-hidden="true">→</span></a>
+                {% elif session.get("role") == "service_centre_employee" %}
+                    <a href="{{ url_for('employee_dashboard') }}" class="btn btn-primary btn-lg hero-cta">Open my dashboard <span aria-hidden="true">→</span></a>
+                {% elif session.get("role") == "reviewer" %}
+                    <a href="{{ url_for('reviewer_dashboard') }}" class="btn btn-primary btn-lg hero-cta">Open my dashboard <span aria-hidden="true">→</span></a>
+                {% elif session.get("role") == "admin" %}
+                    <a href="{{ url_for('admin_dashboard') }}" class="btn btn-primary btn-lg hero-cta">Open my dashboard <span aria-hidden="true">→</span></a>
                 {% endif %}
-
-            </div>
-
-
-            <div class="col-lg-5 mt-5 mt-lg-0">
-
-                <div class="info-card">
-
-                    <p class="card-label">
-                        System Setup
-                    </p>
-
-                    <h3>
-                        Application Ready
-                    </h3>
-
-                    <p class="text-secondary">
-                        Account registration and role access are available.
-                    </p>
-
-                    <div class="status-row">
-
-                        <span>Flask application</span>
-
-                        <strong>
-                            Ready
-                        </strong>
-
-                    </div>
-
-
-                    <div class="status-row">
-
-                        <span>SQLite database</span>
-
-                        {% if table_count > 0 %}
-
-                            <strong>
-                                Ready
-                            </strong>
-
-                        {% else %}
-
-                            <strong>
-                                Not Created
-                            </strong>
-
-                        {% endif %}
-
-                    </div>
-
-
-                    <div class="status-row">
-
-                        <span>User access</span>
-
-                        <strong>
-                            Ready
-                        </strong>
-
-                    </div>
-
+            {% else %}
+                <div class="hero-actions">
+                    <a href="{{ url_for('register') }}" class="btn btn-primary btn-lg hero-cta">Create your account <span aria-hidden="true">→</span></a>
+                    <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-lg hero-login">Sign in</a>
                 </div>
+            {% endif %}
 
+            <div class="hero-trust" aria-label="Built for the claim process">
+                <span><i aria-hidden="true">✓</i> Products and warranties</span>
+                <span><i aria-hidden="true">✓</i> Evidence and claim updates</span>
             </div>
-
         </div>
 
+        <div class="hero-art" aria-label="Illustration of a warranty claim moving through registration, evidence, and review">
+            <div class="art-glow"></div>
+            <div class="art-orbit orbit-one"></div>
+            <div class="art-orbit orbit-two"></div>
+            <div class="journey-card">
+                <div class="journey-card-head">
+                    <div>
+                        <span class="journey-overline">A clearer process</span>
+                        <h2>Your claim journey</h2>
+                    </div>
+                    <span class="journey-spark" aria-hidden="true">✳</span>
+                </div>
+                <div class="journey-step">
+                    <span class="step-number complete">01</span>
+                    <div><strong>Register a product</strong><small>Keep purchase details together</small></div>
+                    <span class="step-check" aria-hidden="true">✓</span>
+                </div>
+                <div class="journey-connector"></div>
+                <div class="journey-step">
+                    <span class="step-number">02</span>
+                    <div><strong>Add claim evidence</strong><small>Attach documents and details</small></div>
+                    <span class="step-dot" aria-hidden="true"></span>
+                </div>
+                <div class="journey-connector"></div>
+                <div class="journey-step">
+                    <span class="step-number">03</span>
+                    <div><strong>Follow the review</strong><small>See updates in one workspace</small></div>
+                    <span class="step-dot" aria-hidden="true"></span>
+                </div>
+                <div class="journey-foot"><span class="journey-pulse"></span> Every step, in view</div>
+            </div>
+            <div class="art-tag"><span aria-hidden="true">✦</span> Less chasing. More clarity.</div>
+        </div>
     </div>
-
+    <div class="hero-bottom-fade" aria-hidden="true"></div>
 </section>
 
-
-<section class="features">
-
+<section class="features" id="how-it-works">
     <div class="container">
-
-        <div class="row g-4">
-
-            <div class="col-md-4">
-
-                <div class="feature-card">
-
-                    <h4>
-                        Customer
-                    </h4>
-
-                    <p>
-                        Customers have their own account area and cannot
-                        open pages belonging to another role.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="col-md-4">
-
-                <div class="feature-card">
-
-                    <h4>
-                        Service Centre
-                    </h4>
-
-                    <p>
-                        Service centre employees use a separate account
-                        role for their permitted claim work.
-                    </p>
-
-                </div>
-
-            </div>
-
-
-            <div class="col-md-4">
-
-                <div class="feature-card">
-
-                    <h4>
-                        Review
-                    </h4>
-
-                    <p>
-                        Reviewers and administrators have separate
-                        protected areas for later modules.
-                    </p>
-
-                </div>
-
-            </div>
-
+        <div class="section-heading">
+            <span class="section-kicker">A simpler way to stay on top of it</span>
+            <h2>From product details to claim review</h2>
+            <p>Everything has a place, so you can focus on the information that moves a claim forward.</p>
         </div>
-
+        <div class="row g-4 feature-grid">
+            <div class="col-md-4">
+                <article class="feature-card">
+                    <span class="feature-number">01 <span>— PRODUCT</span></span>
+                    <div class="feature-icon icon-product" aria-hidden="true"><span></span><span></span><span></span></div>
+                    <h3>Keep the essentials together</h3>
+                    <p>Save product, purchase, and warranty details in one account, ready when you need them.</p>
+                </article>
+            </div>
+            <div class="col-md-4">
+                <article class="feature-card">
+                    <span class="feature-number">02 <span>— EVIDENCE</span></span>
+                    <div class="feature-icon icon-evidence" aria-hidden="true"><span></span><span></span></div>
+                    <h3>Know what to provide</h3>
+                    <p>Add receipts, warranty documents, and repair records directly to the claim workspace.</p>
+                </article>
+            </div>
+            <div class="col-md-4">
+                <article class="feature-card">
+                    <span class="feature-number">03 <span>— REVIEW</span></span>
+                    <div class="feature-icon icon-review" aria-hidden="true"><span></span></div>
+                    <h3>See what happens next</h3>
+                    <p>Track claim progress while reviewers use the evidence and model assessments to guide decisions.</p>
+                </article>
+            </div>
+        </div>
     </div>
-
 </section>
 
+<section class="closing-cta">
+    <div class="container closing-inner">
+        <div>
+            <span class="section-kicker">Ready when you are</span>
+            <h2>Start with the details you have.</h2>
+            <p>Your product information and documents can be added as you go.</p>
+        </div>
+        {% if session.get("user_id") %}
+            <a class="btn btn-primary btn-lg" href="{{ url_for('workflow.claims') }}">Go to claims <span aria-hidden="true">→</span></a>
+        {% else %}
+            <a class="btn btn-primary btn-lg" href="{{ url_for('register') }}">Get started <span aria-hidden="true">→</span></a>
+        {% endif %}
+    </div>
+</section>
 {% endblock %}
