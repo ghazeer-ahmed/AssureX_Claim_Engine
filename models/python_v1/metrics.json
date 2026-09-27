@@ -1,0 +1,388 @@
+{
+  "version": "5a4275326e32c40b62d4908436e1530a4dcdc6d659361f0efbefa1ca1a2af75f",
+  "features": [
+    "product_category",
+    "brand",
+    "retailer",
+    "purchase_price",
+    "warranty_months",
+    "extended_warranty",
+    "extended_months",
+    "fault_category",
+    "fault_covered",
+    "damage_type",
+    "claim_amount",
+    "previous_repairs",
+    "last_repair_centre",
+    "unauthorised_repair",
+    "product_replaced_before",
+    "receipt_uploaded",
+    "warranty_card_uploaded",
+    "product_image_uploaded",
+    "serial_evidence_uploaded",
+    "fault_evidence_uploaded",
+    "repair_report_uploaded",
+    "missing_documents",
+    "serial_match",
+    "duplicate_claim_flag",
+    "contradiction_claim_before_purchase",
+    "contradiction_repair_before_purchase",
+    "contradiction_fault_after_claim",
+    "contradiction_model_mismatch",
+    "contradiction_count",
+    "product_age_days",
+    "remaining_warranty_days",
+    "warranty_status",
+    "reporting_delay_days",
+    "reported_within_window",
+    "claim_to_price_ratio"
+  ],
+  "numeric_features": [
+    "purchase_price",
+    "warranty_months",
+    "extended_warranty",
+    "extended_months",
+    "fault_covered",
+    "claim_amount",
+    "previous_repairs",
+    "unauthorised_repair",
+    "product_replaced_before",
+    "receipt_uploaded",
+    "warranty_card_uploaded",
+    "product_image_uploaded",
+    "serial_evidence_uploaded",
+    "fault_evidence_uploaded",
+    "repair_report_uploaded",
+    "missing_documents",
+    "serial_match",
+    "duplicate_claim_flag",
+    "contradiction_claim_before_purchase",
+    "contradiction_repair_before_purchase",
+    "contradiction_fault_after_claim",
+    "contradiction_model_mismatch",
+    "contradiction_count",
+    "product_age_days",
+    "remaining_warranty_days",
+    "reporting_delay_days",
+    "reported_within_window",
+    "claim_to_price_ratio"
+  ],
+  "categorical_features": [
+    "product_category",
+    "brand",
+    "retailer",
+    "fault_category",
+    "damage_type",
+    "last_repair_centre",
+    "warranty_status"
+  ],
+  "classes": [
+    "Invalid Claim",
+    "Manual Review",
+    "Valid Claim"
+  ],
+  "source_hashes": {
+    "train": "05f4d8ef2820e9ac0d6a1c629db2d21b341fa5ae252e6d59a2a0c197efe33f6a",
+    "validation": "dcb5204b626ab91ad27485bf4757998fc5fd0d102ee2443a9aed80cce24195f0",
+    "test": "9fc44377a75d0acc99f3b1265aa42f8f86119b1296861456953606db92a9c15a"
+  },
+  "candidates": [
+    {
+      "name": "LogisticRegression",
+      "settings": {
+        "C": 1.0,
+        "class_weight": null,
+        "dual": false,
+        "fit_intercept": true,
+        "intercept_scaling": 1,
+        "l1_ratio": null,
+        "max_iter": 2000,
+        "multi_class": "deprecated",
+        "n_jobs": null,
+        "penalty": "l2",
+        "random_state": 42,
+        "solver": "lbfgs",
+        "tol": 0.0001,
+        "verbose": 0,
+        "warm_start": false
+      },
+      "validation_accuracy": 0.8977777777777778,
+      "validation_f1": 0.8985060109484073,
+      "class_results": {
+        "Invalid Claim": {
+          "precision": 0.9166666666666666,
+          "recall": 0.88,
+          "f1-score": 0.8979591836734694,
+          "support": 75.0
+        },
+        "Manual Review": {
+          "precision": 0.825,
+          "recall": 0.88,
+          "f1-score": 0.8516129032258064,
+          "support": 75.0
+        },
+        "Valid Claim": {
+          "precision": 0.958904109589041,
+          "recall": 0.9333333333333333,
+          "f1-score": 0.9459459459459459,
+          "support": 75.0
+        },
+        "accuracy": 0.8977777777777778,
+        "macro avg": {
+          "precision": 0.9001902587519025,
+          "recall": 0.8977777777777778,
+          "f1-score": 0.8985060109484073,
+          "support": 225.0
+        },
+        "weighted avg": {
+          "precision": 0.9001902587519026,
+          "recall": 0.8977777777777778,
+          "f1-score": 0.8985060109484074,
+          "support": 225.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          66,
+          9,
+          0
+        ],
+        [
+          6,
+          66,
+          3
+        ],
+        [
+          0,
+          5,
+          70
+        ]
+      ],
+      "training_cv_f1": [
+        0.8536987741956686,
+        0.928361536123214,
+        0.8710842875851293,
+        0.8765955017141303,
+        0.8763890917233792
+      ]
+    },
+    {
+      "name": "RandomForestClassifier",
+      "settings": {
+        "bootstrap": true,
+        "ccp_alpha": 0.0,
+        "class_weight": null,
+        "criterion": "gini",
+        "max_depth": null,
+        "max_features": "sqrt",
+        "max_leaf_nodes": null,
+        "max_samples": null,
+        "min_impurity_decrease": 0.0,
+        "min_samples_leaf": 1,
+        "min_samples_split": 2,
+        "min_weight_fraction_leaf": 0.0,
+        "monotonic_cst": null,
+        "n_estimators": 150,
+        "n_jobs": null,
+        "oob_score": false,
+        "random_state": 42,
+        "verbose": 0,
+        "warm_start": false
+      },
+      "validation_accuracy": 0.8711111111111111,
+      "validation_f1": 0.8711230847611514,
+      "class_results": {
+        "Invalid Claim": {
+          "precision": 0.9538461538461539,
+          "recall": 0.8266666666666667,
+          "f1-score": 0.8857142857142857,
+          "support": 75.0
+        },
+        "Manual Review": {
+          "precision": 0.7948717948717948,
+          "recall": 0.8266666666666667,
+          "f1-score": 0.8104575163398693,
+          "support": 75.0
+        },
+        "Valid Claim": {
+          "precision": 0.8780487804878049,
+          "recall": 0.96,
+          "f1-score": 0.9171974522292994,
+          "support": 75.0
+        },
+        "accuracy": 0.8711111111111111,
+        "macro avg": {
+          "precision": 0.8755889097352512,
+          "recall": 0.8711111111111111,
+          "f1-score": 0.8711230847611514,
+          "support": 225.0
+        },
+        "weighted avg": {
+          "precision": 0.8755889097352512,
+          "recall": 0.8711111111111111,
+          "f1-score": 0.8711230847611514,
+          "support": 225.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          62,
+          13,
+          0
+        ],
+        [
+          3,
+          62,
+          10
+        ],
+        [
+          0,
+          3,
+          72
+        ]
+      ],
+      "training_cv_f1": [
+        0.8300078715653432,
+        0.8560742738824931,
+        0.8730795496053488,
+        0.8463804713804715,
+        0.835884065756539
+      ]
+    },
+    {
+      "name": "ExtraTreesClassifier",
+      "settings": {
+        "bootstrap": false,
+        "ccp_alpha": 0.0,
+        "class_weight": null,
+        "criterion": "gini",
+        "max_depth": null,
+        "max_features": "sqrt",
+        "max_leaf_nodes": null,
+        "max_samples": null,
+        "min_impurity_decrease": 0.0,
+        "min_samples_leaf": 1,
+        "min_samples_split": 2,
+        "min_weight_fraction_leaf": 0.0,
+        "monotonic_cst": null,
+        "n_estimators": 150,
+        "n_jobs": null,
+        "oob_score": false,
+        "random_state": 42,
+        "verbose": 0,
+        "warm_start": false
+      },
+      "validation_accuracy": 0.8711111111111111,
+      "validation_f1": 0.8717486556660378,
+      "class_results": {
+        "Invalid Claim": {
+          "precision": 0.96875,
+          "recall": 0.8266666666666667,
+          "f1-score": 0.8920863309352518,
+          "support": 75.0
+        },
+        "Manual Review": {
+          "precision": 0.7875,
+          "recall": 0.84,
+          "f1-score": 0.8129032258064516,
+          "support": 75.0
+        },
+        "Valid Claim": {
+          "precision": 0.8765432098765432,
+          "recall": 0.9466666666666667,
+          "f1-score": 0.9102564102564102,
+          "support": 75.0
+        },
+        "accuracy": 0.8711111111111111,
+        "macro avg": {
+          "precision": 0.8775977366255144,
+          "recall": 0.8711111111111111,
+          "f1-score": 0.8717486556660378,
+          "support": 225.0
+        },
+        "weighted avg": {
+          "precision": 0.8775977366255145,
+          "recall": 0.8711111111111111,
+          "f1-score": 0.8717486556660379,
+          "support": 225.0
+        }
+      },
+      "confusion_matrix": [
+        [
+          62,
+          13,
+          0
+        ],
+        [
+          2,
+          63,
+          10
+        ],
+        [
+          0,
+          4,
+          71
+        ]
+      ],
+      "training_cv_f1": [
+        0.8528730641192648,
+        0.8806361343695039,
+        0.8875703974990188,
+        0.8804137832812131,
+        0.8462207403507747
+      ]
+    }
+  ],
+  "selected": "LogisticRegression",
+  "test_accuracy": 0.9111111111111111,
+  "test_results": {
+    "Invalid Claim": {
+      "precision": 0.8974358974358975,
+      "recall": 0.9333333333333333,
+      "f1-score": 0.9150326797385621,
+      "support": 75.0
+    },
+    "Manual Review": {
+      "precision": 0.8873239436619719,
+      "recall": 0.84,
+      "f1-score": 0.863013698630137,
+      "support": 75.0
+    },
+    "Valid Claim": {
+      "precision": 0.9473684210526315,
+      "recall": 0.96,
+      "f1-score": 0.9536423841059603,
+      "support": 75.0
+    },
+    "accuracy": 0.9111111111111111,
+    "macro avg": {
+      "precision": 0.9107094207168336,
+      "recall": 0.9111111111111111,
+      "f1-score": 0.9105629208248865,
+      "support": 225.0
+    },
+    "weighted avg": {
+      "precision": 0.9107094207168336,
+      "recall": 0.9111111111111111,
+      "f1-score": 0.9105629208248865,
+      "support": 225.0
+    }
+  },
+  "test_confusion_matrix": [
+    [
+      70,
+      5,
+      0
+    ],
+    [
+      8,
+      63,
+      4
+    ],
+    [
+      0,
+      3,
+      72
+    ]
+  ]
+}

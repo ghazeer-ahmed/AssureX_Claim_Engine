@@ -1,0 +1,125 @@
+{
+  "selected_model": "logistic_regression",
+  "features": [
+    "product_category",
+    "brand",
+    "retailer",
+    "purchase_price",
+    "warranty_months",
+    "extended_warranty",
+    "extended_months",
+    "fault_category",
+    "fault_covered",
+    "damage_type",
+    "claim_amount",
+    "previous_repairs",
+    "last_repair_centre",
+    "unauthorised_repair",
+    "product_replaced_before",
+    "receipt_uploaded",
+    "warranty_card_uploaded",
+    "product_image_uploaded",
+    "serial_evidence_uploaded",
+    "fault_evidence_uploaded",
+    "repair_report_uploaded",
+    "missing_documents",
+    "serial_match",
+    "duplicate_claim_flag",
+    "contradiction_claim_before_purchase",
+    "contradiction_repair_before_purchase",
+    "contradiction_fault_after_claim",
+    "contradiction_model_mismatch",
+    "contradiction_count",
+    "product_age_days",
+    "remaining_warranty_days",
+    "warranty_status",
+    "reporting_delay_days",
+    "reported_within_window",
+    "claim_to_price_ratio"
+  ],
+  "numeric_features": [
+    "purchase_price",
+    "warranty_months",
+    "extended_warranty",
+    "extended_months",
+    "fault_covered",
+    "claim_amount",
+    "previous_repairs",
+    "unauthorised_repair",
+    "product_replaced_before",
+    "receipt_uploaded",
+    "warranty_card_uploaded",
+    "product_image_uploaded",
+    "serial_evidence_uploaded",
+    "fault_evidence_uploaded",
+    "repair_report_uploaded",
+    "missing_documents",
+    "serial_match",
+    "duplicate_claim_flag",
+    "contradiction_claim_before_purchase",
+    "contradiction_repair_before_purchase",
+    "contradiction_fault_after_claim",
+    "contradiction_model_mismatch",
+    "contradiction_count",
+    "product_age_days",
+    "remaining_warranty_days",
+    "reporting_delay_days",
+    "reported_within_window",
+    "claim_to_price_ratio"
+  ],
+  "categorical_features": [
+    "product_category",
+    "brand",
+    "retailer",
+    "fault_category",
+    "damage_type",
+    "last_repair_centre",
+    "warranty_status"
+  ],
+  "results": {
+    "logistic_regression": {
+      "validation_accuracy": 0.8933333333333333,
+      "validation_precision_macro": 0.8953722334004025,
+      "validation_recall_macro": 0.8933333333333334,
+      "validation_f1_macro": 0.8940158615717376,
+      "test_accuracy": 0.8977777777777778,
+      "test_precision_macro": 0.9016666666666667,
+      "test_recall_macro": 0.8977777777777778,
+      "test_f1_macro": 0.8990433815350389,
+      "confusion_matrix": [
+        [
+          66,
+          9,
+          0
+        ],
+        [
+          9,
+          66,
+          0
+        ],
+        [
+          0,
+          5,
+          70
+        ]
+      ],
+      "classes": [
+        "Invalid Claim",
+        "Manual Review",
+        "Valid Claim"
+      ]
+    },
+    "random_forest": {
+      "validation_accuracy": 0.88,
+      "validation_precision_macro": 0.8811692154953511,
+      "validation_recall_macro": 0.8799999999999999,
+      "validation_f1_macro": 0.8795714089831735
+    },
+    "extra_trees": {
+      "validation_accuracy": 0.8933333333333333,
+      "validation_precision_macro": 0.8937839937839938,
+      "validation_recall_macro": 0.8933333333333334,
+      "validation_f1_macro": 0.8930374166202073
+    }
+  }
+}
