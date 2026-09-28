@@ -88,35 +88,49 @@ def extract_document(path):
     path = Path(path)
     if path.suffix == '.mp4':
         return '', {}, 'Video evidence does not support text extraction.'
+    warning = ''
     try:
         if path.suffix == '.pdf':
             from pypdf import PdfReader
-            text = '\n'.join((page.extract_text() or '') for page in PdfReader(path).pages[:30])
-            if not text.strip():
-                import pymupdf
-                import pytesseract
-                from PIL import Image
-                command = _find_tesseract()
-                if not command:
-                    raise FileNotFoundError('Tesseract is not installed.')
-                pytesseract.pytesseract.tesseract_cmd = command
-                rendered = []
-                with pymupdf.open(path) as pdf:
-                    for page in pdf[:5]:
-                        pixmap = page.get_pixmap(matrix=pymupdf.Matrix(2, 2), alpha=False)
-                        image = Image.frombytes('RGB', (pixmap.width, pixmap.height), pixmap.samples)
-                        rendered.append(pytesseract.image_to_string(image, timeout=20))
-                text = '\n'.join(rendered)
-                if not text.strip():
-                    return '', {}, 'No readable text found. Enter and verify the fields manually.'
+            pages = PdfReader(path).pages[:30]
+            page_text = [(page.extract_text() or '') for page in pages]
+            # Mixed PDFs commonly combine a typed cover page with scanned receipts.
+            # OCR the first five textless pages rather than deciding from
+            # the PDF as a whole whether OCR is needed.
+            scan_pages = [index for index, text in enumerate(page_text) if not text.strip()][:5]
+            if scan_pages:
+                try:
+                    import pymupdf
+                    import pytesseract
+                    from PIL import Image
+                    command = _find_tesseract()
+                    if not command:
+                        raise FileNotFoundError('Tesseract is not installed.')
+                    pytesseract.pytesseract.tesseract_cmd = command
+                    with pymupdf.open(path) as pdf:
+                        for index in scan_pages:
+                            pixmap = pdf[index].get_pixmap(matrix=pymupdf.Matrix(2, 2), alpha=False)
+                            image = Image.frombytes('RGB', (pixmap.width, pixmap.height), pixmap.samples)
+                            try:
+                                recognized = pytesseract.image_to_string(image, timeout=20)
+                                if recognized.strip():
+                                    page_text[index] = recognized
+                                else:
+                                    warning = 'Some scanned pages had no readable text. Review the original and enter missing fields manually.'
+                            except Exception:
+                                warning = 'Some scanned pages could not be read. Review the original and enter missing fields manually.'
+                except (ImportError, FileNotFoundError):
+                    if not any(text.strip() for text in page_text):
+                        return '', {}, 'OCR is unavailable. Install the documented OCR dependencies or enter the fields manually.'
+                    warning = 'Text was extracted, but scanned pages could not be read. Install/configure Tesseract and retry.'
+            text = '\n'.join(page_text)
         else:
             import pytesseract
             from PIL import Image
             command = _find_tesseract()
-            if command:
-                pytesseract.pytesseract.tesseract_cmd = command
-            else:
+            if not command:
                 raise FileNotFoundError('Tesseract is not installed.')
+            pytesseract.pytesseract.tesseract_cmd = command
             with Image.open(path) as image:
                 text = pytesseract.image_to_string(image, timeout=20)
     except (ImportError, FileNotFoundError):
@@ -124,6 +138,8 @@ def extract_document(path):
     except Exception as error:
         print(f'document extraction failed: {type(error).__name__}: {error}')
         return '', {}, 'Text extraction could not finish. Enter and verify the fields manually.'
+    if not text.strip():
+        return '', {}, 'No readable text found. Enter and verify the fields manually.'
     fields = {}
     patterns = {
         'invoice_number': r'(?:invoice|receipt)\s*(?:no\.?|number|#)?\s*[:#-]\s*([^\n]+)',
@@ -139,7 +155,8 @@ def extract_document(path):
         found = re.search(pattern, text, re.IGNORECASE)
         if found:
             fields[key] = found.group(1).strip()[:200]
-    return text[:50000], fields, 'Extracted. Review every field before saving.'
+    status = warning or 'Extracted. Review every field before saving.'
+    return text[:50000], fields, status
 
 
 def _find_tesseract():

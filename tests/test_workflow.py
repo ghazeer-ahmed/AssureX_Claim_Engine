@@ -241,6 +241,30 @@ class WorkflowTests(unittest.TestCase):
         self.assertEqual(fields['serial_number'], 'SERIAL-1')
         self.assertIn('Extracted', status)
 
+    def test_mixed_pdf_ocr_scans_textless_pages(self):
+        import pymupdf
+        image = Image.new('RGB', (900, 380), 'white')
+        from PIL import ImageDraw, ImageFont
+        draw = ImageDraw.Draw(image)
+        font = ImageFont.truetype('arial.ttf', 34)
+        for index, line in enumerate(['Invoice: INV-MIXED-9', 'Serial: SERIAL-MIXED', 'Date: 2026-02-03', 'Total: 1250']):
+            draw.text((50, 40 + index * 75), line, fill='black', font=font)
+        png = io.BytesIO(); image.save(png, format='PNG')
+        pdf = pymupdf.open()
+        page = pdf.new_page(width=720, height=310)
+        page.insert_text((40, 60), 'Typed cover page: supporting receipt follows.')
+        scan = pdf.new_page(width=720, height=310)
+        scan.insert_image(scan.rect, stream=png.getvalue())
+        path = Path(self.temp.name) / 'mixed-receipt.pdf'
+        pdf.save(path); pdf.close()
+        with module.app.app_context():
+            raw, fields, status = extract_document(path)
+        self.assertIn('Typed cover page', raw)
+        self.assertIn('INV-MIXED-9', raw)
+        self.assertEqual(fields['invoice_number'], 'INV-MIXED-9')
+        self.assertEqual(fields['serial_number'], 'SERIAL-MIXED')
+        self.assertIn('Extracted', status)
+
     def test_separate_category_policy_files(self):
         from claim_services import read_policies, save_policy
         folder = Path(self.temp.name) / 'policy_files'; folder.mkdir()
@@ -292,13 +316,13 @@ class WorkflowTests(unittest.TestCase):
         self.assertEqual(len(prediction['version']), 64)
 
     def test_real_image_ocr(self):
-        image = Image.new('RGB', (900, 380), 'white')
+        image = Image.new('RGB', (1000, 700), 'white')
         from PIL import ImageDraw, ImageFont
         draw = ImageDraw.Draw(image)
-        font = ImageFont.truetype('arial.ttf', 34)
-        lines = ['Invoice: INV-456', 'Serial: SERIAL-1', 'Date: 2026-01-01', 'Total: 1000']
+        font = ImageFont.truetype('arial.ttf', 32)
+        lines = ['Invoice: INV-456', 'Product: Laptop Pro', 'Model: MOD-42', 'Serial: SERIAL-1', 'Retailer: Northwind Store', 'Purchase Date: 2026-01-01', 'Total: 1000', 'Warranty: 12 months']
         for index, line in enumerate(lines):
-            draw.text((50, 40 + index * 75), line, fill='black', font=font)
+            draw.text((50, 20 + index * 78), line, fill='black', font=font)
         path = Path(self.temp.name) / 'receipt.png'
         image.save(path)
         with module.app.app_context():
@@ -307,6 +331,11 @@ class WorkflowTests(unittest.TestCase):
         self.assertEqual(fields['invoice_number'], 'INV-456')
         self.assertEqual(fields['serial_number'], 'SERIAL-1')
         self.assertEqual(fields['purchase_date'], '2026-01-01')
+        self.assertEqual(fields['product_name'], 'Laptop Pro')
+        self.assertEqual(fields['model_number'], 'MOD-42')
+        self.assertEqual(fields['retailer'], 'Northwind Store')
+        self.assertEqual(fields['purchase_amount'], '1000')
+        self.assertEqual(fields['warranty_duration'], '12')
         self.assertIn('Extracted', status)
 
     def test_uploaded_image_ocr_route(self):
@@ -329,6 +358,8 @@ class WorkflowTests(unittest.TestCase):
         response = self.client.get(f'/documents/{document_id}/verify')
         self.assertIn(b'INV-789', response.data)
         self.assertIn(b'SERIAL-1', response.data)
+        self.assertIn(b'Extract text', response.data)
+        self.assertIn(b'local Tesseract OCR', response.data)
 
     def test_policy_edits_and_immutable_submission(self):
         claim=self.claim(); self.post(f'/claims/{claim}/submit'); self.as_admin()
