@@ -14,8 +14,8 @@ The models assist the workflow; they do not replace the human review. The Python
 
 - Windows 10 or 11, or another operating system capable of running Python and Flask. The commands below are for Windows Command Prompt (CMD).
 - Python 3.11 or newer. During installation on Windows, enable the option to add Python to PATH, or use the Python Launcher command `py`.
-- Internet access during installation to download Python packages. The image classifier also loads TensorFlow.js and the Teachable Machine image library from jsDelivr, so the browser needs internet access when that feature is used.
-- Optional: Tesseract OCR installed locally if you want to extract text from image evidence. Without it, users can still upload evidence and enter or verify claim details manually. Text-based PDFs are read with the Python `pypdf` package.
+- Internet access during installation to download Python packages. The TensorFlow.js and Teachable Machine browser libraries are included under `static/vendor/`, so model inference does not need a third-party CDN at runtime.
+- Tesseract OCR installed locally for OCR on receipt images and scanned PDF pages. Install the Windows Tesseract program separately from the Python packages, then open a new CMD window and run `tesseract --version` to confirm it is on PATH. Text-based PDFs are read with `pypdf`; scanned PDFs are rendered with PyMuPDF and OCR is applied to the first five pages. If Tesseract is installed outside a common Windows location, set `TESSERACT_CMD` as described under Configuration. Without Tesseract, evidence can still be uploaded and details entered or verified manually.
 
 ## Install and run the website from Windows CMD
 
@@ -125,13 +125,13 @@ On the claim page, attach available supporting files. Supported file types are P
 
 Choose the evidence type shown by the page (for example receipt, warranty card, product image, serial evidence, fault evidence, repair report, invoice, or other). The server also limits the complete upload request size; if a request containing multiple files is too large, upload fewer files at a time.
 
-The application can extract some text from evidence to suggest values for review. OCR is not proof that a value is correct. Check proposed information against the original document and verify it before using it. Image OCR requires Tesseract; scanned PDF pages are not automatically converted into OCR text. If extraction does not work, enter the information manually and keep the original evidence attached.
+The application can extract some text from evidence to suggest values for review. OCR is not proof that a value is correct. Check proposed information against the original document and verify it before using it. Image OCR and scanned-PDF OCR require Tesseract. Scanned PDFs are rendered locally, and the first five pages are sent to OCR. If extraction does not work, enter the information manually and keep the original evidence attached.
 
 ### 6. Check the claim and submit it
 
 Before submitting, review the product, warranty, dates, amount, description, attachments, repairs, and any policy or missing-information checks displayed on the claim. Add repair records where relevant.
 
-Use **Run Models** if shown, then choose **Submit for Review**. The application evaluates the available structured claim data and image summary. Submission locks the claim from ordinary editing while it is being reviewed. If a reviewer requests more information, the claim can be updated in that workflow and resubmitted.
+Use **Run models and submit for review**. The application requests Python probabilities from the server, creates the claim card without predictions, runs the image classifier in the browser, records its three scores, compares both outputs, applies warranty/evidence rules, and sends the claim to human review. If a model is unavailable or results disagree, the claim still goes to manual review. The application evaluates the available structured claim data and image summary. Submission locks the claim from ordinary editing while it is being reviewed. If a reviewer requests more information, the claim can be updated in that workflow and resubmitted.
 
 ### 7. Follow the review
 
@@ -156,11 +156,19 @@ Public self-registration is intended for customer accounts. A customer cannot gr
 
 The active Python classifier is `models/python_claim_classifier.joblib`. The ordered input schema and model information are recorded in `models/model_metrics.json`. The image model export consists of `models/model.json`, `models/metadata.json`, and `models/weights.bin`.
 
-The server maps claim and related database information into the saved Python feature schema. The image classifier runs in the browser against a generated claim summary card; it does not require a webcam. The site loads TensorFlow.js and the Teachable Machine image library from jsDelivr, so the browser must be able to reach that CDN. Model files are delivered through authenticated application routes.
+The server maps claim and related database information into the saved Python feature schema. The image classifier runs in the browser against a generated claim summary card; it does not require a webcam. TensorFlow.js 1.7.4 and Teachable Machine Image 0.8.5 are bundled under `static/vendor/`, so the browser does not need CDN access at runtime. The trained model files are delivered through application routes.
 
-Predictions and their model versions are recorded for the claim. Decision limits are configured in `config/decision.json`. Category-specific warranty terms are in `policies/warranties.json`. Unknown categories are sent for manual review rather than being treated as covered automatically. A prediction is not a final approval or rejection, and a missing prediction still leaves the claim in human review.
+Predictions and their model versions are recorded for the claim. Decision limits are configured in `config/decision.json`. Category-specific warranty terms are in separate files under `policies/`: `laptop.json`, `smartphone.json`, and `appliance.json`. Unknown categories are sent for manual review rather than being treated as covered automatically. A prediction is not a final approval or rejection, and a missing prediction still leaves the claim in human review.
 
-The saved models are used for inference; ordinary website use does not retrain them. New claim records do not automatically become training rows or modify the model files.
+The saved models are used for inference; ordinary website use does not retrain them. Current held-out test results are recorded in `documentation/MODEL_EVALUATION.md`: Python accuracy is 91.11% and Teachable Machine accuracy is 37.33% on the same 225 unseen claims. The image model runs but does not meet the SRS 85% accuracy target. The comparison report is `reports/python_model_evaluation_2026-09-28/model_comparison_2026-09-28.csv`. New claim records do not automatically become training rows or modify the model files.
+
+### Model input fields
+
+The website prepares the Python model input from saved product, warranty, claim, repair, policy, and verified document information. Users do not upload a CSV or enter model feature names. The ordered schema is stored in `models/model_metrics.json`, and `ml_service.py` checks that every request matches that exact order before inference. The current schema contains 35 fields:
+
+`product_category`, `brand`, `retailer`, `purchase_price`, `warranty_months`, `extended_warranty`, `extended_months`, `fault_category`, `fault_covered`, `damage_type`, `claim_amount`, `previous_repairs`, `last_repair_centre`, `unauthorised_repair`, `product_replaced_before`, `receipt_uploaded`, `warranty_card_uploaded`, `product_image_uploaded`, `serial_evidence_uploaded`, `fault_evidence_uploaded`, `repair_report_uploaded`, `missing_documents`, `serial_match`, `duplicate_claim_flag`, `contradiction_claim_before_purchase`, `contradiction_repair_before_purchase`, `contradiction_fault_after_claim`, `contradiction_model_mismatch`, `contradiction_count`, `product_age_days`, `remaining_warranty_days`, `warranty_status`, `reporting_delay_days`, `reported_within_window`, and `claim_to_price_ratio`.
+
+The claim-summary image is a separate model input. The card renderer uses claim facts and evidence indicators, and it must not include the Python prediction, any Python confidence score, or the final decision.
 
 ## Data storage and privacy
 
@@ -180,7 +188,9 @@ The main configuration files are:
 
 - `config/settings.json`: application name, database path, upload directory, warranty alert period, and OCR executable setting.
 - `config/decision.json`: confidence and comparison thresholds used by the evaluation workflow.
-- `policies/warranties.json`: sample warranty terms and category rules.
+- `policies/`: category-specific warranty rules, one JSON file per supported product category.
+
+Tesseract is a separate Windows program. The app checks `TESSERACT_CMD`, `config/settings.json`, PATH, and common Program Files install folders. If Tesseract is installed elsewhere, set `TESSERACT_CMD` to the full path of `tesseract.exe`.
 
 The application also recognizes these environment variables:
 
@@ -192,7 +202,7 @@ The application also recognizes these environment variables:
 | `ASSUREX_PORT` | Choose the local server port; the default is `5000`. |
 | `ASSUREX_DEBUG` | Set to `1` to enable Flask debug mode for local development only. |
 | `ASSUREX_HTTPS` | Set to `1` when the application is correctly served through HTTPS so secure-cookie behavior can be enabled. |
-| `TESSERACT_CMD` | Full path to the Tesseract executable if it is installed somewhere other than the configured path. |
+| `TESSERACT_CMD` | Full path to `tesseract.exe` when automatic discovery does not find the installation. |
 
 If you change a path, make sure the account running the application can access that directory. Keep secrets out of source control and screenshots.
 
@@ -210,7 +220,7 @@ From the repository root in CMD, run:
 .venv\Scripts\python.exe -m unittest discover -s tests -v
 ```
 
-The tests use temporary databases and upload locations so the test run does not need to use your normal application records. They cover account access boundaries, claim validation and workflow, document handling and OCR review, warranty policy snapshots, duplicate detection, reviewer actions, model evaluation limits, and history behavior. The test result notes are in [`documentation/TEST_RESULTS.md`](documentation/TEST_RESULTS.md), and the module review is in [`documentation/MODULE_REVIEW.md`](documentation/MODULE_REVIEW.md).
+The tests use temporary databases and upload locations so the test run does not need to use your normal application records. They cover account access boundaries, claim validation and workflow, text and scanned-PDF extraction, image OCR review, warranty policy files and snapshots, duplicate detection, reviewer actions, active Python inference, local image-model assets and prediction storage, evaluation limits, and history behavior. The test result notes are in [`documentation/TEST_RESULTS.md`](documentation/TEST_RESULTS.md), and the module review is in [`documentation/MODULE_REVIEW.md`](documentation/MODULE_REVIEW.md).
 
 A passing automated test suite checks the behaviors represented by those tests; it does not replace manually trying the site in a browser with realistic accounts and evidence files.
 
@@ -239,8 +249,10 @@ The dataset and generated card assets are organized under `data/` and `cards/`. 
 | `database/` | Default location for the SQLite database created at runtime. |
 | `uploads/` | Default location for evidence uploaded at runtime. |
 | `config/` | Application and decision settings. |
-| `policies/` | Warranty policy configuration. |
-| `models/` | Saved model exports and model metadata. |
+| `policies/` | One JSON policy file per product category. The shipped categories are Laptop, Smartphone, and Appliance. |
+| `models/` | Active Python classifier, preprocessing pipeline, ordered schema and metrics, and Teachable Machine export files. |
+| `model/` | Guide to the active model artifacts and their relationship to the `models/` directory. |
+| `static/vendor/` | Local Bootstrap, TensorFlow.js, and Teachable Machine runtime files plus license notices. |
 | `data/`, `cards/` | Dataset material and generated claim-card assets. |
 | `src/train.py` | Optional model training command-line program. |
 | `tests/` | Automated Python tests. |
@@ -283,11 +295,11 @@ Then open `http://127.0.0.1:5001`. Close that CMD window or run `set ASSUREX_POR
 
 ### The browser cannot load the image model
 
-Check that the browser has internet access and can reach jsDelivr. The image model requires the local model export files under `models/` as well as the browser libraries. If the browser model is unavailable, the rest of the site can still route the claim to human review.
+Confirm that `models/model.json`, `models/metadata.json`, and `models/weights.bin` exist and that the local scripts under `static/vendor/` are served successfully. The model runtime is bundled with the project, so an external CDN connection is not needed. If a model prediction still fails, the claim is routed to human review and the browser status message explains the failure.
 
 ### Text extraction did not find information
 
-Confirm Tesseract is installed and that `TESSERACT_CMD` points to its executable. Text-based PDFs and image OCR follow different paths; scanned PDF OCR is not automatically performed. Check and correct extracted fields manually.
+Confirm Tesseract is installed. The app checks `TESSERACT_CMD`, the application setting, PATH, and common Windows installation folders. Text-based PDFs are parsed directly; scanned PDFs are rendered locally and the first five pages are sent to Tesseract. Check and correct extracted fields manually.
 
 ### The warranty list is empty on a new claim
 

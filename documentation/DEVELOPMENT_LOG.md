@@ -1,32 +1,47 @@
-# Development log — 2026-09-26
+# Development Log
 
-## Scope
+## 2026-09-26 application work
 
-Frontend/backend continuation based on the supplied SRS. The dataset is not in this folder, so training was not run.
+The earlier development work added claim drafts, intake validation, linked warranty selection, evidence uploads, PDF and image handling, extraction and user verification, repair history, policy checks, duplicate detection, reviewer transitions, comments, dashboards, filters, CSV exports, HTML reports, access controls, CSRF checks, login throttling, audit events, and OCR setup.
 
-## Work
+The original log recorded 13 initial integration tests. The final test record later recorded 32 passing tests. See [`TEST_RESULTS.md`](TEST_RESULTS.md) for the recorded command and coverage. This work included AI assistance and must not be represented as student testing without independent team verification.
 
-- Added claim drafts, intake validation, linked warranty selection and human-review submission.
-- Added private evidence uploads, download/removal, content hashes, PDF/image checks and MP4 signature validation.
-- Added optional text extraction and verified fields, comparison with registered product data, and immutable submission snapshots.
-- Added repair history, category policy editing, rule explanations and duplicate checks.
-- Added review requests, comments, decisions, reopen/close transitions, customer notifications, dashboards, filters, CSV exports and downloadable HTML reports.
-- Restricted staff role assignment; added employee/customer assignments, CSRF checks, login throttling, stable session secret and finite-number/date validation.
-- Fixed the broken JavaScript URL and replaced placeholder role landing pages with a live dashboard.
-- Installed and configured local Tesseract 5.4.0 with English language data for image OCR.
-- Added direct and upload-route OCR checks using locally created receipt images.
+## 2026-09-28 documentation and model review
 
-## Problems and limitations encountered
+### Work completed
 
-- Original project had tables but no claim/document workflows.
-- Original public signup could create reviewers; original custom script URL returned 404.
-- Windows default text encoding required correction to UTF-8 after an edit.
-- Network sandbox initially blocked dependency installation; project virtual-environment installation then completed with escalation.
-- OCR accuracy may vary with real receipts, blur, rotation, handwriting and unusual layouts. Scanned PDFs still require image conversion before OCR.
-- Model helper files are ready, but training and image classification are waiting for the real project files. Claims without both results stay in manual review.
+- Reviewed the current project report and technical blog draft in the Documentation folder against the supplied SRS.
+- Replaced the previous blog outline with a Medium-ready technical article in Markdown and prepared a Word version with the same evidence and figures.
+- Prepared a corrected SRS project report in Markdown and Word format.
+- Rewrote the module review as an SRS traceability matrix, including functional requirements, non-functional targets, deliverables, and open work.
+- Updated the test record and this development log to distinguish the last recorded application test run from the new model evaluation.
+- Generated architecture, claim workflow, dataset split, validation comparison, test confusion matrix, and class metric figures in `documentation/figures/`.
+- Reran `src/train.py` on the repository train/validation/test split and saved a separate evaluation run under `reports/python_model_evaluation_2026-09-28/`.
 
-## Verification
+### Model result and issue found
 
-Initial 13 integration tests passed using isolated temporary stores. Test suite and manual/browser verification are expanded during implementation; see `tests/` and `TEST_RESULTS.md` for the final run.
+At the time of the earlier entry, the Python and Teachable Machine evaluations were pending. Both evaluations were completed on 2026-09-28; the final results and follow-up changes are recorded in the system verification section below. That later evaluation supersedes the provisional statements in this entry.
+## Student verification
 
-Student understanding, independent review/testing, team attribution and competition-day commit evidence have not been fabricated. Record those separately when actually performed.
+This log does not claim student understanding, review, testing, or contribution that is not supported by team records. Each team member should review their assigned code and independently document the tests and modifications they perform.
+
+## 2026-09-28 system verification and fixes
+
+### Work completed
+
+- Reran the original suite, then expanded it to 36 tests covering model routes, local runtime assets, scanned-PDF OCR, and separate category policies. The complete expanded suite passed.
+- Replaced the version-mismatched active Python classifier with a fresh validation-selected scikit-learn 1.8.0 pipeline. Updated its preprocessing artifact and model metadata together. The active Python model achieved 91.11% on the reserved 225-claim test set.
+- Bundled the project's pinned Bootstrap 5.3.3, TensorFlow.js 1.7.4, and Teachable Machine Image 0.8.5 browser scripts under `static/vendor/` with license notices. The UI and model inference no longer require those CDN scripts at runtime.
+- Implemented scanned-PDF OCR by rendering up to five pages with PyMuPDF and sending those pages to Tesseract. Added portable Tesseract discovery through configuration, PATH, and common Windows install directories.
+- Split the Laptop, Smartphone, and Appliance warranty definitions into three JSON policy files. The policy loader merges these files, and the admin policy editor can update category files.
+- Ran browser inference on all 225 held-out Claim Summary Cards. The Teachable Machine model achieved 37.33% accuracy and agreed with Python on 85/225 claims. Saved class metrics, confusion matrices, consistency categories, artifact hashes, and a per-claim report under `reports/python_model_evaluation_2026-09-28/`.
+- Updated README.md, model evaluation, the SRS module matrix, project report, technical blog, and test results.
+
+### Known failures and open SRS targets
+
+- The Teachable Machine inference integration works, but the exported model's 37.33% accuracy fails the 85% SRS threshold. The repository does not include the original Teachable Machine training project/settings. Retraining needs to be done using the train split, validation selection, and a final reserved test run.
+- The 10,000-claim scale, five-second representative latency, 99% business-hours availability, and mobile accessibility/usability targets have not been measured.
+- Dataset label and scenario provenance, demonstration video, and deployment evidence remain incomplete.
+- `AI_USAGE.md` is empty as requested, so the SRS AI tool disclosure requirement is not met until the team adds the required declaration.
+
+The local evaluation confirmed actual software behavior; it is not a student verification record. Team members should review and understand changes they explain or submit.
