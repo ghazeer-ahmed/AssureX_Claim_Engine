@@ -23,7 +23,10 @@ class WorkflowTests(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         folder = Path(self.temp.name)
         module.app.config.update(TESTING=True, DATABASE_FILE=str(folder/'test.db'), UPLOAD_FOLDER=str(folder/'uploads'), POLICY_FILE=str(folder/'policies.json'))
-        (folder/'policies.json').write_bytes(Path('policies/warranties.json').read_bytes())
+        policies = {}
+        for policy_file in Path('policies').glob('*.json'):
+            policies.update(json.loads(policy_file.read_text(encoding='utf-8')))
+        (folder/'policies.json').write_text(json.dumps(policies), encoding='utf-8')
         self.original_config = module.config_file
         module.config_file = str(folder/'settings.json')
         Path(module.config_file).write_text(json.dumps(module.config))
@@ -217,6 +220,76 @@ class WorkflowTests(unittest.TestCase):
         self.assertEqual(fields['serial_number'],'SERIAL-1')
         self.assertEqual(fields['invoice_number'],'INV-123')
         self.assertEqual(fields['purchase_date'],'2026-01-01')
+
+    def test_scanned_pdf_ocr(self):
+        import pymupdf
+        image = Image.new('RGB', (900, 380), 'white')
+        from PIL import ImageDraw, ImageFont
+        draw = ImageDraw.Draw(image)
+        font = ImageFont.truetype('arial.ttf', 34)
+        for index, line in enumerate(['Invoice: INV-SCAN-8', 'Serial: SERIAL-1', 'Date: 2026-01-01', 'Total: 1000']):
+            draw.text((50, 40 + index * 75), line, fill='black', font=font)
+        png = io.BytesIO(); image.save(png, format='PNG')
+        pdf = pymupdf.open(); page = pdf.new_page(width=720, height=310)
+        page.insert_image(page.rect, stream=png.getvalue())
+        path = Path(self.temp.name) / 'scanned-receipt.pdf'
+        pdf.save(path); pdf.close()
+        with module.app.app_context():
+            raw, fields, status = extract_document(path)
+        self.assertIn('INV-SCAN-8', raw)
+        self.assertEqual(fields['invoice_number'], 'INV-SCAN-8')
+        self.assertEqual(fields['serial_number'], 'SERIAL-1')
+        self.assertIn('Extracted', status)
+
+    def test_separate_category_policy_files(self):
+        from claim_services import read_policies, save_policy
+        folder = Path(self.temp.name) / 'policy_files'; folder.mkdir()
+        for name, category in [('laptop', 'Laptop'), ('smartphone', 'Smartphone'), ('appliance', 'Appliance')]:
+            (folder / f'{name}.json').write_text(json.dumps({category: {'coverage_months': 12}}))
+        previous = module.app.config['POLICY_FILE']
+        module.app.config['POLICY_FILE'] = str(folder)
+        self.addCleanup(module.app.config.__setitem__, 'POLICY_FILE', previous)
+        with module.app.app_context():
+            self.assertEqual(set(read_policies()), {'Laptop', 'Smartphone', 'Appliance'})
+            save_policy('Laptop', {'coverage_months': 24})
+            self.assertEqual(read_policies()['Laptop']['coverage_months'], 24)
+
+    def test_python_model_prediction_route(self):
+        claim_id = self.claim()
+        response = self.post(f'/claims/{claim_id}/predict/python')
+        self.assertEqual(response.status_code, 200, response.data.decode())
+        result = response.get_json()
+        self.assertIn(result['class'], ('Valid Claim', 'Invalid Claim', 'Manual Review'))
+        db = self.db()
+        prediction = db.execute('SELECT p.*,m.version FROM predictions p JOIN model_versions m ON m.id=p.model_version_id WHERE p.claim_id=?', (claim_id,)).fetchone()
+        db.close()
+        self.assertIsNotNone(prediction)
+        self.assertEqual(prediction['model_type'], 'Python')
+        self.assertEqual(len(prediction['version']), 64)
+        self.assertAlmostEqual(prediction['valid_conf'] + prediction['invalid_conf'] + prediction['manual_conf'], 1.0, places=5)
+
+    def test_teachable_machine_assets_and_prediction_route(self):
+        claim_id = self.claim()
+        for asset in ('vendor/tf.min.js', 'vendor/teachablemachine-image.min.js', 'vendor/bootstrap.min.css', 'vendor/bootstrap.bundle.min.js'):
+            response = self.client.get(f'/static/{asset}')
+            self.assertEqual(response.status_code, 200)
+            self.assertGreater(len(response.data), 1000)
+            response.close()
+        for asset in ('model.json', 'metadata.json', 'weights.bin'):
+            response = self.client.get(f'/model-assets/{asset}')
+            self.assertEqual(response.status_code, 200)
+            self.assertGreater(len(response.data), 100)
+            response.close()
+        scores = {'valid_claim': 0.1, 'invalid_claim': 0.8, 'manual_review': 0.1}
+        response = self.post(f'/claims/{claim_id}/predict/keras', {'scores': json.dumps(scores)})
+        self.assertEqual(response.status_code, 200, response.data.decode())
+        self.assertEqual(response.get_json()['class'], 'Invalid Claim')
+        db = self.db()
+        prediction = db.execute('SELECT p.*,m.version FROM predictions p JOIN model_versions m ON m.id=p.model_version_id WHERE p.claim_id=?', (claim_id,)).fetchone()
+        db.close()
+        self.assertIsNotNone(prediction)
+        self.assertEqual(prediction['model_type'], 'Keras')
+        self.assertEqual(len(prediction['version']), 64)
 
     def test_real_image_ocr(self):
         image = Image.new('RGB', (900, 380), 'white')

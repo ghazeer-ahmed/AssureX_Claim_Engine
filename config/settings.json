@@ -4,5 +4,5 @@
     "database_file": "database/assurex.db",
     "upload_folder": "uploads",
     "warranty_alert_days": 30,
-    "tesseract_cmd": "C:\\Program Files\\Tesseract-OCR\\tesseract.exe"
+    "tesseract_cmd": ""
 }

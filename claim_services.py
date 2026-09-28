@@ -93,13 +93,26 @@ def extract_document(path):
             from pypdf import PdfReader
             text = '\n'.join((page.extract_text() or '') for page in PdfReader(path).pages[:30])
             if not text.strip():
-                return '', {}, 'Scanned PDF: upload its receipt page as a JPG or PNG for OCR, or enter the fields manually.'
+                import pymupdf
+                import pytesseract
+                from PIL import Image
+                command = _find_tesseract()
+                if not command:
+                    raise FileNotFoundError('Tesseract is not installed.')
+                pytesseract.pytesseract.tesseract_cmd = command
+                rendered = []
+                with pymupdf.open(path) as pdf:
+                    for page in pdf[:5]:
+                        pixmap = page.get_pixmap(matrix=pymupdf.Matrix(2, 2), alpha=False)
+                        image = Image.frombytes('RGB', (pixmap.width, pixmap.height), pixmap.samples)
+                        rendered.append(pytesseract.image_to_string(image, timeout=20))
+                text = '\n'.join(rendered)
+                if not text.strip():
+                    return '', {}, 'No readable text found. Enter and verify the fields manually.'
         else:
             import pytesseract
             from PIL import Image
-            command = os.environ.get('TESSERACT_CMD') or current_app.config.get('TESSERACT_CMD')
-            if not command:
-                command = shutil.which('tesseract')
+            command = _find_tesseract()
             if command:
                 pytesseract.pytesseract.tesseract_cmd = command
             else:
@@ -108,8 +121,8 @@ def extract_document(path):
                 text = pytesseract.image_to_string(image, timeout=20)
     except (ImportError, FileNotFoundError):
         return '', {}, 'OCR is unavailable. Install the documented OCR dependencies or enter the fields manually.'
-    except Exception:
-        print('document extraction failed')
+    except Exception as error:
+        print(f'document extraction failed: {type(error).__name__}: {error}')
         return '', {}, 'Text extraction could not finish. Enter and verify the fields manually.'
     fields = {}
     patterns = {
@@ -127,6 +140,24 @@ def extract_document(path):
         if found:
             fields[key] = found.group(1).strip()[:200]
     return text[:50000], fields, 'Extracted. Review every field before saving.'
+
+
+def _find_tesseract():
+    """Resolve an explicitly configured binary, PATH entry, or common Windows install."""
+    configured = os.environ.get('TESSERACT_CMD') or current_app.config.get('TESSERACT_CMD')
+    if configured and (Path(configured).is_file() or shutil.which(configured)):
+        return configured
+    on_path = shutil.which('tesseract')
+    if on_path:
+        return on_path
+    if os.name == 'nt':
+        for variable in ('ProgramFiles', 'ProgramFiles(x86)'):
+            base = os.environ.get(variable)
+            if base:
+                candidate = Path(base) / 'Tesseract-OCR' / 'tesseract.exe'
+                if candidate.is_file():
+                    return str(candidate)
+    return None
 
 
 def evaluate_claim(db, claim):
