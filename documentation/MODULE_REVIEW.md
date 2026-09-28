@@ -76,7 +76,7 @@ The checked-in split metadata reports 1,500 records, balanced across the three c
 
 The active logistic regression pipeline was freshly trained with scikit-learn 1.8.0, selected by validation macro F1, and evaluated on the reserved test split at 91.11% accuracy. `models/model_metrics.json` and `models/python_claim_classifier.joblib` now identify the same artifact version. The Teachable Machine export ran on all 225 corresponding test cards and achieved 37.33% accuracy. The detailed per-claim comparisons are in `reports/python_model_evaluation_2026-09-28/model_comparison_2026-09-28.csv`. The SRS 85% target is met by Python but not by the image model.
 
-The test suite was rerun on 2026-09-28: 36 tests passed. Coverage now includes the active Python inference endpoint, local model asset delivery and image-score persistence endpoint, image OCR, text PDF extraction, scanned-PDF OCR, separate category policy files, and end-to-end claim/reviewer transitions. Browser inference was run against the complete isolated test-card set using the exact vendored JavaScript runtime.
+The test suite was rerun on 2026-09-28: 37 tests passed. Coverage now includes the active Python inference endpoint, local model asset delivery and image-score persistence endpoint, image OCR, text PDF extraction, scanned-PDF and mixed-PDF OCR, separate category policy files, and end-to-end claim/reviewer transitions. Browser inference was run against the complete isolated test-card set using the exact vendored JavaScript runtime.
 
 ## SRS deliverables
 
@@ -89,7 +89,7 @@ The test suite was rerun on 2026-09-28: 36 tests passed. Coverage now includes t
 | Teachable Machine evidence | Export and 225 holdout scores are present. Accuracy is 37.33%, below the SRS target; retraining is required. |
 | Model comparison report for 30+ unseen claims | Complete for 225 claims in `reports/python_model_evaluation_2026-09-28/`; model-quality target remains open. |
 | Warranty policies | Three separate JSON policy files are present under `policies/`. |
-| Automated test cases/results | 36 tests passed on 2026-09-28. Specialized Google TM training/test and load targets remain as noted. |
+| Automated test cases/results | 37 tests passed on 2026-09-28. Specialized Google TM training/test and load targets remain as noted. |
 | Installation and execution instructions | Present in root `README.md`. |
 | Public deployment and evaluator credentials | No verified public deployment or safe evaluator credential package in this checkout. |
 | Demonstration video | Not found in the reviewed Documentation folder. |

@@ -29,10 +29,10 @@ This log does not claim student understanding, review, testing, or contribution 
 
 ### Work completed
 
-- Reran the original suite, then expanded it to 36 tests covering model routes, local runtime assets, scanned-PDF OCR, and separate category policies. The complete expanded suite passed.
+- Reran the original suite, then expanded it to 37 tests covering model routes, local runtime assets, scanned-PDF OCR, mixed-PDF OCR, complete receipt-field OCR, and separate category policies. The complete expanded suite passed.
 - Replaced the version-mismatched active Python classifier with a fresh validation-selected scikit-learn 1.8.0 pipeline. Updated its preprocessing artifact and model metadata together. The active Python model achieved 91.11% on the reserved 225-claim test set.
 - Bundled the project's pinned Bootstrap 5.3.3, TensorFlow.js 1.7.4, and Teachable Machine Image 0.8.5 browser scripts under `static/vendor/` with license notices. The UI and model inference no longer require those CDN scripts at runtime.
-- Implemented scanned-PDF OCR by rendering up to five pages with PyMuPDF and sending those pages to Tesseract. Added portable Tesseract discovery through configuration, PATH, and common Windows install directories.
+- Implemented scanned-PDF OCR by rendering up to five textless pages with PyMuPDF and sending those pages to Tesseract. Mixed PDFs retain selectable text while scanned pages are also OCRed. Added portable Tesseract discovery through configuration, PATH, and common Windows install directories.
 - Split the Laptop, Smartphone, and Appliance warranty definitions into three JSON policy files. The policy loader merges these files, and the admin policy editor can update category files.
 - Ran browser inference on all 225 held-out Claim Summary Cards. The Teachable Machine model achieved 37.33% accuracy and agreed with Python on 85/225 claims. Saved class metrics, confusion matrices, consistency categories, artifact hashes, and a per-claim report under `reports/python_model_evaluation_2026-09-28/`.
 - Updated README.md, model evaluation, the SRS module matrix, project report, technical blog, and test results.

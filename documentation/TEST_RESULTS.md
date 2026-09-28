@@ -2,15 +2,15 @@
 
 **Test date:** 2026-09-28
 **Command:** `.venv\Scripts\python.exe -m unittest discover -s tests -v`
-**Result:** 36 tests passed.
+**Result:** 37 tests passed.
 
 ## Automated test coverage
 
-The suite passed decision-logic tests and application workflow tests using temporary databases and upload directories. The current 36 tests cover:
+The suite passed decision-logic tests and application workflow tests using temporary databases and upload directories. The current 37 tests cover:
 
 - Account registration, login, privileged-role protection, CSRF checks, login throttling, role access, and employee/customer assignment.
 - Product and warranty validation, date boundaries, warranty policy snapshots, alerts, claim creation and state transitions, reviewer actions, comments, overrides, and history.
-- PDF text extraction, real image OCR, the uploaded-image OCR route, and scanned-PDF OCR. The scanned-PDF test embeds a synthetic receipt image in a PDF, then checks OCR extraction of invoice number, serial number, and date.
+- PDF text extraction, real image OCR, the uploaded-image OCR route, and scanned-PDF OCR. The PDF tests cover text PDFs, scanned receipts, and mixed PDFs containing selectable text and scanned pages. A real Tesseract image test verifies all eight SRS receipt fields: purchase date, invoice number, product name, model number, serial number, retailer, purchase amount, and warranty duration.
 - Upload validation, file hashes, duplicate evidence, claim duplicate checks, contradictions, private evidence authorization, report access, filters, notifications, and CSV formula escaping.
 - Loading the active Python model through the application prediction route, storing three valid class probabilities and the model artifact hash.
 - Serving local TensorFlow.js, Teachable Machine, Bootstrap, and all three model export files; accepting and storing a three-class image prediction with its artifact hash.

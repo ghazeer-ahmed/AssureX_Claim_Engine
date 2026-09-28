@@ -69,7 +69,7 @@ For image inference, the app renders a Claim Summary Card from claim facts, then
 
 The dataset is balanced and split by claim ID, but its synthetic/scenario-generation provenance needs a fuller audit trail. Test scores do not establish real-world performance on manufacturer records, new policy types, or documents from different sources. OCR values require human verification. The 37.33% Teachable Machine accuracy is below the SRS target and must be corrected by retraining before claiming full SRS accuracy compliance.
 
-The automated suite passes 36 tests, including active Python inference, the browser model assets and prediction-record endpoint, image OCR, text-PDF extraction, scanned-PDF OCR, and the application claim/review workflow. Load testing for 10,000 claims, verified inference latency under representative hardware, 99% availability, and cross-device browser review have not been measured.
+The automated suite passes 37 tests, including active Python inference, the browser model assets and prediction-record endpoint, image OCR for all eight SRS receipt fields, text-PDF extraction, scanned-PDF and mixed-PDF OCR, and the application claim/review workflow. Load testing for 10,000 claims, verified inference latency under representative hardware, 99% availability, and cross-device browser review have not been measured.
 
 ## Reproducibility artifacts
 

@@ -187,7 +187,7 @@ A consistency label does not decide the claim by itself. Rule findings, missing 
 
 Three separate sample policy JSON files cover Laptop, Smartphone, and Appliance. The policies configure coverage months, reporting periods, covered faults, exclusions, mandatory evidence types, authorized repair conditions, grace days, and rules for warnings or manual review. Unknown categories are not automatically treated as covered.
 
-Evidence formats include PDF, JPG/JPEG, PNG, and MP4, subject to configured validation and size limits. Text-based PDF extraction uses `pypdf`. Image and scanned-PDF OCR use `pytesseract` and a locally installed Tesseract executable. Scanned PDFs are rendered with PyMuPDF, with OCR applied to the first five pages. Extracted fields are shown for user verification rather than being accepted silently. Broad receipt-layout accuracy is not established.
+Evidence formats include PDF, JPG/JPEG, PNG, and MP4, subject to configured validation and size limits. Text-based PDF extraction uses `pypdf`. Image and scanned-PDF OCR use `pytesseract` and a locally installed Tesseract executable. Text is extracted page by page; the first five pages without selectable text are rendered with PyMuPDF and passed to OCR, including pages in mixed text/scanned PDFs. Extracted fields are shown for user verification rather than being accepted silently. Broad receipt-layout accuracy is not established.
 
 The application checks possible duplicate claims using product or serial associations and detects exact duplicate files with a content hash. It checks selected contradictions, including dates and differences between verified document values and registered product data. The checks do not implement every duplicate signal listed in the SRS, such as invoice-number and fault-description similarity across all claimants. This is recorded as a partial requirement in the compliance matrix.
 
@@ -201,7 +201,7 @@ These safeguards do not establish compliance with a particular privacy law or pr
 
 ## 13. Test evidence
 
-`documentation/TEST_RESULTS.md` records 36 passing automated tests from 2026-09-28. The documented coverage includes accounts and roles, CSRF, claim and warranty dates, documents, PDF text extraction, Tesseract image OCR, verification, duplicate and contradiction checks, repairs, notifications, policy snapshots, filters, reviewer transitions, overrides, evaluation history, and confidence consistency logic.
+`documentation/TEST_RESULTS.md` records 37 passing automated tests from 2026-09-28. The documented coverage includes accounts and roles, CSRF, claim and warranty dates, documents, PDF text extraction, Tesseract image, scanned-PDF, and mixed-PDF OCR, verification, duplicate and contradiction checks, repairs, notifications, policy snapshots, filters, reviewer transitions, overrides, evaluation history, and confidence consistency logic.
 
 The expanded test suite passed during this review. Browser inference was separately completed on all 225 holdout cards. The local scripts for Bootstrap, TensorFlow.js, and Teachable Machine are vendored under `static/vendor/`, so the application UI and model do not depend on those CDNs at runtime. These results are not evidence of real-world OCR accuracy, 10,000-claim performance, 99% availability, or mobile browser usability. Those targets still require separate evidence.
 

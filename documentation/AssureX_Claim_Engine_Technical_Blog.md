@@ -130,7 +130,7 @@ The workflow checks dates and conditions, required evidence, serial information,
 
 A receipt or invoice can contain purchase dates, product names, retailer details, amounts, model numbers, and serial numbers. AssureX can extract text from text-based PDFs and use Tesseract OCR for supported image files when Tesseract is installed. The extracted values are presented for review so a user can correct them before they become verified claim information.
 
-OCR is not a guarantee of correct data. A photograph may be blurred, tilted, faded, or cropped. Handwriting and unusual receipt layouts can also reduce extraction quality. Scanned PDF pages are not automatically converted to images for OCR in the current workflow. When extraction misses a field, users need to enter it manually and compare it with the original document.
+OCR is not a guarantee of correct data. A photograph may be blurred, tilted, faded, or cropped. Handwriting and unusual receipt layouts can also reduce extraction quality. For a PDF, text is read from text-based pages and the first five textless pages are rendered locally for OCR. This also supports mixed files that contain both selectable text and scanned receipt pages. When extraction misses a field, users can enter it manually and compare it with the original document.
 
 The application checks uploaded file types and size limits and keeps evidence associated with the relevant product or claim. It also records file hashes to identify an identical file used again. A file hash can show that two files are byte-for-byte identical, but it cannot establish whether two different receipts describe the same purchase.
 

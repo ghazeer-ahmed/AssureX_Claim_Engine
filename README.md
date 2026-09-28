@@ -15,7 +15,7 @@ The models assist the workflow; they do not replace the human review. The Python
 - Windows 10 or 11, or another operating system capable of running Python and Flask. The commands below are for Windows Command Prompt (CMD).
 - Python 3.11 or newer. During installation on Windows, enable the option to add Python to PATH, or use the Python Launcher command `py`.
 - Internet access during installation to download Python packages. The TensorFlow.js and Teachable Machine browser libraries are included under `static/vendor/`, so model inference does not need a third-party CDN at runtime.
-- Tesseract OCR installed locally for OCR on receipt images and scanned PDF pages. Install the Windows Tesseract program separately from the Python packages, then open a new CMD window and run `tesseract --version` to confirm it is on PATH. Text-based PDFs are read with `pypdf`; scanned PDFs are rendered with PyMuPDF and OCR is applied to the first five pages. If Tesseract is installed outside a common Windows location, set `TESSERACT_CMD` as described under Configuration. Without Tesseract, evidence can still be uploaded and details entered or verified manually.
+- Tesseract OCR installed locally for OCR on receipt images and scanned PDF pages. Install the Windows Tesseract program separately from the Python packages, then open a new CMD window and run `tesseract --version` to confirm it is on PATH. Text-based PDFs are read with `pypdf`; textless PDF pages are rendered with PyMuPDF and OCR is applied to the first five textless pages, even when other pages contain selectable text. If Tesseract is installed outside a common Windows location, set `TESSERACT_CMD` as described under Configuration. Without Tesseract, evidence can still be uploaded and details entered or verified manually.
 
 ## Install and run the website from Windows CMD
 
@@ -125,7 +125,7 @@ On the claim page, attach available supporting files. Supported file types are P
 
 Choose the evidence type shown by the page (for example receipt, warranty card, product image, serial evidence, fault evidence, repair report, invoice, or other). The server also limits the complete upload request size; if a request containing multiple files is too large, upload fewer files at a time.
 
-The application can extract some text from evidence to suggest values for review. OCR is not proof that a value is correct. Check proposed information against the original document and verify it before using it. Image OCR and scanned-PDF OCR require Tesseract. Scanned PDFs are rendered locally, and the first five pages are sent to OCR. If extraction does not work, enter the information manually and keep the original evidence attached.
+To run extraction, upload evidence, click **Verify** next to that file, then click **Extract text** on the verification page. The page displays extracted text and suggested fields. The application can extract some text from evidence to suggest values for review. OCR is not proof that a value is correct. Check proposed information against the original document and verify it before using it. Image OCR and scanned-PDF OCR require Tesseract. Textless PDF pages are rendered locally, and up to five textless pages are sent to OCR, including mixed text/scanned documents. If extraction does not work, enter the information manually and keep the original evidence attached.
 
 ### 6. Check the claim and submit it
 
@@ -299,7 +299,7 @@ Confirm that `models/model.json`, `models/metadata.json`, and `models/weights.bi
 
 ### Text extraction did not find information
 
-Confirm Tesseract is installed. The app checks `TESSERACT_CMD`, the application setting, PATH, and common Windows installation folders. Text-based PDFs are parsed directly; scanned PDFs are rendered locally and the first five pages are sent to Tesseract. Check and correct extracted fields manually.
+Confirm Tesseract is installed. The app checks `TESSERACT_CMD`, the application setting, PATH, and common Windows installation folders. Text-based PDFs are parsed directly; textless PDF pages are rendered locally and up to five textless pages are sent to Tesseract, including mixed text/scanned documents. Check and correct extracted fields manually.
 
 ### The warranty list is empty on a new claim
 
