@@ -1,0 +1,1806 @@
+{
+  "source": "holdout_test",
+  "model_name": "Teachable Machine image classifier",
+  "rows": [
+    {
+      "claim_id": "CLM-000004",
+      "actual_class": "Manual Review",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9773117899894714,
+      "Invalid Claim": 0.0004060052742715925,
+      "Manual Review": 0.022282205522060394
+    },
+    {
+      "claim_id": "CLM-000006",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.8164312243461609,
+      "Invalid Claim": 0.006021594163030386,
+      "Manual Review": 0.1775471717119217
+    },
+    {
+      "claim_id": "CLM-000030",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.05121269077062607,
+      "Invalid Claim": 0.25403615832328796,
+      "Manual Review": 0.6947511434555054
+    },
+    {
+      "claim_id": "CLM-000037",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.003389944788068533,
+      "Invalid Claim": 0.43317684531211853,
+      "Manual Review": 0.5634331107139587
+    },
+    {
+      "claim_id": "CLM-000042",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.008181272074580193,
+      "Invalid Claim": 0.3547990918159485,
+      "Manual Review": 0.6370196342468262
+    },
+    {
+      "claim_id": "CLM-000043",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.2517049014568329,
+      "Invalid Claim": 0.10525468736886978,
+      "Manual Review": 0.6430404782295227
+    },
+    {
+      "claim_id": "CLM-000050",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.000533808080945164,
+      "Invalid Claim": 0.4623590409755707,
+      "Manual Review": 0.5371072292327881
+    },
+    {
+      "claim_id": "CLM-000052",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.02780373953282833,
+      "Invalid Claim": 0.20797035098075867,
+      "Manual Review": 0.7642259001731873
+    },
+    {
+      "claim_id": "CLM-000056",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.75541752576828,
+      "Invalid Claim": 0.014056227169930935,
+      "Manual Review": 0.2305261790752411
+    },
+    {
+      "claim_id": "CLM-000060",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.8265874981880188,
+      "Invalid Claim": 0.0239200908690691,
+      "Manual Review": 0.1494923084974289
+    },
+    {
+      "claim_id": "CLM-000061",
+      "actual_class": "Manual Review",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9910022616386414,
+      "Invalid Claim": 0.00020359196059871465,
+      "Manual Review": 0.008794213645160198
+    },
+    {
+      "claim_id": "CLM-000076",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.7916750311851501,
+      "Invalid Claim": 0.009209821000695229,
+      "Manual Review": 0.1991150975227356
+    },
+    {
+      "claim_id": "CLM-000089",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.312592089176178,
+      "Invalid Claim": 0.12914377450942993,
+      "Manual Review": 0.5582641363143921
+    },
+    {
+      "claim_id": "CLM-000112",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.06861121952533722,
+      "Invalid Claim": 0.28505387902259827,
+      "Manual Review": 0.6463348865509033
+    },
+    {
+      "claim_id": "CLM-000119",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.20960819721221924,
+      "Invalid Claim": 0.09458623081445694,
+      "Manual Review": 0.695805549621582
+    },
+    {
+      "claim_id": "CLM-000126",
+      "actual_class": "Manual Review",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9943522214889526,
+      "Invalid Claim": 9.191221761284396e-05,
+      "Manual Review": 0.005555927287787199
+    },
+    {
+      "claim_id": "CLM-000133",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.5677884221076965,
+      "Invalid Claim": 0.071356400847435,
+      "Manual Review": 0.3608552813529968
+    },
+    {
+      "claim_id": "CLM-000134",
+      "actual_class": "Manual Review",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9543116092681885,
+      "Invalid Claim": 0.0007864736253395677,
+      "Manual Review": 0.04490191116929054
+    },
+    {
+      "claim_id": "CLM-000141",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.02332523837685585,
+      "Invalid Claim": 0.22275544703006744,
+      "Manual Review": 0.753919243812561
+    },
+    {
+      "claim_id": "CLM-000142",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.6239300966262817,
+      "Invalid Claim": 0.03240502253174782,
+      "Manual Review": 0.3436647951602936
+    },
+    {
+      "claim_id": "CLM-000150",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.0015384249854832888,
+      "Invalid Claim": 0.362783819437027,
+      "Manual Review": 0.6356777548789978
+    },
+    {
+      "claim_id": "CLM-000155",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9939991235733032,
+      "Invalid Claim": 7.983596879057586e-05,
+      "Manual Review": 0.0059210676699876785
+    },
+    {
+      "claim_id": "CLM-000161",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9923930764198303,
+      "Invalid Claim": 0.00010928702249657363,
+      "Manual Review": 0.007497669663280249
+    },
+    {
+      "claim_id": "CLM-000163",
+      "actual_class": "Manual Review",
+      "predicted_class": "Invalid Claim",
+      "Valid Claim": 6.330332689685747e-05,
+      "Invalid Claim": 0.8007755875587463,
+      "Manual Review": 0.19916114211082458
+    },
+    {
+      "claim_id": "CLM-000167",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.0011589891510084271,
+      "Invalid Claim": 0.42415010929107666,
+      "Manual Review": 0.5746909379959106
+    },
+    {
+      "claim_id": "CLM-000174",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.06662221252918243,
+      "Invalid Claim": 0.19747816026210785,
+      "Manual Review": 0.7358996272087097
+    },
+    {
+      "claim_id": "CLM-000179",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.6013115048408508,
+      "Invalid Claim": 0.029697135090827942,
+      "Manual Review": 0.3689914643764496
+    },
+    {
+      "claim_id": "CLM-000183",
+      "actual_class": "Manual Review",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9198417067527771,
+      "Invalid Claim": 0.003532495116814971,
+      "Manual Review": 0.07662579417228699
+    },
+    {
+      "claim_id": "CLM-000204",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.0023523319978266954,
+      "Invalid Claim": 0.3998516798019409,
+      "Manual Review": 0.5977959632873535
+    },
+    {
+      "claim_id": "CLM-000212",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.05939663574099541,
+      "Invalid Claim": 0.4648556113243103,
+      "Manual Review": 0.4757477045059204
+    },
+    {
+      "claim_id": "CLM-000228",
+      "actual_class": "Manual Review",
+      "predicted_class": "Invalid Claim",
+      "Valid Claim": 0.0011992891086265445,
+      "Invalid Claim": 0.5816335678100586,
+      "Manual Review": 0.41716712713241577
+    },
+    {
+      "claim_id": "CLM-000233",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.011581121943891048,
+      "Invalid Claim": 0.18201188743114471,
+      "Manual Review": 0.8064069747924805
+    },
+    {
+      "claim_id": "CLM-000248",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9794334769248962,
+      "Invalid Claim": 0.0004820158355869353,
+      "Manual Review": 0.02008456364274025
+    },
+    {
+      "claim_id": "CLM-000249",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9957985281944275,
+      "Invalid Claim": 4.297940176911652e-05,
+      "Manual Review": 0.004158441908657551
+    },
+    {
+      "claim_id": "CLM-000266",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.033223580569028854,
+      "Invalid Claim": 0.21206389367580414,
+      "Manual Review": 0.7547124624252319
+    },
+    {
+      "claim_id": "CLM-000267",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.03066781535744667,
+      "Invalid Claim": 0.18579402565956116,
+      "Manual Review": 0.7835381627082825
+    },
+    {
+      "claim_id": "CLM-000269",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.08293372392654419,
+      "Invalid Claim": 0.19511492550373077,
+      "Manual Review": 0.7219513058662415
+    },
+    {
+      "claim_id": "CLM-000277",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.07039211690425873,
+      "Invalid Claim": 0.12188190221786499,
+      "Manual Review": 0.8077260255813599
+    },
+    {
+      "claim_id": "CLM-000283",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.0022719604894518852,
+      "Invalid Claim": 0.3935086727142334,
+      "Manual Review": 0.6042193174362183
+    },
+    {
+      "claim_id": "CLM-000290",
+      "actual_class": "Manual Review",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.8974493145942688,
+      "Invalid Claim": 0.004928715992718935,
+      "Manual Review": 0.09762190282344818
+    },
+    {
+      "claim_id": "CLM-000294",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Invalid Claim",
+      "Valid Claim": 0.0008377080084756017,
+      "Invalid Claim": 0.5598582625389099,
+      "Manual Review": 0.43930402398109436
+    },
+    {
+      "claim_id": "CLM-000299",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.0754164606332779,
+      "Invalid Claim": 0.14756718277931213,
+      "Manual Review": 0.7770163416862488
+    },
+    {
+      "claim_id": "CLM-000309",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.00040907386573962867,
+      "Invalid Claim": 0.4089064598083496,
+      "Manual Review": 0.5906844139099121
+    },
+    {
+      "claim_id": "CLM-000312",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.3718876838684082,
+      "Invalid Claim": 0.14600732922554016,
+      "Manual Review": 0.48210495710372925
+    },
+    {
+      "claim_id": "CLM-000313",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.2151467651128769,
+      "Invalid Claim": 0.2513235807418823,
+      "Manual Review": 0.5335296392440796
+    },
+    {
+      "claim_id": "CLM-000314",
+      "actual_class": "Manual Review",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.7991334795951843,
+      "Invalid Claim": 0.009589002467691898,
+      "Manual Review": 0.19127756357192993
+    },
+    {
+      "claim_id": "CLM-000316",
+      "actual_class": "Manual Review",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.8992621898651123,
+      "Invalid Claim": 0.006477247923612595,
+      "Manual Review": 0.09426052868366241
+    },
+    {
+      "claim_id": "CLM-000324",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.13788843154907227,
+      "Invalid Claim": 0.24735631048679352,
+      "Manual Review": 0.6147552728652954
+    },
+    {
+      "claim_id": "CLM-000328",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.1733643114566803,
+      "Invalid Claim": 0.14527027308940887,
+      "Manual Review": 0.6813653707504272
+    },
+    {
+      "claim_id": "CLM-000343",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.39926877617836,
+      "Invalid Claim": 0.09969259053468704,
+      "Manual Review": 0.5010386109352112
+    },
+    {
+      "claim_id": "CLM-000368",
+      "actual_class": "Manual Review",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.4959487020969391,
+      "Invalid Claim": 0.030812930315732956,
+      "Manual Review": 0.47323840856552124
+    },
+    {
+      "claim_id": "CLM-000382",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.993561863899231,
+      "Invalid Claim": 9.878977289190516e-05,
+      "Manual Review": 0.006339394487440586
+    },
+    {
+      "claim_id": "CLM-000385",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.07930786907672882,
+      "Invalid Claim": 0.15763787925243378,
+      "Manual Review": 0.7630542516708374
+    },
+    {
+      "claim_id": "CLM-000390",
+      "actual_class": "Manual Review",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9969574213027954,
+      "Invalid Claim": 3.312939588795416e-05,
+      "Manual Review": 0.003009374486282468
+    },
+    {
+      "claim_id": "CLM-000400",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.19700443744659424,
+      "Invalid Claim": 0.17316924035549164,
+      "Manual Review": 0.6298263072967529
+    },
+    {
+      "claim_id": "CLM-000403",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.3282586634159088,
+      "Invalid Claim": 0.0953965112566948,
+      "Manual Review": 0.5763447880744934
+    },
+    {
+      "claim_id": "CLM-000420",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.1024179607629776,
+      "Invalid Claim": 0.15066911280155182,
+      "Manual Review": 0.7469128966331482
+    },
+    {
+      "claim_id": "CLM-000426",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.7897467017173767,
+      "Invalid Claim": 0.012721885927021503,
+      "Manual Review": 0.19753135740756989
+    },
+    {
+      "claim_id": "CLM-000427",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Invalid Claim",
+      "Valid Claim": 0.0012111611431464553,
+      "Invalid Claim": 0.5193378329277039,
+      "Manual Review": 0.47945109009742737
+    },
+    {
+      "claim_id": "CLM-000437",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.5925379991531372,
+      "Invalid Claim": 0.03649478778243065,
+      "Manual Review": 0.37096714973449707
+    },
+    {
+      "claim_id": "CLM-000444",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.10855401307344437,
+      "Invalid Claim": 0.18183563649654388,
+      "Manual Review": 0.7096104025840759
+    },
+    {
+      "claim_id": "CLM-000446",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9837619662284851,
+      "Invalid Claim": 0.00043317166273482144,
+      "Manual Review": 0.015804877504706383
+    },
+    {
+      "claim_id": "CLM-000454",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.38823893666267395,
+      "Invalid Claim": 0.07286461442708969,
+      "Manual Review": 0.5388964414596558
+    },
+    {
+      "claim_id": "CLM-000456",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.053319841623306274,
+      "Invalid Claim": 0.2084473818540573,
+      "Manual Review": 0.7382327318191528
+    },
+    {
+      "claim_id": "CLM-000457",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.004156610928475857,
+      "Invalid Claim": 0.3870018720626831,
+      "Manual Review": 0.6088415384292603
+    },
+    {
+      "claim_id": "CLM-000460",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.008605354465544224,
+      "Invalid Claim": 0.3673279881477356,
+      "Manual Review": 0.6240666508674622
+    },
+    {
+      "claim_id": "CLM-000466",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9742485284805298,
+      "Invalid Claim": 0.0009216765756718814,
+      "Manual Review": 0.02482977882027626
+    },
+    {
+      "claim_id": "CLM-000468",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.6082460284233093,
+      "Invalid Claim": 0.06040488928556442,
+      "Manual Review": 0.33134907484054565
+    },
+    {
+      "claim_id": "CLM-000474",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.29450079798698425,
+      "Invalid Claim": 0.08430105447769165,
+      "Manual Review": 0.6211981773376465
+    },
+    {
+      "claim_id": "CLM-000482",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.13316942751407623,
+      "Invalid Claim": 0.2000761330127716,
+      "Manual Review": 0.666754424571991
+    },
+    {
+      "claim_id": "CLM-000490",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.3892952799797058,
+      "Invalid Claim": 0.08743378520011902,
+      "Manual Review": 0.5232709050178528
+    },
+    {
+      "claim_id": "CLM-000491",
+      "actual_class": "Manual Review",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.5124491453170776,
+      "Invalid Claim": 0.04776358976960182,
+      "Manual Review": 0.4397871792316437
+    },
+    {
+      "claim_id": "CLM-000496",
+      "actual_class": "Manual Review",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9189178347587585,
+      "Invalid Claim": 0.0058080414310097694,
+      "Manual Review": 0.07527410984039307
+    },
+    {
+      "claim_id": "CLM-000501",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.34114524722099304,
+      "Invalid Claim": 0.10232850909233093,
+      "Manual Review": 0.556526243686676
+    },
+    {
+      "claim_id": "CLM-000502",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.24218468368053436,
+      "Invalid Claim": 0.14362287521362305,
+      "Manual Review": 0.6141924262046814
+    },
+    {
+      "claim_id": "CLM-000503",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.0025237551890313625,
+      "Invalid Claim": 0.3190283179283142,
+      "Manual Review": 0.678447961807251
+    },
+    {
+      "claim_id": "CLM-000508",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.012678776867687702,
+      "Invalid Claim": 0.45913437008857727,
+      "Manual Review": 0.5281868577003479
+    },
+    {
+      "claim_id": "CLM-000521",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9328055381774902,
+      "Invalid Claim": 0.002106491941958666,
+      "Manual Review": 0.06508801877498627
+    },
+    {
+      "claim_id": "CLM-000527",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Invalid Claim",
+      "Valid Claim": 0.000264399335719645,
+      "Invalid Claim": 0.634811520576477,
+      "Manual Review": 0.3649241030216217
+    },
+    {
+      "claim_id": "CLM-000528",
+      "actual_class": "Manual Review",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.49887898564338684,
+      "Invalid Claim": 0.04070383682847023,
+      "Manual Review": 0.46041715145111084
+    },
+    {
+      "claim_id": "CLM-000531",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.7150466442108154,
+      "Invalid Claim": 0.015534836798906326,
+      "Manual Review": 0.26941853761672974
+    },
+    {
+      "claim_id": "CLM-000533",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.3765939772129059,
+      "Invalid Claim": 0.04198038950562477,
+      "Manual Review": 0.581425666809082
+    },
+    {
+      "claim_id": "CLM-000539",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.05898243561387062,
+      "Invalid Claim": 0.2781522274017334,
+      "Manual Review": 0.6628652811050415
+    },
+    {
+      "claim_id": "CLM-000554",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Invalid Claim",
+      "Valid Claim": 0.0058863661251962185,
+      "Invalid Claim": 0.5360586047172546,
+      "Manual Review": 0.4580550491809845
+    },
+    {
+      "claim_id": "CLM-000556",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.15849654376506805,
+      "Invalid Claim": 0.25145286321640015,
+      "Manual Review": 0.5900506377220154
+    },
+    {
+      "claim_id": "CLM-000569",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.011169256642460823,
+      "Invalid Claim": 0.48254522681236267,
+      "Manual Review": 0.5062854886054993
+    },
+    {
+      "claim_id": "CLM-000573",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.011082607321441174,
+      "Invalid Claim": 0.18840594589710236,
+      "Manual Review": 0.8005114793777466
+    },
+    {
+      "claim_id": "CLM-000578",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.015541528351604939,
+      "Invalid Claim": 0.19425846636295319,
+      "Manual Review": 0.7901999354362488
+    },
+    {
+      "claim_id": "CLM-000589",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.28554993867874146,
+      "Invalid Claim": 0.11182393878698349,
+      "Manual Review": 0.6026261448860168
+    },
+    {
+      "claim_id": "CLM-000611",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.04401887208223343,
+      "Invalid Claim": 0.14259760081768036,
+      "Manual Review": 0.8133835196495056
+    },
+    {
+      "claim_id": "CLM-000614",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.10342511534690857,
+      "Invalid Claim": 0.11608919501304626,
+      "Manual Review": 0.7804856896400452
+    },
+    {
+      "claim_id": "CLM-000620",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9877347350120544,
+      "Invalid Claim": 0.0002068119792966172,
+      "Manual Review": 0.012058471329510212
+    },
+    {
+      "claim_id": "CLM-000632",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Invalid Claim",
+      "Valid Claim": 0.00042576398118399084,
+      "Invalid Claim": 0.5624973177909851,
+      "Manual Review": 0.4370769262313843
+    },
+    {
+      "claim_id": "CLM-000637",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.003998957108706236,
+      "Invalid Claim": 0.335296630859375,
+      "Manual Review": 0.6607044339179993
+    },
+    {
+      "claim_id": "CLM-000639",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.46303457021713257,
+      "Invalid Claim": 0.06597254425287247,
+      "Manual Review": 0.4709928035736084
+    },
+    {
+      "claim_id": "CLM-000644",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Invalid Claim",
+      "Valid Claim": 0.003423491260036826,
+      "Invalid Claim": 0.5556104779243469,
+      "Manual Review": 0.44096606969833374
+    },
+    {
+      "claim_id": "CLM-000646",
+      "actual_class": "Manual Review",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9623879790306091,
+      "Invalid Claim": 0.0004028965486213565,
+      "Manual Review": 0.037209078669548035
+    },
+    {
+      "claim_id": "CLM-000655",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.053407974541187286,
+      "Invalid Claim": 0.23364140093326569,
+      "Manual Review": 0.712950587272644
+    },
+    {
+      "claim_id": "CLM-000660",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.09125716239213943,
+      "Invalid Claim": 0.23745250701904297,
+      "Manual Review": 0.6712903380393982
+    },
+    {
+      "claim_id": "CLM-000661",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.11360499262809753,
+      "Invalid Claim": 0.09593220800161362,
+      "Manual Review": 0.7904627919197083
+    },
+    {
+      "claim_id": "CLM-000675",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.02054307609796524,
+      "Invalid Claim": 0.36759236454963684,
+      "Manual Review": 0.6118645668029785
+    },
+    {
+      "claim_id": "CLM-000682",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.34983202815055847,
+      "Invalid Claim": 0.10845071822404861,
+      "Manual Review": 0.5417172908782959
+    },
+    {
+      "claim_id": "CLM-000684",
+      "actual_class": "Manual Review",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9669051766395569,
+      "Invalid Claim": 0.0010826678480952978,
+      "Manual Review": 0.032012175768613815
+    },
+    {
+      "claim_id": "CLM-000685",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.07455553114414215,
+      "Invalid Claim": 0.3327600061893463,
+      "Manual Review": 0.5926844477653503
+    },
+    {
+      "claim_id": "CLM-000694",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Invalid Claim",
+      "Valid Claim": 0.0002884463465306908,
+      "Invalid Claim": 0.640710175037384,
+      "Manual Review": 0.35900136828422546
+    },
+    {
+      "claim_id": "CLM-000705",
+      "actual_class": "Manual Review",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9632100462913513,
+      "Invalid Claim": 0.002242186339572072,
+      "Manual Review": 0.03454776853322983
+    },
+    {
+      "claim_id": "CLM-000735",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.43090230226516724,
+      "Invalid Claim": 0.0688425675034523,
+      "Manual Review": 0.5002551078796387
+    },
+    {
+      "claim_id": "CLM-000736",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.0002011192264035344,
+      "Invalid Claim": 0.4781091511249542,
+      "Manual Review": 0.5216897130012512
+    },
+    {
+      "claim_id": "CLM-000763",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9068253040313721,
+      "Invalid Claim": 0.004330168943852186,
+      "Manual Review": 0.08884459733963013
+    },
+    {
+      "claim_id": "CLM-000764",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.0021362516563385725,
+      "Invalid Claim": 0.4882071018218994,
+      "Manual Review": 0.5096566081047058
+    },
+    {
+      "claim_id": "CLM-000768",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.1414697766304016,
+      "Invalid Claim": 0.11758314818143845,
+      "Manual Review": 0.7409470677375793
+    },
+    {
+      "claim_id": "CLM-000774",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9904547929763794,
+      "Invalid Claim": 0.00014598530833609402,
+      "Manual Review": 0.009399292059242725
+    },
+    {
+      "claim_id": "CLM-000778",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9873037934303284,
+      "Invalid Claim": 0.00024307980493176728,
+      "Manual Review": 0.012453122064471245
+    },
+    {
+      "claim_id": "CLM-000786",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.011623521335422993,
+      "Invalid Claim": 0.3560681641101837,
+      "Manual Review": 0.632308304309845
+    },
+    {
+      "claim_id": "CLM-000789",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.018497293815016747,
+      "Invalid Claim": 0.1645537167787552,
+      "Manual Review": 0.8169490098953247
+    },
+    {
+      "claim_id": "CLM-000814",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9961811304092407,
+      "Invalid Claim": 3.347106394357979e-05,
+      "Manual Review": 0.0037854467518627644
+    },
+    {
+      "claim_id": "CLM-000815",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.03137064725160599,
+      "Invalid Claim": 0.32648611068725586,
+      "Manual Review": 0.6421433091163635
+    },
+    {
+      "claim_id": "CLM-000822",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.22827427089214325,
+      "Invalid Claim": 0.24495989084243774,
+      "Manual Review": 0.5267658233642578
+    },
+    {
+      "claim_id": "CLM-000825",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.8632269501686096,
+      "Invalid Claim": 0.0037029904779046774,
+      "Manual Review": 0.13307003676891327
+    },
+    {
+      "claim_id": "CLM-000828",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9649356007575989,
+      "Invalid Claim": 0.001307547208853066,
+      "Manual Review": 0.033756814897060394
+    },
+    {
+      "claim_id": "CLM-000835",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.8257387280464172,
+      "Invalid Claim": 0.008895451202988625,
+      "Manual Review": 0.1653658151626587
+    },
+    {
+      "claim_id": "CLM-000840",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.00044276437256485224,
+      "Invalid Claim": 0.44664451479911804,
+      "Manual Review": 0.552912712097168
+    },
+    {
+      "claim_id": "CLM-000853",
+      "actual_class": "Manual Review",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.8958165645599365,
+      "Invalid Claim": 0.0034187007695436478,
+      "Manual Review": 0.10076481103897095
+    },
+    {
+      "claim_id": "CLM-000854",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.00765021750703454,
+      "Invalid Claim": 0.36122608184814453,
+      "Manual Review": 0.6311236619949341
+    },
+    {
+      "claim_id": "CLM-000857",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.26569557189941406,
+      "Invalid Claim": 0.15586654841899872,
+      "Manual Review": 0.578437864780426
+    },
+    {
+      "claim_id": "CLM-000867",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.09253481030464172,
+      "Invalid Claim": 0.2019832730293274,
+      "Manual Review": 0.7054819464683533
+    },
+    {
+      "claim_id": "CLM-000872",
+      "actual_class": "Manual Review",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.6949804425239563,
+      "Invalid Claim": 0.028077257797122,
+      "Manual Review": 0.27694228291511536
+    },
+    {
+      "claim_id": "CLM-000875",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.989206075668335,
+      "Invalid Claim": 0.00018936279229819775,
+      "Manual Review": 0.01060452964156866
+    },
+    {
+      "claim_id": "CLM-000877",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.007617347873747349,
+      "Invalid Claim": 0.2777005136013031,
+      "Manual Review": 0.7146822214126587
+    },
+    {
+      "claim_id": "CLM-000896",
+      "actual_class": "Manual Review",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.7714705467224121,
+      "Invalid Claim": 0.008549807593226433,
+      "Manual Review": 0.21997962892055511
+    },
+    {
+      "claim_id": "CLM-000897",
+      "actual_class": "Manual Review",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.8488898277282715,
+      "Invalid Claim": 0.005802160128951073,
+      "Manual Review": 0.1453080028295517
+    },
+    {
+      "claim_id": "CLM-000902",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.8431971669197083,
+      "Invalid Claim": 0.006022389512509108,
+      "Manual Review": 0.15078045427799225
+    },
+    {
+      "claim_id": "CLM-000907",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.6229649186134338,
+      "Invalid Claim": 0.08167754113674164,
+      "Manual Review": 0.2953575551509857
+    },
+    {
+      "claim_id": "CLM-000910",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.22150777280330658,
+      "Invalid Claim": 0.03977282717823982,
+      "Manual Review": 0.7387194037437439
+    },
+    {
+      "claim_id": "CLM-000911",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.004850039258599281,
+      "Invalid Claim": 0.33634617924690247,
+      "Manual Review": 0.6588038206100464
+    },
+    {
+      "claim_id": "CLM-000915",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.024753879755735397,
+      "Invalid Claim": 0.2250453680753708,
+      "Manual Review": 0.7502008080482483
+    },
+    {
+      "claim_id": "CLM-000917",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.041851289570331573,
+      "Invalid Claim": 0.29418569803237915,
+      "Manual Review": 0.6639630198478699
+    },
+    {
+      "claim_id": "CLM-000919",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.018965212628245354,
+      "Invalid Claim": 0.2284860759973526,
+      "Manual Review": 0.7525487542152405
+    },
+    {
+      "claim_id": "CLM-000923",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.06592191755771637,
+      "Invalid Claim": 0.09540961682796478,
+      "Manual Review": 0.8386684656143188
+    },
+    {
+      "claim_id": "CLM-000925",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.1613982766866684,
+      "Invalid Claim": 0.177727609872818,
+      "Manual Review": 0.6608741283416748
+    },
+    {
+      "claim_id": "CLM-000934",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Invalid Claim",
+      "Valid Claim": 0.006533034145832062,
+      "Invalid Claim": 0.5008417963981628,
+      "Manual Review": 0.4926252067089081
+    },
+    {
+      "claim_id": "CLM-000940",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.5863760113716125,
+      "Invalid Claim": 0.022427015006542206,
+      "Manual Review": 0.39119696617126465
+    },
+    {
+      "claim_id": "CLM-000942",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.18592341244220734,
+      "Invalid Claim": 0.0661659687757492,
+      "Manual Review": 0.7479106187820435
+    },
+    {
+      "claim_id": "CLM-000943",
+      "actual_class": "Manual Review",
+      "predicted_class": "Invalid Claim",
+      "Valid Claim": 9.446516924072057e-05,
+      "Invalid Claim": 0.7609999775886536,
+      "Manual Review": 0.23890557885169983
+    },
+    {
+      "claim_id": "CLM-000948",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Invalid Claim",
+      "Valid Claim": 0.007927090860903263,
+      "Invalid Claim": 0.5177143812179565,
+      "Manual Review": 0.4743584394454956
+    },
+    {
+      "claim_id": "CLM-000951",
+      "actual_class": "Manual Review",
+      "predicted_class": "Invalid Claim",
+      "Valid Claim": 0.00603401567786932,
+      "Invalid Claim": 0.4989708364009857,
+      "Manual Review": 0.4949950575828552
+    },
+    {
+      "claim_id": "CLM-000956",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.887479305267334,
+      "Invalid Claim": 0.0077491383999586105,
+      "Manual Review": 0.10477153211832047
+    },
+    {
+      "claim_id": "CLM-000968",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.28686001896858215,
+      "Invalid Claim": 0.11368538439273834,
+      "Manual Review": 0.5994545817375183
+    },
+    {
+      "claim_id": "CLM-000982",
+      "actual_class": "Manual Review",
+      "predicted_class": "Invalid Claim",
+      "Valid Claim": 1.5227527001115959e-05,
+      "Invalid Claim": 0.7424655556678772,
+      "Manual Review": 0.2575192451477051
+    },
+    {
+      "claim_id": "CLM-000992",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.548617422580719,
+      "Invalid Claim": 0.0215442031621933,
+      "Manual Review": 0.4298383295536041
+    },
+    {
+      "claim_id": "CLM-001001",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.055114466696977615,
+      "Invalid Claim": 0.3280284106731415,
+      "Manual Review": 0.6168570518493652
+    },
+    {
+      "claim_id": "CLM-001002",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9855918288230896,
+      "Invalid Claim": 0.0003035252739209682,
+      "Manual Review": 0.014104602858424187
+    },
+    {
+      "claim_id": "CLM-001005",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.2902660071849823,
+      "Invalid Claim": 0.1287495642900467,
+      "Manual Review": 0.580984354019165
+    },
+    {
+      "claim_id": "CLM-001009",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.01796884834766388,
+      "Invalid Claim": 0.19889281690120697,
+      "Manual Review": 0.7831383347511292
+    },
+    {
+      "claim_id": "CLM-001014",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.052194952964782715,
+      "Invalid Claim": 0.21535898745059967,
+      "Manual Review": 0.732446014881134
+    },
+    {
+      "claim_id": "CLM-001017",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9494873881340027,
+      "Invalid Claim": 0.002953627612441778,
+      "Manual Review": 0.047558993101119995
+    },
+    {
+      "claim_id": "CLM-001024",
+      "actual_class": "Manual Review",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.8141587972640991,
+      "Invalid Claim": 0.010654154233634472,
+      "Manual Review": 0.17518699169158936
+    },
+    {
+      "claim_id": "CLM-001028",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.05781146511435509,
+      "Invalid Claim": 0.2778266668319702,
+      "Manual Review": 0.6643618941307068
+    },
+    {
+      "claim_id": "CLM-001037",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Invalid Claim",
+      "Valid Claim": 0.0004811608523596078,
+      "Invalid Claim": 0.603701114654541,
+      "Manual Review": 0.39581772685050964
+    },
+    {
+      "claim_id": "CLM-001040",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9319530129432678,
+      "Invalid Claim": 0.0023913613986223936,
+      "Manual Review": 0.06565560400485992
+    },
+    {
+      "claim_id": "CLM-001042",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.01009637676179409,
+      "Invalid Claim": 0.44445592164993286,
+      "Manual Review": 0.5454477071762085
+    },
+    {
+      "claim_id": "CLM-001059",
+      "actual_class": "Manual Review",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9913974404335022,
+      "Invalid Claim": 0.0001127595387515612,
+      "Manual Review": 0.008489864878356457
+    },
+    {
+      "claim_id": "CLM-001065",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.13047340512275696,
+      "Invalid Claim": 0.11999444663524628,
+      "Manual Review": 0.749532163143158
+    },
+    {
+      "claim_id": "CLM-001066",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.08173728734254837,
+      "Invalid Claim": 0.19758696854114532,
+      "Manual Review": 0.7206757664680481
+    },
+    {
+      "claim_id": "CLM-001072",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.8450484275817871,
+      "Invalid Claim": 0.003911880776286125,
+      "Manual Review": 0.1510397344827652
+    },
+    {
+      "claim_id": "CLM-001074",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.010332174599170685,
+      "Invalid Claim": 0.40761157870292664,
+      "Manual Review": 0.5820562839508057
+    },
+    {
+      "claim_id": "CLM-001080",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.1831582635641098,
+      "Invalid Claim": 0.11221636831760406,
+      "Manual Review": 0.7046253681182861
+    },
+    {
+      "claim_id": "CLM-001088",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.7873757481575012,
+      "Invalid Claim": 0.02858453243970871,
+      "Manual Review": 0.18403977155685425
+    },
+    {
+      "claim_id": "CLM-001099",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.06284156441688538,
+      "Invalid Claim": 0.23537671566009521,
+      "Manual Review": 0.701781690120697
+    },
+    {
+      "claim_id": "CLM-001101",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.04720958322286606,
+      "Invalid Claim": 0.24490021169185638,
+      "Manual Review": 0.7078902125358582
+    },
+    {
+      "claim_id": "CLM-001103",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.019997408613562584,
+      "Invalid Claim": 0.39657169580459595,
+      "Manual Review": 0.5834308862686157
+    },
+    {
+      "claim_id": "CLM-001119",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.23367659747600555,
+      "Invalid Claim": 0.07838598638772964,
+      "Manual Review": 0.6879374384880066
+    },
+    {
+      "claim_id": "CLM-001121",
+      "actual_class": "Manual Review",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.6538901329040527,
+      "Invalid Claim": 0.02852448634803295,
+      "Manual Review": 0.31758537888526917
+    },
+    {
+      "claim_id": "CLM-001126",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.10727393627166748,
+      "Invalid Claim": 0.09003075957298279,
+      "Manual Review": 0.8026952743530273
+    },
+    {
+      "claim_id": "CLM-001133",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.10396397858858109,
+      "Invalid Claim": 0.25980842113494873,
+      "Manual Review": 0.6362276673316956
+    },
+    {
+      "claim_id": "CLM-001135",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9812977313995361,
+      "Invalid Claim": 0.0004973312607035041,
+      "Manual Review": 0.01820492371916771
+    },
+    {
+      "claim_id": "CLM-001146",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Invalid Claim",
+      "Valid Claim": 0.0034487226512283087,
+      "Invalid Claim": 0.6611552834510803,
+      "Manual Review": 0.3353959619998932
+    },
+    {
+      "claim_id": "CLM-001153",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.6508524417877197,
+      "Invalid Claim": 0.01664074696600437,
+      "Manual Review": 0.33250680565834045
+    },
+    {
+      "claim_id": "CLM-001158",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.039391305297613144,
+      "Invalid Claim": 0.31487253308296204,
+      "Manual Review": 0.6457360982894897
+    },
+    {
+      "claim_id": "CLM-001159",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.949367880821228,
+      "Invalid Claim": 0.0030320254154503345,
+      "Manual Review": 0.04760003834962845
+    },
+    {
+      "claim_id": "CLM-001162",
+      "actual_class": "Manual Review",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.5250259637832642,
+      "Invalid Claim": 0.03241730108857155,
+      "Manual Review": 0.4425567388534546
+    },
+    {
+      "claim_id": "CLM-001169",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Invalid Claim",
+      "Valid Claim": 0.0010114694014191628,
+      "Invalid Claim": 0.5938609838485718,
+      "Manual Review": 0.40512752532958984
+    },
+    {
+      "claim_id": "CLM-001172",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.005956835579127073,
+      "Invalid Claim": 0.38917088508605957,
+      "Manual Review": 0.6048723459243774
+    },
+    {
+      "claim_id": "CLM-001176",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.14421644806861877,
+      "Invalid Claim": 0.1656363159418106,
+      "Manual Review": 0.6901472210884094
+    },
+    {
+      "claim_id": "CLM-001217",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.6288077235221863,
+      "Invalid Claim": 0.057393599301576614,
+      "Manual Review": 0.313798725605011
+    },
+    {
+      "claim_id": "CLM-001221",
+      "actual_class": "Manual Review",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9826980233192444,
+      "Invalid Claim": 0.0002710340195335448,
+      "Manual Review": 0.017030905932188034
+    },
+    {
+      "claim_id": "CLM-001226",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.12858103215694427,
+      "Invalid Claim": 0.14483776688575745,
+      "Manual Review": 0.7265812158584595
+    },
+    {
+      "claim_id": "CLM-001229",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.03878189995884895,
+      "Invalid Claim": 0.20918844640254974,
+      "Manual Review": 0.7520296573638916
+    },
+    {
+      "claim_id": "CLM-001231",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.003662803443148732,
+      "Invalid Claim": 0.3113962709903717,
+      "Manual Review": 0.6849408745765686
+    },
+    {
+      "claim_id": "CLM-001245",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.5925201773643494,
+      "Invalid Claim": 0.0370926633477211,
+      "Manual Review": 0.37038707733154297
+    },
+    {
+      "claim_id": "CLM-001254",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.1644749492406845,
+      "Invalid Claim": 0.2362866848707199,
+      "Manual Review": 0.5992383360862732
+    },
+    {
+      "claim_id": "CLM-001257",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9378665685653687,
+      "Invalid Claim": 0.0033329674042761326,
+      "Manual Review": 0.05880051106214523
+    },
+    {
+      "claim_id": "CLM-001260",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.0076313684694468975,
+      "Invalid Claim": 0.422917902469635,
+      "Manual Review": 0.5694507956504822
+    },
+    {
+      "claim_id": "CLM-001263",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.8477141857147217,
+      "Invalid Claim": 0.0038207327015697956,
+      "Manual Review": 0.1484651267528534
+    },
+    {
+      "claim_id": "CLM-001267",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.23255398869514465,
+      "Invalid Claim": 0.06018730625510216,
+      "Manual Review": 0.7072587609291077
+    },
+    {
+      "claim_id": "CLM-001284",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.0016673553036525846,
+      "Invalid Claim": 0.4924774467945099,
+      "Manual Review": 0.505855143070221
+    },
+    {
+      "claim_id": "CLM-001288",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9736881852149963,
+      "Invalid Claim": 0.0010528111597523093,
+      "Manual Review": 0.0252589900046587
+    },
+    {
+      "claim_id": "CLM-001292",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.13603335618972778,
+      "Invalid Claim": 0.19494490325450897,
+      "Manual Review": 0.669021725654602
+    },
+    {
+      "claim_id": "CLM-001313",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9948175549507141,
+      "Invalid Claim": 5.1080642151646316e-05,
+      "Manual Review": 0.005131317302584648
+    },
+    {
+      "claim_id": "CLM-001320",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.47860783338546753,
+      "Invalid Claim": 0.03980455547571182,
+      "Manual Review": 0.48158764839172363
+    },
+    {
+      "claim_id": "CLM-001323",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.01715274713933468,
+      "Invalid Claim": 0.31062623858451843,
+      "Manual Review": 0.6722210645675659
+    },
+    {
+      "claim_id": "CLM-001332",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.7904367446899414,
+      "Invalid Claim": 0.006237462628632784,
+      "Manual Review": 0.20332573354244232
+    },
+    {
+      "claim_id": "CLM-001345",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.2423602044582367,
+      "Invalid Claim": 0.050457876175642014,
+      "Manual Review": 0.7071818709373474
+    },
+    {
+      "claim_id": "CLM-001379",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.34092840552330017,
+      "Invalid Claim": 0.036712199449539185,
+      "Manual Review": 0.6223593950271606
+    },
+    {
+      "claim_id": "CLM-001380",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.056008629500865936,
+      "Invalid Claim": 0.11986186355352402,
+      "Manual Review": 0.8241295218467712
+    },
+    {
+      "claim_id": "CLM-001384",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Invalid Claim",
+      "Valid Claim": 0.00034272426273673773,
+      "Invalid Claim": 0.7401244044303894,
+      "Manual Review": 0.2595328688621521
+    },
+    {
+      "claim_id": "CLM-001388",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.14107204973697662,
+      "Invalid Claim": 0.17093952000141144,
+      "Manual Review": 0.6879884004592896
+    },
+    {
+      "claim_id": "CLM-001393",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.2723347544670105,
+      "Invalid Claim": 0.12477567791938782,
+      "Manual Review": 0.6028895974159241
+    },
+    {
+      "claim_id": "CLM-001395",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.012771408073604107,
+      "Invalid Claim": 0.4642709791660309,
+      "Manual Review": 0.5229576826095581
+    },
+    {
+      "claim_id": "CLM-001407",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.6172992587089539,
+      "Invalid Claim": 0.01709240861237049,
+      "Manual Review": 0.3656083941459656
+    },
+    {
+      "claim_id": "CLM-001410",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Invalid Claim",
+      "Valid Claim": 0.0010374212870374322,
+      "Invalid Claim": 0.5723503232002258,
+      "Manual Review": 0.4266122579574585
+    },
+    {
+      "claim_id": "CLM-001415",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Invalid Claim",
+      "Valid Claim": 0.002657428150996566,
+      "Invalid Claim": 0.6894456148147583,
+      "Manual Review": 0.30789703130722046
+    },
+    {
+      "claim_id": "CLM-001424",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.050679873675107956,
+      "Invalid Claim": 0.2976808547973633,
+      "Manual Review": 0.6516392230987549
+    },
+    {
+      "claim_id": "CLM-001433",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.008850153535604477,
+      "Invalid Claim": 0.4214107096195221,
+      "Manual Review": 0.5697391629219055
+    },
+    {
+      "claim_id": "CLM-001435",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.8837327361106873,
+      "Invalid Claim": 0.003731297794729471,
+      "Manual Review": 0.1125359758734703
+    },
+    {
+      "claim_id": "CLM-001437",
+      "actual_class": "Manual Review",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.6069045662879944,
+      "Invalid Claim": 0.03615869581699371,
+      "Manual Review": 0.3569367825984955
+    },
+    {
+      "claim_id": "CLM-001443",
+      "actual_class": "Invalid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.18444712460041046,
+      "Invalid Claim": 0.1326206922531128,
+      "Manual Review": 0.6829321980476379
+    },
+    {
+      "claim_id": "CLM-001451",
+      "actual_class": "Manual Review",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.0019532269798219204,
+      "Invalid Claim": 0.33156484365463257,
+      "Manual Review": 0.6664819121360779
+    },
+    {
+      "claim_id": "CLM-001458",
+      "actual_class": "Manual Review",
+      "predicted_class": "Invalid Claim",
+      "Valid Claim": 0.015469726175069809,
+      "Invalid Claim": 0.5083052515983582,
+      "Manual Review": 0.4762251079082489
+    },
+    {
+      "claim_id": "CLM-001464",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9888373613357544,
+      "Invalid Claim": 0.00023354464792646468,
+      "Manual Review": 0.010929088108241558
+    },
+    {
+      "claim_id": "CLM-001467",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9960154891014099,
+      "Invalid Claim": 4.528816498350352e-05,
+      "Manual Review": 0.003939203452318907
+    },
+    {
+      "claim_id": "CLM-001470",
+      "actual_class": "Manual Review",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.9686060547828674,
+      "Invalid Claim": 0.000682408397551626,
+      "Manual Review": 0.03071150928735733
+    },
+    {
+      "claim_id": "CLM-001472",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Manual Review",
+      "Valid Claim": 0.004565180279314518,
+      "Invalid Claim": 0.33758795261383057,
+      "Manual Review": 0.6578468680381775
+    },
+    {
+      "claim_id": "CLM-001476",
+      "actual_class": "Valid Claim",
+      "predicted_class": "Valid Claim",
+      "Valid Claim": 0.8119531273841858,
+      "Invalid Claim": 0.007949371822178364,
+      "Manual Review": 0.18009746074676514
+    },
+    {
+      "claim_id": "CLM-001490",
+      "actual_class": "Manual Review",
+      "predicted_class": "Invalid Claim",
+      "Valid Claim": 0.005381959956139326,
+      "Invalid Claim": 0.5863918662071228,
+      "Manual Review": 0.4082261323928833
+    }
+  ]
+}
