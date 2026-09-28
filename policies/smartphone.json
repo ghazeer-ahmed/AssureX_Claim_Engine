@@ -1,0 +1,43 @@
+{
+  "Smartphone": {
+    "coverage_months": 12,
+    "start_condition": "purchase_date",
+    "reporting_days": 14,
+    "covered_faults": [
+      "Manufacturing defect",
+      "Electrical failure",
+      "Mechanical failure"
+    ],
+    "exclusions": [
+      "Accidental damage",
+      "Liquid damage",
+      "Misuse"
+    ],
+    "mandatory_documents": [
+      "Receipt",
+      "Warranty card",
+      "Fault evidence",
+      "Serial evidence"
+    ],
+    "authorized_repairs_only": true,
+    "replacement_condition": "Reviewer approval required",
+    "grace_days": 0,
+    "hard_fail_rules": [
+      "coverage",
+      "exclusions"
+    ],
+    "warning_rules": [
+      "reporting_period"
+    ],
+    "manual_review_rules": [
+      "documents",
+      "serial",
+      "duplicates",
+      "contradictions",
+      "repairs"
+    ],
+    "repair_documents": [
+      "Repair report"
+    ]
+  }
+}

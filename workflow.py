@@ -645,7 +645,7 @@ def policies():
 
 
 def install_workflow(app):
-    app.config.setdefault('POLICY_FILE', str(Path(app.root_path) / 'policies' / 'warranties.json'))
+    app.config.setdefault('POLICY_FILE', str(Path(app.root_path) / 'policies'))
     from app_features import install_features
     install_features(app)
     app.register_blueprint(bp)
