@@ -150,7 +150,6 @@
 </section>
 {% if editable %}
 <script src="{{ url_for('static', filename='vendor/tf.min.js') }}"></script>
-<script src="{{ url_for('static', filename='vendor/teachablemachine-image.min.js') }}"></script>
 <script>
 (() => {
     const form = document.querySelector('form[action="{{ url_for('workflow.submit_claim', claim_id=claim.id) }}"]');
@@ -175,13 +174,37 @@
 
             const modelUrl = '{{ url_for('workflow.model_asset', filename='model.json') }}';
             const base = modelUrl.slice(0, modelUrl.lastIndexOf('/') + 1);
-            const model = await tmImage.load(base + 'model.json', base + 'metadata.json');
-            const card = new Image();
-            card.src = '{{ url_for('workflow.claim_model_card', claim_id=claim.id) }}?t=' + Date.now();
-            await new Promise((resolve, reject) => { card.onload = resolve; card.onerror = reject; });
-            const predictions = await model.predict(card);
-            const scores = {};
-            for (const item of predictions) scores[item.className.toLowerCase()] = item.probability;
+            const metadataResponse = await fetch(base + 'metadata.json', { cache: 'no-store' });
+            if (!metadataResponse.ok) throw new Error('The image model metadata could not be loaded.');
+            const metadata = await metadataResponse.json();
+            if (metadata.modelType !== 'graph-model' || metadata.labels?.length !== 3 || metadata.imageSize !== 224) {
+                throw new Error('The image model configuration is invalid.');
+            }
+            let imageModel, modelInput, modelOutput, scores;
+            try {
+                imageModel = await tf.loadGraphModel(base + 'model.json');
+                const card = new Image();
+                card.src = '{{ url_for('workflow.claim_model_card', claim_id=claim.id) }}?t=' + Date.now();
+                await new Promise((resolve, reject) => { card.onload = resolve; card.onerror = reject; });
+                modelInput = tf.tidy(() => tf.image.resizeBilinear(
+                    tf.browser.fromPixels(card).toFloat(), [metadata.imageSize, metadata.imageSize]
+                ).div(127.5).sub(1).expandDims(0));
+                modelOutput = await imageModel.executeAsync(modelInput);
+                const prediction = Array.isArray(modelOutput) ? modelOutput[0] :
+                    (modelOutput?.data ? modelOutput : modelOutput?.[metadata.outputName] || Object.values(modelOutput || {})[0]);
+                if (!prediction) throw new Error('The image model returned no predictions.');
+                const values = Array.from(await prediction.data());
+                if (values.length !== metadata.labels.length || !values.every(value => Number.isFinite(value) && value >= 0 && value <= 1)) {
+                    throw new Error('The image model returned invalid class scores.');
+                }
+                scores = Object.fromEntries(metadata.labels.map((label, index) => [label, values[index]]));
+            } finally {
+                modelInput?.dispose();
+                if (Array.isArray(modelOutput)) modelOutput.forEach(value => value?.dispose());
+                else if (modelOutput?.dispose) modelOutput.dispose();
+                else if (modelOutput && typeof modelOutput === 'object') Object.values(modelOutput).forEach(value => value?.dispose?.());
+                imageModel?.dispose();
+            }
             const imageBody = new URLSearchParams({ _csrf: csrf, scores: JSON.stringify(scores) });
             const imageResult = await fetch('{{ url_for('workflow.predict_keras', claim_id=claim.id) }}', {
                 method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: imageBody

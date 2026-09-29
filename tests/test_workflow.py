@@ -292,9 +292,14 @@ class WorkflowTests(unittest.TestCase):
         self.assertEqual(len(prediction['version']), 64)
         self.assertAlmostEqual(prediction['valid_conf'] + prediction['invalid_conf'] + prediction['manual_conf'], 1.0, places=5)
 
-    def test_teachable_machine_assets_and_prediction_route(self):
+    def test_savedmodel_assets_and_prediction_route(self):
         claim_id = self.claim()
-        for asset in ('vendor/tf.min.js', 'vendor/teachablemachine-image.min.js', 'vendor/bootstrap.min.css', 'vendor/bootstrap.bundle.min.js'):
+        page = self.client.get(f'/claims/{claim_id}')
+        self.assertEqual(page.status_code, 200)
+        self.assertIn(b'tf.loadGraphModel', page.data)
+        self.assertIn(b'imageModel.executeAsync(modelInput)', page.data)
+        self.assertNotIn(b'tmImage.load', page.data)
+        for asset in ('vendor/tf.min.js', 'vendor/bootstrap.min.css', 'vendor/bootstrap.bundle.min.js'):
             response = self.client.get(f'/static/{asset}')
             self.assertEqual(response.status_code, 200)
             self.assertGreater(len(response.data), 1000)
