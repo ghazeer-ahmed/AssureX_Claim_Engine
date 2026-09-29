@@ -1,0 +1,95 @@
+{
+  "evaluation_date": "2026-09-29",
+  "dataset_split": "reserved held-out test",
+  "model_name": "gtm_savedmodel",
+  "model_type": "graph-model",
+  "input_shape": [
+    224,
+    224,
+    3
+  ],
+  "input_normalization": "rgb_0_1_to_minus1_1",
+  "output_name": "Identity",
+  "output_labels": [
+    "valid_claim",
+    "invalid_claim",
+    "manual_review"
+  ],
+  "records": 225,
+  "class_distribution": {
+    "Invalid Claim": 75,
+    "Manual Review": 75,
+    "Valid Claim": 75
+  },
+  "accuracy": 0.3466666666666667,
+  "correct": 78,
+  "macro_precision": 0.36999190666791465,
+  "macro_recall": 0.3466666666666667,
+  "macro_f1": 0.31058673469387754,
+  "confusion_matrix": [
+    [
+      18,
+      4,
+      53
+    ],
+    [
+      19,
+      10,
+      46
+    ],
+    [
+      16,
+      9,
+      50
+    ]
+  ],
+  "confusion_matrix_labels": [
+    "Invalid Claim",
+    "Manual Review",
+    "Valid Claim"
+  ],
+  "class_metrics": {
+    "Invalid Claim": {
+      "precision": 0.33962264150943394,
+      "recall": 0.24,
+      "f1": 0.28125000000000006,
+      "support": 75
+    },
+    "Manual Review": {
+      "precision": 0.43478260869565216,
+      "recall": 0.13333333333333333,
+      "f1": 0.20408163265306123,
+      "support": 75
+    },
+    "Valid Claim": {
+      "precision": 0.33557046979865773,
+      "recall": 0.6666666666666666,
+      "f1": 0.4464285714285714,
+      "support": 75
+    }
+  },
+  "srs_accuracy_target": 0.85,
+  "meets_srs_accuracy_target": false,
+  "python_accuracy_same_split": 0.9111111111111111,
+  "python_correct_same_split": 205,
+  "model_agreement_count": 78,
+  "model_agreement_rate": 0.3466666666666667,
+  "model_disagreement_count": 147,
+  "consistency_status_counts": {
+    "Model Disagreement": 147,
+    "Strong Match": 37,
+    "Uncertain Result": 29,
+    "Acceptable Match": 8,
+    "Weak Match": 4
+  },
+  "comparison_thresholds": {
+    "minimum_confidence": 0.8,
+    "strong_difference": 0.05,
+    "acceptable_difference": 0.15,
+    "maximum_difference": 0.25
+  },
+  "inference_latency_measured": false,
+  "evaluation_method": "TensorFlow.js graph model, per-image inference on each of 225 manifest-matched held-out Claim Summary Cards; RGB pixels scaled from [0,255] to [-1,1]; output class order mapped from models/metadata.json.",
+  "python_predictions_source": "reports/python_model_evaluation_2026-09-28/test_results.csv",
+  "model_artifact_sha256_combined": "cab0a1b3528f3908b91a99a32d33f156e20475d8ac2805b00abe6a8b88782d4c"
+}

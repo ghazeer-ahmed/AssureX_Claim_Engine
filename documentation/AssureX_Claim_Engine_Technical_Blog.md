@@ -1,10 +1,12 @@
 # AssureX Claim Engine: A Practical Approach to Warranty Claim Review
 
-*How structured claim data, warranty rules, document checks, machine learning, and human review fit into one workflow.*
+*How our student team built and tested a warranty-claim review prototype, and what the results taught us.*
 
-A warranty claim is more than a fault description. To assess it, a reviewer may need to connect the purchase date, product serial number, warranty terms, fault date, repair history, receipt, and photographs. When those details arrive through different forms and files, even a straightforward claim can take time to verify.
+We chose warranty claims because the decision depends on more than whether a product has a fault. A reviewer may need to connect a purchase date, serial number, warranty terms, fault date, repair history, receipt, and photographs. When those details arrive in different forms and files, even a straightforward claim can take time to verify.
 
-AssureX Claim Engine is a web application built to organize that process. It lets customers register products and warranties, prepare claims, attach evidence, and follow claim status. It also brings together configurable warranty checks, document extraction, a Python classifier, and a Teachable Machine image classifier. The goal is to help reviewers find the important facts and identify uncertainty. The final claim outcome remains a human responsibility.
+As students, we wanted to explore how software could make those checks easier to follow without pretending that a model can settle every case. We built AssureX Claim Engine as a web prototype for product registration, warranties, claim intake, evidence review, and claim tracking. It combines configurable warranty rules, document extraction, a Python classifier, and a GTM SavedModel image classifier. The final decision stays with an authorized human reviewer.
+
+This is a project prototype, not a deployed insurer system. We did not validate it on a production insurer’s records. That boundary matters when interpreting the results later in this article.
 
 ## Why warranty review needs a structured process
 
@@ -16,7 +18,7 @@ The AssureX requirements specification describes a web-based application that br
 
 ## What AssureX does
 
-AssureX is built with Python and Flask. The browser pages use HTML templates, CSS, JavaScript, and Bootstrap styling. SQLite stores application records, while uploaded evidence is stored in a private upload directory. The application includes customer, service-centre employee, reviewer, and administrator roles with role-based access checks.
+We built the application with Python and Flask. Its pages use HTML templates, CSS, JavaScript, and Bootstrap styling. SQLite stores application records, while uploaded evidence is kept in a private upload directory. We added customer, service-centre employee, reviewer, and administrator roles with role-based access checks.
 
 A customer can register a product, add warranty information, attach documents, and create a claim linked to the product and warranty. The claim form collects information such as the fault date, fault category, damage type, requested amount, description, and relevant repairs or replacements. The reviewer can inspect rule findings and evidence, request more information, record an outcome, and leave a reason in the claim history.
 
@@ -32,7 +34,7 @@ The workflow begins with a product and a warranty record. A user creates a claim
 
 The system then checks the claim against configured warranty rules and evidence requirements. It can flag missing mandatory documents, an expired warranty, an excluded damage type, a serial-number mismatch, a possible duplicate, or a contradiction between the uploaded evidence and the product record. Repair history is available as another piece of context.
 
-If model results are available, the application records the Python prediction and the Teachable Machine prediction with their model versions and class scores. It compares their predicted classes and top-class confidence values. Low confidence, disagreement, incomplete evidence, or rule findings can keep the claim in manual review. A reviewer can request more information, approve, reject, or close the claim according to the workflow and their permissions.
+If model results are available, the application records the Python prediction and the GTM SavedModel prediction with their model versions and class scores. It compares their predicted classes and top-class confidence values. Low confidence, disagreement, incomplete evidence, or rule findings can keep the claim in manual review. A reviewer can request more information, approve, reject, or close the claim according to the workflow and their permissions.
 
 ![Claim intake, validation, parallel model predictions, comparison, and human review](figures/claim_workflow.png)
 
@@ -40,7 +42,7 @@ If model results are available, the application records the Python prediction an
 
 ## Building a shared dataset
 
-The project includes 1,500 structured claim records. The classes are balanced: 500 Valid Claim records, 500 Invalid Claim records, and 500 Manual Review records. The records are separated into three splits: 1,050 training claims, 225 validation claims, and 225 test claims. Each split contains 75 claims from each class in the validation and test sets, and 350 from each class in the training set.
+For the prototype, we worked with 1,500 structured claim records. The classes are balanced: 500 Valid Claim records, 500 Invalid Claim records, and 500 Manual Review records. The records are separated into three splits: 1,050 training claims, 225 validation claims, and 225 test claims. Each split contains 75 claims from each class in the validation and test sets, and 350 from each class in the training set.
 
 The dataset fields cover product and purchase details, warranty length and status, fault category, damage type, claim amount, repairs, evidence availability, serial matching, duplicate indicators, contradictions, product age, and time remaining on the warranty. This gives the model a structured view of the information a reviewer may need to consider.
 
@@ -64,7 +66,7 @@ This preparation is important because models expect consistent inputs. A date ne
 
 The training utility compares logistic regression, random forest, and extra trees. It scores each candidate on the validation split and selects the model with the best macro-averaged F1 score. Macro F1 calculates the score for each class and gives the classes equal weight. That is useful here because the system needs to recognize Valid Claim, Invalid Claim, and Manual Review rather than favoring one outcome.
 
-I reran the repository's training utility on the checked-in train, validation, and test splits and saved a separate evaluation run under `reports/python_model_evaluation_2026-09-28`. Logistic regression was selected. Its validation accuracy was 89.78% and its validation macro F1 was 89.85%. Random forest reached 87.11% validation accuracy and 87.11% macro F1. Extra trees reached 87.11% validation accuracy and 87.17% macro F1.
+We reran the repository's training utility on the checked-in train, validation, and test splits and saved a separate evaluation run under `reports/python_model_evaluation_2026-09-28`. Logistic regression was selected. Its validation accuracy was 89.78% and its validation macro F1 was 89.85%. Random forest reached 87.11% validation accuracy and 87.11% macro F1. Extra trees reached 87.11% validation accuracy and 87.17% macro F1.
 
 The test split was not used to choose the algorithm. After selection, the logistic regression model reached 91.11% accuracy on the 225 test claims. Its macro precision was 91.07%, macro recall was 91.11%, and macro F1 was 91.06%. Those figures are above the SRS target of 85% for the Python model on unseen test claims, but they describe this prepared test set. They do not guarantee the same performance on new manufacturers, policies, or real customer claims.
 
@@ -88,23 +90,33 @@ The Manual Review class deserves particular attention. Its recall was 84%, which
 
 *Figure 6. Per-class test scores. Each class has 75 test examples.*
 
-![Python and Teachable Machine accuracy compared with the SRS target](figures/model_accuracy_comparison.png)
+![Python and GTM SavedModel accuracy compared with the SRS target](figures/model_accuracy_comparison.png)
+
+*Figure 7. Python clears the 85% target on this test set; the image model does not.*
 
 ![Consistency categories from the 225-claim comparison](figures/model_consistency_counts.png)
 
-## The Teachable Machine image model
+*Figure 8. The models disagree on 147 of 225 test claims, which routes those cases to human review.*
 
-The second classifier evaluates a visual Claim Summary Card. The card is generated from the claim details and includes information such as product age, warranty status, fault type, repair history, and document availability. The SRS says the card must not include the Python prediction, its confidence score, or the final claim result. That separation lets the image classifier make its own prediction from the claim information.
+## The GTM SavedModel image model
 
-The repository contains the exported TensorFlow.js model definition, metadata, and weights. The metadata lists the three labels: valid claim, invalid claim, and manual review. The application code loads the image model in the browser and records its returned scores. The browser-based path needs access to TensorFlow.js and the Teachable Machine image library.
+We also wanted to test whether a visual summary could provide a second perspective, so the image classifier evaluates a generated Claim Summary Card. The card contains claim facts such as product age, warranty status, fault type, repair history, and document availability. It does not include the Python model prediction or final claim result.
 
-I ran the exported image classifier against one card for each of the 225 reserved test claims. I first bundled the same versions of TensorFlow.js and the Teachable Machine image runtime locally, so the browser did not need to reach a public CDN. The model loaded its JSON graph, metadata, and weights and returned three class probabilities for every card.
+The new GTM SavedModel is exported as a TensorFlow.js graph model. Its metadata defines a 224 by 224 RGB input and three output labels: valid claim, invalid claim, and manual review. The website loads the graph model in the browser, scales the image pixels to the model’s expected range, and records all three returned scores.
 
-The result was not good enough. The image model reached **37.33% accuracy**, below the SRS target of 85%. Invalid Claim recall was 14.67%, Manual Review recall was 54.67%, and Valid Claim recall was 42.67%. It predicted Manual Review for many claims, including a large share of claims from the other classes.
+We evaluated one matching card for each of the 225 reserved test claims using the locally bundled TensorFlow.js runtime. We mapped output positions from the model metadata and used the same 224 by 224 resizing and [-1,1] normalization as the application. The model correctly classified **78 of 225 cards, or 34.67%**. That is below the SRS target of 85%. Macro precision was 37.00%, macro recall was 34.67%, and macro F1 was 31.06%.
 
-![Teachable Machine test confusion matrix](figures/teachable_machine_confusion_matrix.png)
+![GTM SavedModel confusion matrix](figures/gtm_savedmodel_confusion_matrix.png)
 
-The issue is model quality rather than JavaScript integration. The repository contains the export and card images, but not the original Teachable Machine project or the settings used to train it. The model should be retrained using the 2,100 training cards, checked against the 225 validation cards, and only then evaluated once on the reserved test set. Until retraining is done, the image model does not meet the SRS requirement.
+*Figure 9. Rows show the actual class and columns show the model prediction for 225 held-out cards.*
+
+The predictions leaned toward Valid Claim. The model assigned that label to 149 cards, including 53 Invalid Claim examples and 46 Manual Review examples. Recall was 24.00% for Invalid Claim, 13.33% for Manual Review, and 66.67% for Valid Claim. The image model therefore does not meet the SRS accuracy requirement and should not decide claims by itself.
+
+![GTM SavedModel recall by class](figures/gtm_savedmodel_class_recall.png)
+
+*Figure 10. The model misses most Invalid Claim and Manual Review examples in this test set.*
+
+The browser inference path completed for every test card. That confirms the saved graph can produce predictions for these inputs; it does not show that the predictions are accurate enough. We need to review the training examples, label mapping, and card design, then tune only on training and validation data before a final evaluation on the reserved test set.
 
 ## Comparing predictions and confidence
 
@@ -116,11 +128,11 @@ A small difference can mean that the two models assign similar confidence to the
 
 The application defines consistency labels such as Strong Match, Acceptable Match, Weak Match, Model Disagreement, and Uncertain Result. These thresholds are configuration values, which makes them easier to inspect and adjust than values hidden throughout the code. The consistency label is one input to the workflow, not a payment decision.
 
-The project now has a comparison report for all 225 unseen test claims. The Python model and image model predicted the same class on 85 claims, an agreement rate of 37.78%. They disagreed on 140. For every claim the report lists both classes, each model’s three confidence scores, the confidence difference, evidence and rule flags, consistency status, recommendation, and review reasons. The comparison confirms that most cases need human review until the image model is improved.
+On the same 225 unseen claims, the Python and GTM models agreed on 78 (34.67%) and disagreed on 147. With the configured thresholds, 37 pairs were Strong Match, 8 Acceptable Match, 4 Weak Match, and 29 Uncertain Result. Most pairs therefore need human review. The per-claim report records both predictions, all six class scores, confidence difference, and consistency status.
 
 ## Warranty rules and data checks
 
-A model learns patterns in examples. A warranty policy states conditions that the application can check directly. AssureX stores sample warranty terms in JSON by product category. The sample policies include coverage duration, reporting periods, covered faults, exclusions, required documents, repair requirements, and conditions that lead to manual review.
+One lesson from the design was to keep learned patterns separate from explicit policy rules. A classifier learns patterns in examples; a warranty policy states conditions the application can check directly. We store sample warranty terms in JSON by product category. The sample policies include coverage duration, reporting periods, covered faults, exclusions, required documents, repair requirements, and conditions that lead to manual review.
 
 For example, the sample laptop and smartphone policies cover listed manufacturing, electrical, and mechanical faults while excluding accidental damage, liquid damage, and misuse. The appliance example uses a different warranty duration and reporting window. These are example policies, not universal legal terms. A real organization would need to replace them with its own approved policy wording and confirm that every configured category is correct.
 
@@ -128,7 +140,7 @@ The workflow checks dates and conditions, required evidence, serial information,
 
 ## OCR and document processing
 
-A receipt or invoice can contain purchase dates, product names, retailer details, amounts, model numbers, and serial numbers. AssureX can extract text from text-based PDFs and use Tesseract OCR for supported image files when Tesseract is installed. The extracted values are presented for review so a user can correct them before they become verified claim information.
+Receipts and invoices often contain the facts a reviewer needs: purchase date, product, retailer, amount, model, and serial number. We added extraction for text-based PDFs and Tesseract OCR for supported images and scanned PDF pages when Tesseract is installed. The extracted values are presented for review so a user can correct them before they become verified claim information.
 
 OCR is not a guarantee of correct data. A photograph may be blurred, tilted, faded, or cropped. Handwriting and unusual receipt layouts can also reduce extraction quality. For a PDF, text is read from text-based pages and the first five textless pages are rendered locally for OCR. This also supports mixed files that contain both selectable text and scanned receipt pages. When extraction misses a field, users can enter it manually and compare it with the original document.
 
@@ -144,22 +156,26 @@ The claim report and CSV export can contain personal or purchase information. An
 
 ## What went wrong and what the numbers do not tell us
 
-One practical difficulty was that the saved model artifacts and their metrics were not all in sync. The checked-in `models/model_metrics.json` contains a previous test score, while a fresh run of `src/train.py` saved a new model and evaluation under the dated reports folder. Loading the older active classifier with the installed scikit-learn version also produced a warning that it was serialized with a different version. For this reason, the report above uses the fresh training run and its own test results, and the application model file was not silently replaced during documentation work.
+One practical difficulty was keeping the active Python model, preprocessing pipeline, and metrics aligned. The initial review found an older classifier serialized with a different scikit-learn version. We retrained and selected a model using validation data, then updated the active classifier, preprocessing artifact, and metadata together. The resulting Python model scored 91.11% on the reserved test split. The dated evaluation folder preserves the training metrics and per-claim predictions used for this report.
 
-The image model initially depended on an external browser runtime that this environment blocked. Bundling the pinned TensorFlow.js and Teachable Machine libraries solved the loading problem and allowed a complete holdout run. That exposed a more important issue: the model scored 37.33%, far below the 85% SRS target, and it disagreed with Python on 140 of 225 claims. A working inference path does not make an inaccurate model ready for claim decisions.
+The GTM graph model completed inference on all 225 held-out cards with the locally bundled TensorFlow.js runtime. It scored 34.67% accuracy and agreed with Python on 78 claims. This gave us an important distinction: a model can load and return class probabilities while still performing far below its accuracy target. We need to review the training data and labels, tune with training and validation splits, then test a final candidate once on the reserved holdout.
 
 There are also dataset questions. The files contain balanced classes and matching claim IDs, but the repository does not fully document how every scenario and label was generated. A future project iteration should preserve the dataset creation procedure, label rules, version hashes, and evaluation environment alongside the saved models.
 
-## Lessons and next steps
+## Lessons we learned and what comes next
 
-The main lesson is that warranty review is not just a classification task. Product records, evidence, policy rules, and a traceable review process all matter. A model can help prioritize a case, but the system still needs a safe path for missing information, contradictory records, and low-confidence results.
+Our main lesson is that warranty review is not just a classification task. Product records, evidence, policy rules, and a traceable review process all matter. A model can help prioritize a case, but the system still needs a safe path for missing information, contradictory records, and low-confidence results.
 
-The most useful next steps are clear. First, run the Teachable Machine model on the holdout cards in a browser that can load the pinned TensorFlow.js and Teachable Machine libraries. Second, generate the required comparison report for at least 30 unseen claims and save both models' three-class scores, agreement status, confidence difference, rule findings, and final review outcome. Third, update the model metadata so that it identifies the exact active model artifact and evaluation run. Finally, record the dataset's source and scenario-generation method, and measure performance, mobile usability, and uptime against the non-functional requirements.
+Next, we should investigate why the model labels so many cards Valid Claim, verify card and label alignment, and compare new candidates using only the training and validation splits. The updated per-claim report contains the Python and GTM predictions, all six class scores, the confidence difference, and the comparison status for each of the 225 test claims. We also still need to document the dataset labels and measure inference time, capacity, mobile usability, and availability against the SRS.
 
-AssureX Claim Engine brings the parts of a warranty workflow into one application and gives reviewers a structured view of each claim. The current Python results provide a useful baseline on the prepared test set. Completing the image-model evaluation and the operational checks is the next step toward a fully evidenced SRS submission.
+Working on AssureX changed how we think about an AI project. It is easy to focus on a model score, but a useful system also needs reliable inputs, visible evidence, explicit rules, understandable uncertainty, and a person who can review the outcome. Our Python model provides a promising result on this prepared test set. The GTM SavedModel does not meet its target yet, with 34.67% accuracy. We see that gap as part of the project’s result, not something to hide.
+
+We set out as students to explore a practical claims problem. We finished with a functioning prototype, an end-to-end test suite, and a clearer picture of what still needs work before anyone could rely on it in a real claims operation.
 
 ## Project sources
 
 - [AssureX Claim Engine repository](https://github.com/ghazeer-ahmed/AssureX_Claim_Engine)
 - Project requirements: *AssureX Claim Engine Software Requirements Specification, Version 1.0, Aptech Limited.*
+- [Model evaluation report](https://github.com/ghazeer-ahmed/AssureX_Claim_Engine/blob/main/documentation/MODEL_EVALUATION.md)
+- [Per-claim Python and image-model comparison](https://github.com/ghazeer-ahmed/AssureX_Claim_Engine/blob/main/reports/gtm_model_evaluation_2026-09-29/test_predictions.csv)
 - Training outputs: `reports/python_model_evaluation_2026-09-28/metrics.json` and `reports/python_model_evaluation_2026-09-28/test_results.csv`.

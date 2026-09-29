@@ -13,7 +13,7 @@ The suite passed decision-logic tests and application workflow tests using tempo
 - PDF text extraction, real image OCR, the uploaded-image OCR route, and scanned-PDF OCR. The PDF tests cover text PDFs, scanned receipts, and mixed PDFs containing selectable text and scanned pages. A real Tesseract image test verifies all eight SRS receipt fields: purchase date, invoice number, product name, model number, serial number, retailer, purchase amount, and warranty duration.
 - Upload validation, file hashes, duplicate evidence, claim duplicate checks, contradictions, private evidence authorization, report access, filters, notifications, and CSV formula escaping.
 - Loading the active Python model through the application prediction route, storing three valid class probabilities and the model artifact hash.
-- Serving local TensorFlow.js, Teachable Machine, Bootstrap, and all three model export files; accepting and storing a three-class image prediction with its artifact hash.
+- Serving the local TensorFlow.js graph-model assets; accepting and storing a three-class image prediction with its artifact hash.
 - Both model outputs and the end-to-end review workflow, including decision thresholds and human review routing.
 - Reading, merging, and editing separate category-specific warranty policy JSON files.
 
@@ -21,8 +21,8 @@ The suite reported a Joblib/NumPy deprecation warning during model deserializati
 
 ## Held-out model evaluation
 
-The Python classifier and Teachable Machine image model were evaluated on the same 225 reserved test claims and their matching test cards. The active Python pipeline achieved **91.11% accuracy**. The Teachable Machine export ran successfully in the browser and achieved **37.33% accuracy**, below the SRS requirement of at least 85% for both models. The prediction classes matched on 85 of 225 claims (37.78%). The image model must be retrained and retested before the accuracy requirement can be claimed. See [`MODEL_EVALUATION.md`](MODEL_EVALUATION.md) and the full per-claim comparison file in `../reports/python_model_evaluation_2026-09-28/`.
+A separate evaluation dated 2026-09-29 ran the GTM SavedModel against the same 225 reserved test claims and matching cards. The Python classifier achieved **91.11% accuracy**. GTM achieved **34.67% accuracy** (78/225), with macro precision of 37.00%, macro recall of 34.67%, and macro F1 of 31.06%. Its result is below the SRS requirement of at least 85% for both models. Python and GTM agreed on 78 claims (34.67%) and disagreed on 147. GTM is not accurate enough to decide claims by itself. See [`MODEL_EVALUATION.md`](MODEL_EVALUATION.md), [`metrics.json`](../reports/gtm_model_evaluation_2026-09-29/metrics.json), and [`test_predictions.csv`](../reports/gtm_model_evaluation_2026-09-29/test_predictions.csv).
 
 ## What this run does not establish
 
-The tests and holdout evaluation do not prove real-world OCR accuracy across varied receipts, five-second end-to-end latency under target hardware, 10,000-claim performance, concurrent-user capacity, 99% uptime, accessibility, or mobile usability. The image-model inference path runs, but its present accuracy fails the SRS target.
+The tests and holdout evaluation do not prove real-world OCR accuracy across varied receipts, five-second end-to-end latency under target hardware, 10,000-claim performance, concurrent-user capacity, 99% uptime, accessibility, or mobile usability. The GTM inference path runs, but its measured accuracy fails the SRS target.

@@ -45,3 +45,8 @@ This log does not claim student understanding, review, testing, or contribution 
 - `AI_USAGE.md` is empty as requested, so the SRS AI tool disclosure requirement is not met until the team adds the required declaration.
 
 The local evaluation confirmed actual software behavior; it is not a student verification record. Team members should review and understand changes they explain or submit.
+
+
+## GTM SavedModel evaluation on 2026-09-29
+
+The earlier Teachable Machine export was superseded by the GTM SavedModel graph export. We evaluated the new model on all 225 reserved test cards, matched by claim ID. It achieved 34.67% accuracy (78/225), 37.00% macro precision, 34.67% macro recall, and 31.06% macro F1. Python achieved 91.11% on the same structured claims. The model predictions agreed on 78 claims and disagreed on 147. The updated metrics and per-claim results are in `reports/gtm_model_evaluation_2026-09-29/`; the image classifier remains below the SRS 85% target.

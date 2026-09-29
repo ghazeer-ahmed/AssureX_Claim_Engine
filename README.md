@@ -1,6 +1,6 @@
 # AssureX Claim Engine
 
-AssureX is a local web application for recording product warranties, submitting warranty claims, collecting evidence, and reviewing claim decisions. It is built with Python, Flask, server-rendered HTML templates, Bootstrap styling, and SQLite. The project also includes a saved Python claim classifier and a Teachable Machine image classifier.
+AssureX is a local web application for recording product warranties, submitting warranty claims, collecting evidence, and reviewing claim decisions. It is built with Python, Flask, server-rendered HTML templates, Bootstrap styling, and SQLite. The project also includes a saved Python claim classifier and a GTM SavedModel image classifier.
 
 This guide is written for someone opening this project for the first time. It explains what the application does, how to install and start it on Windows, how to create the first administrator, how each user role can use the site, where its files and data live, and how to run the automated checks.
 
@@ -14,7 +14,7 @@ The models assist the workflow; they do not replace the human review. The Python
 
 - Windows 10 or 11, or another operating system capable of running Python and Flask. The commands below are for Windows Command Prompt (CMD).
 - Python 3.11 or newer. During installation on Windows, enable the option to add Python to PATH, or use the Python Launcher command `py`.
-- Internet access during installation to download Python packages. The TensorFlow.js and Teachable Machine browser libraries are included under `static/vendor/`, so model inference does not need a third-party CDN at runtime.
+- Internet access during installation to download Python packages. TensorFlow.js is bundled under `static/vendor/`, so image-model inference does not need a third-party CDN at runtime.
 - Tesseract OCR installed locally for OCR on receipt images and scanned PDF pages. Install the Windows Tesseract program separately from the Python packages, then open CMD and run `where tesseract`. If it is not on PATH but is installed in the common location, verify it with `"%ProgramFiles%\Tesseract-OCR\tesseract.exe" --version`; the app also checks that location automatically. Text-based PDFs are read with `pypdf`; textless PDF pages are rendered with PyMuPDF and OCR is applied to the first five textless pages, even when other pages contain selectable text. If Tesseract is installed outside a common Windows location, set `TESSERACT_CMD` as described under Configuration. Without Tesseract, evidence can still be uploaded and details entered or verified manually.
 
 ## Install and run the website from Windows CMD
@@ -156,11 +156,11 @@ Public self-registration is intended for customer accounts. A customer cannot gr
 
 The active Python classifier is `models/python_claim_classifier.joblib`. The ordered input schema and model information are recorded in `models/model_metrics.json`. The image model export consists of `models/model.json`, `models/metadata.json`, and `models/weights.bin`.
 
-The server maps claim and related database information into the saved Python feature schema. The image classifier runs in the browser against a generated claim summary card; it does not require a webcam. TensorFlow.js 1.7.4 and Teachable Machine Image 0.8.5 are bundled under `static/vendor/`, so the browser does not need CDN access at runtime. The trained model files are delivered through application routes.
+The server maps claim and related database information into the saved Python feature schema. The image classifier runs in the browser against a generated claim summary card; it does not require a webcam. TensorFlow.js is bundled under `static/vendor/` and loads the GTM graph export without a CDN at runtime. The trained model files are delivered through application routes.
 
 Predictions and their model versions are recorded for the claim. Decision limits are configured in `config/decision.json`. Category-specific warranty terms are in separate files under `policies/`: `laptop.json`, `smartphone.json`, and `appliance.json`. Unknown categories are sent for manual review rather than being treated as covered automatically. A prediction is not a final approval or rejection, and a missing prediction still leaves the claim in human review.
 
-The saved models are used for inference; ordinary website use does not retrain them. Current held-out test results are recorded in `documentation/MODEL_EVALUATION.md`: Python accuracy is 91.11% and Teachable Machine accuracy is 37.33% on the same 225 unseen claims. The image model runs but does not meet the SRS 85% accuracy target. The comparison report is `reports/python_model_evaluation_2026-09-28/model_comparison_2026-09-28.csv`. New claim records do not automatically become training rows or modify the model files.
+The saved models are used for inference; ordinary website use does not retrain them. Current held-out test results are recorded in `documentation/MODEL_EVALUATION.md`: Python accuracy is 91.11% and GTM SavedModel accuracy is 34.67% on the same 225 unseen claims. The image model runs but does not meet the SRS 85% accuracy target. The aligned predictions are in `reports/gtm_model_evaluation_2026-09-29/test_predictions.csv`. New claim records do not automatically become training rows or modify the model files.
 
 ### Model input fields
 
@@ -250,9 +250,9 @@ The dataset and generated card assets are organized under `data/` and `cards/`. 
 | `uploads/` | Default location for evidence uploaded at runtime. |
 | `config/` | Application and decision settings. |
 | `policies/` | One JSON policy file per product category. The shipped categories are Laptop, Smartphone, and Appliance. |
-| `models/` | Active Python classifier, preprocessing pipeline, ordered schema and metrics, and Teachable Machine export files. |
+| `models/` | Active Python classifier, preprocessing pipeline, ordered schema and metrics, and GTM SavedModel TensorFlow.js graph export files. |
 | `model/` | Guide to the active model artifacts and their relationship to the `models/` directory. |
-| `static/vendor/` | Local Bootstrap, TensorFlow.js, and Teachable Machine runtime files plus license notices. |
+| `static/vendor/` | Local Bootstrap, TensorFlow.js, and the bundled image-model runtime files plus license notices. |
 | `data/`, `cards/` | Dataset material and generated claim-card assets. |
 | `src/train.py` | Optional model training command-line program. |
 | `tests/` | Automated Python tests. |

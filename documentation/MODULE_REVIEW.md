@@ -28,7 +28,7 @@ This review compares the repository with the supplied *AssureX Claim Engine Soft
 | xviii. Python classifier and algorithm comparison | Implemented | Training script compares logistic regression, random forest, and extra trees; fresh training compares three algorithms, selects by validation macro F1, and stores the scikit-learn 1.8 pipeline and aligned metadata in the active model paths. |
 | xix. Python probabilities for three classes | Implemented | Inference code validates and stores scores for Valid Claim, Invalid Claim, and Manual Review. |
 | xx. Claim Summary Card generation without model answer | Implemented | Shared renderer creates cards; Python output is not included in the card. |
-| xxi. Teachable Machine image classifier | Partial | TensorFlow.js and Teachable Machine scripts are bundled locally. The exported model returned three-class scores for all 225 test cards; measured accuracy was 37.33%, below the SRS 85% target. |
+| xxi. GTM SavedModel image classifier | Partial | The TensorFlow.js graph export returned three-class scores for all 225 test cards; measured accuracy was 34.67%, below the SRS 85% target. |
 | xxii. Predicted-class comparison | Partial | Comparison logic exists; end-to-end results on corresponding holdout cards are not verified. |
 | xxiii. Top-confidence difference | Partial | Absolute confidence differences are calculated for all 225 matched holdout pairs and saved with consistency labels. |
 | xxiv. Configurable consistency states | Implemented | Strong Match, Acceptable Match, Weak Match, Model Disagreement, and Uncertain Result logic uses configured thresholds. |
@@ -67,14 +67,14 @@ This review compares the repository with the supplied *AssureX Claim Engine Soft
 | Model inference within five seconds | Unverified | Not measured under representative deployment hardware and load. The browser holdout batch is not a single-claim latency test. |
 | At least 10,000 claims and concurrent users | Unverified | No load, concurrency, or database scale test is recorded. |
 | Usable interface across user roles/devices | Partial | Role-oriented screens exist; no completed accessibility or device-width evaluation is recorded. |
-| At least 85% accuracy for both models | Partial | Python is 91.11% on 225 prepared test records. Teachable Machine is 37.33% on the same 225 cards, so the dual-model accuracy requirement fails. |
+| At least 85% accuracy for both models | Partial | Python is 91.11% on 225 prepared test records. GTM SavedModel is 34.67% on the same 225 cards, so the dual-model accuracy requirement fails. |
 | 99% business-hours availability | Unverified | No deployment monitoring or uptime record is present. |
 
 ## Dataset and model evidence
 
 The checked-in split metadata reports 1,500 records, balanced across the three classes, split 70/15/15. The card manifest contains 2,550 images: 2,100 training images and 225 each for validation and test. The Python evaluation was freshly rerun on 2026-09-28 and is documented in [`MODEL_EVALUATION.md`](MODEL_EVALUATION.md).
 
-The active logistic regression pipeline was freshly trained with scikit-learn 1.8.0, selected by validation macro F1, and evaluated on the reserved test split at 91.11% accuracy. `models/model_metrics.json` and `models/python_claim_classifier.joblib` now identify the same artifact version. The Teachable Machine export ran on all 225 corresponding test cards and achieved 37.33% accuracy. The detailed per-claim comparisons are in `reports/python_model_evaluation_2026-09-28/model_comparison_2026-09-28.csv`. The SRS 85% target is met by Python but not by the image model.
+The active logistic regression pipeline was freshly trained with scikit-learn 1.8.0, selected by validation macro F1, and evaluated on the reserved test split at 91.11% accuracy. `models/model_metrics.json` and `models/python_claim_classifier.joblib` now identify the same artifact version. The GTM SavedModel graph ran on all 225 corresponding test cards and achieved 34.67% accuracy. The detailed per-claim comparison is in `reports/gtm_model_evaluation_2026-09-29/test_predictions.csv`. The SRS 85% target is met by Python but not by the image model.
 
 The test suite was rerun on 2026-09-28: 37 tests passed. Coverage now includes the active Python inference endpoint, local model asset delivery and image-score persistence endpoint, image OCR, text PDF extraction, scanned-PDF and mixed-PDF OCR, separate category policy files, and end-to-end claim/reviewer transitions. Browser inference was run against the complete isolated test-card set using the exact vendored JavaScript runtime.
 
@@ -86,7 +86,7 @@ The test suite was rerun on 2026-09-28: 37 tests passed. Coverage now includes t
 | Complete source code and installation guide | Present; see root `README.md`. |
 | Structured dataset and card dataset | Present with split and claim mapping files. Dataset creation/label provenance needs documentation. |
 | Python model training evidence | Fresh metrics, model, preprocessing artifact, and test predictions under `reports/python_model_evaluation_2026-09-28/`. |
-| Teachable Machine evidence | Export and 225 holdout scores are present. Accuracy is 37.33%, below the SRS target; retraining is required. |
+| GTM SavedModel evidence | Graph export and 225 holdout scores are present. Accuracy is 34.67%, below the SRS target; review and retraining are required. |
 | Model comparison report for 30+ unseen claims | Complete for 225 claims in `reports/python_model_evaluation_2026-09-28/`; model-quality target remains open. |
 | Warranty policies | Three separate JSON policy files are present under `policies/`. |
 | Automated test cases/results | 37 tests passed on 2026-09-28. Specialized Google TM training/test and load targets remain as noted. |

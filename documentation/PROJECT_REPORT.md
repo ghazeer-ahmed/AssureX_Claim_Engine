@@ -18,7 +18,7 @@ The project scope includes account roles, product and warranty records, claim in
 
 The current repository does not connect to manufacturer systems, payment services, or enterprise warranty platforms. It uses SQLite for local development. The web server instructions are for local development and demonstration, not a production deployment.
 
-The decision process depends on the information supplied by the user, the correctness of the policy JSON, and the quality of the dataset. Text extraction may fail or return incorrect values. The active Python classifier achieved 91.11% and the Teachable Machine image classifier achieved 37.33% on the same prepared test claims. The image model runs, but fails the SRS accuracy target.
+The decision process depends on the information supplied by the user, the correctness of the policy JSON, and the quality of the dataset. Text extraction may fail or return incorrect values. The active Python classifier achieved 91.11% and the GTM SavedModel image classifier achieved 34.67% on the same prepared test claims. The image model runs, but fails the SRS accuracy target.
 
 ## 3. Users and permissions
 
@@ -53,7 +53,7 @@ The Python model consumes a structured feature row assembled from the claim, pro
 | `decision_service.py` | Probability validation, confidence comparison, consistency state, final recommendation, and evaluation history. |
 | `database/` | SQLite setup and SQL schema. |
 | `templates/` and `static/` | Browser pages, styles, and JavaScript. |
-| `models/` and `model/` | Active Python classifier, preprocessing, metadata, Teachable Machine export, and a model-directory guide. |
+| `models/` | Active Python classifier, preprocessing, metadata, and the GTM SavedModel TensorFlow.js export. |
 | `data/`, `cards/`, and `dataset_generator/` | Structured dataset, split/card mapping, image cards, and card utilities. |
 
 ## 5. Claim lifecycle
@@ -143,13 +143,13 @@ The model correctly classified 205 of 225 test claims. Manual Review recall was 
 
 *Figure 7. Class-wise test metrics, with 75 records in each class.*
 
-![Python and Teachable Machine test accuracy compared with the SRS target](figures/model_accuracy_comparison.png)
+![Python and GTM SavedModel test accuracy compared with the SRS target](figures/model_accuracy_comparison.png)
 
 *Figure 8. The image model is below the SRS target on the prepared holdout set.*
 
-![Teachable Machine confusion matrix](figures/teachable_machine_confusion_matrix.png)
+![GTM SavedModel confusion matrix](figures/gtm_savedmodel_confusion_matrix.png)
 
-*Figure 9. Teachable Machine predictions for the 225 held-out cards.*
+*Figure 9. GTM SavedModel predictions for the 225 held-out cards.*
 
 ![Model consistency results across the holdout set](figures/model_consistency_counts.png)
 
@@ -159,23 +159,23 @@ The model correctly classified 205 of 225 test claims. Manual Review recall was 
 
 The active model is the validation-selected logistic-regression pipeline at `models/python_claim_classifier.joblib`, trained using scikit-learn 1.8.0. `models/python_preprocessing.joblib` and `models/model_metrics.json` are from the same training run. Its SHA-256 artifact hash is stored in the metadata. The trained pipeline includes imputation, scaling, categorical encoding, and classification; live input columns are validated against the saved ordered schema.
 
-## 9. Teachable Machine image model
+## 9. GTM SavedModel image model
 
-The image classifier uses the TensorFlow.js export in `models/model.json`, `models/metadata.json`, and `models/weights.bin`. The metadata reports three labels and a 224-pixel image input. The application code loads the model in the browser and sends its scores back to the claim workflow. The Claim Summary Card renderer is in `dataset_generator/render_cards.py`.
+The image classifier uses the GTM SavedModel converted to a TensorFlow.js graph export in `models/model.json`, `models/metadata.json`, and `models/weights.bin`. The metadata identifies three labels and a 224 by 224 RGB input. The browser loads the graph model, applies the documented pixel normalization, and sends the labelled scores to the claim workflow. The Claim Summary Card renderer is in `dataset_generator/render_cards.py`.
 
-The image model and its locally bundled browser runtime produced all three class probabilities on each of the 225 reserved test cards. It achieved 37.33% accuracy, 41.11% macro precision, 37.33% macro recall, and 35.13% macro F1. This does not meet the SRS requirement of at least 85% accuracy. Its confusion matrix shows frequent false Manual Review predictions.
+The GTM SavedModel and locally bundled TensorFlow.js runtime produced all three class probabilities on each of the 225 reserved test cards. It achieved 34.67% accuracy, 37.00% macro precision, 34.67% macro recall, and 31.06% macro F1. This does not meet the SRS requirement of at least 85% accuracy. It predicted Valid Claim for 149 cards, including 53 Invalid Claim and 46 Manual Review cases.
 
-The model runtime and application integration are operational. The exported image model needs retraining and a new holdout evaluation. The repository contains the card dataset and exported weights, but not the original Teachable Machine project or training configuration. Do not describe the model as meeting the target until it has been retrained on training cards only, selected using validation data, and evaluated once on the held-out test cards.
+The browser inference path completed on all 225 cards, but the accuracy target is not met. Review the GTM labels, training data, settings, and card rendering. Tune only with training and validation data, then evaluate a final model once on the held-out test cards.
 
 ## 10. Comparison and decision logic
 
 For two valid prediction records, the application checks whether the predicted classes match and computes the absolute difference between the top-class confidence values:
 
-**Difference = |Python top-class confidence - Teachable Machine top-class confidence|**
+**Difference = |Python top-class confidence - GTM top-class confidence|**
 
 The decision configuration sets a minimum confidence of 0.80. The configured confidence-difference thresholds are 0.05 for Strong Match, 0.15 for Acceptable Match, and 0.25 as the maximum allowed difference. A disagreement is labeled Model Disagreement. Insufficient confidence or missing/invalid output is Uncertain Result. Matching and sufficiently confident results are assigned a consistency label according to the confidence gap.
 
-On the 225 held-out claims, the models agreed on 85 (37.78%) and disagreed on 140. The saved comparison file includes six class scores per claim, top-confidence difference, rule/evidence flags, consistency status, recommendation, and review reasons. Under the configured thresholds, 18 pairs were Strong Match, 9 Acceptable Match, 1 Weak Match, and 57 Uncertain Result.
+On the 225 held-out claims, the models agreed on 78 (34.67%) and disagreed on 147. The saved comparison file includes six class scores per claim, top-confidence difference, and consistency status. Under the configured thresholds, 37 pairs were Strong Match, 8 Acceptable Match, 4 Weak Match, and 29 Uncertain Result.
 
 A consistency label does not decide the claim by itself. Rule findings, missing required evidence, duplicates, contradictions, and other issues can still send the claim to manual review. The decision service returns Likely Valid or Likely Invalid only when the model evidence is available and the rule findings do not create unresolved reasons. Otherwise the result is Manual Review Required.
 
@@ -203,13 +203,13 @@ These safeguards do not establish compliance with a particular privacy law or pr
 
 `documentation/TEST_RESULTS.md` records 37 passing automated tests from 2026-09-28. The documented coverage includes accounts and roles, CSRF, claim and warranty dates, documents, PDF text extraction, Tesseract image, scanned-PDF, and mixed-PDF OCR, verification, duplicate and contradiction checks, repairs, notifications, policy snapshots, filters, reviewer transitions, overrides, evaluation history, and confidence consistency logic.
 
-The expanded test suite passed during this review. Browser inference was separately completed on all 225 holdout cards. The local scripts for Bootstrap, TensorFlow.js, and Teachable Machine are vendored under `static/vendor/`, so the application UI and model do not depend on those CDNs at runtime. These results are not evidence of real-world OCR accuracy, 10,000-claim performance, 99% availability, or mobile browser usability. Those targets still require separate evidence.
+The expanded test suite passed during the earlier review. GTM graph inference was separately completed on all 225 holdout cards using the locally bundled TensorFlow.js runtime, so image inference does not depend on a public CDN at runtime. These results are not evidence of real-world OCR accuracy, 10,000-claim performance, 99% availability, or mobile browser usability. Those targets still require separate evidence.
 
 ## 14. SRS traceability and open work
 
 The detailed requirement-by-requirement status is in [`MODULE_REVIEW.md`](MODULE_REVIEW.md). The most significant outstanding items are:
 
-- Retrain the Teachable Machine image model using training cards only, select settings from validation results, and reevaluate the reserved test cards. The current test accuracy is 37.33%.
+- Review and retrain the GTM SavedModel using training cards only, select settings with validation data, and evaluate the final model once on the reserved test cards. The current test accuracy is 34.67%.
 - Review the saved 225-claim comparison report and use its disagreement records to investigate image-model failures.
 - Keep the active Python classifier, metadata, preprocessing artifact, scikit-learn dependency, and test report versioned together.
 - Record the dataset's provenance and scenario/label generation process.
@@ -231,8 +231,8 @@ The root `README.md` documents first-time Windows CMD setup, the virtual environ
 | `templates/`, `static/` | User interface templates, styles, and browser scripts. |
 | `policies/`, `config/` | Separate category policy files and decision thresholds. |
 | `data/`, `cards/`, `dataset_generator/` | Structured records, split/card manifest, claim cards, and card rendering. |
-| `models/` | Python model and Teachable Machine exports plus metadata. |
-| `reports/python_model_evaluation_2026-09-28/` | Python training outputs and complete 225-claim Python/image model evaluation and comparison records. |
+| `models/` | Python model and GTM SavedModel exports plus metadata. |
+| `reports/gtm_model_evaluation_2026-09-29/` | GTM SavedModel holdout metrics and 225 aligned Python/GTM test predictions. |
 | `documentation/figures/` | Diagrams and plots used in the report and blog. |
 | `tests/` | Automated test suite. |
 | `documentation/` | SRS review, test record, development log, and technical blog. |
